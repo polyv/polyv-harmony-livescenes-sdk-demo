@@ -19,7 +19,7 @@ polyv-harmony-livescenes-sdk-demo
 ### 1 简介
 此项目是保利威鸿蒙多场景 Demo。
 
-此项目支持视频播放、在线聊天、打赏、商品、互动等功能（具体见[多场景支持的功能特性](https://github.com/polyv/polyv-harmony-livescenes-sdk-demo/blob/master/docs/public/支持的功能特性.md)）
+此项目支持视频播放、在线聊天、打赏、商品、互动等功能（具体见[多场景支持的功能特性](https://github.com/polyv/polyv-harmony-livescenes-sdk-demo/blob/master/publish/docs/支持的功能特性.md)）
 
 多场景项目的文件目录结构如下：
 
