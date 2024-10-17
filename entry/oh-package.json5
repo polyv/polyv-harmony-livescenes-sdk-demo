@@ -1,0 +1,14 @@
+{
+  "name": "entry",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "scenes_live": "file:../scenes_live",
+    "@polyvharmony/media-player-sdk": "2.2.0",
+    "@polyvharmony/media-player-core-ijk": "2.2.0"
+  }
+}
+

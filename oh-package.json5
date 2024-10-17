@@ -1,0 +1,16 @@
+{
+  "modelVersion": "5.0.0",
+  "name": "@polyvharmony/harmony-livescenes-sdk",
+  "version": "1.0.0",
+  "description": "polyv harmony-livescenes-sdk",
+  "main": "",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "dynamicDependencies": {},
+  "overrides": {
+  }
+}

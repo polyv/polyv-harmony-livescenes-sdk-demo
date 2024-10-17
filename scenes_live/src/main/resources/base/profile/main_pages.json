@@ -1,0 +1,6 @@
+{
+  "src": [
+    "pages/PLVLIWatchPage",
+    "components/product/PLVLIProductDetailPage"
+  ]
+}

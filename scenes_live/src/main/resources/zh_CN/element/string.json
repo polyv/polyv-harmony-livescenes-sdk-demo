@@ -1,0 +1,248 @@
+{
+  "string": [
+    {
+      "name": "shared_desc",
+      "value": "description"
+    },
+    {
+      "name": "plvli_live_bulletin",
+      "value": "公告"
+    },
+    {
+      "name": "plvli_live_intro",
+      "value": "直播介绍"
+    },
+    {
+      "name": "plvli_live_no_intro",
+      "value": "暂无直播介绍~"
+    },
+    {
+      "name": "plvli_live_bulletin_tip",
+      "value": "公告: "
+    },
+    {
+      "name": "plvli_live_language_switch",
+      "value": "语言切换"
+    },
+    {
+      "name": "plvli_live_language_switch_zh",
+      "value": "简体中文-ZH"
+    },
+    {
+      "name": "plvli_live_language_switch_en",
+      "value": "English-EN"
+    },
+    {
+      "name": "plvli_live_language_switch_hint",
+      "value": "切换语言将为您重新进入直播间，请点击\"确定\"后切换"
+    },
+    {
+      "name": "plvli_chat_toast_logging",
+      "value": "聊天室登录中"
+    },
+    {
+      "name": "plvli_chat_toast_login_success",
+      "value": "聊天室登录成功"
+    },
+    {
+      "name": "plvli_chat_toast_reconnecting",
+      "value": "聊天室重连中"
+    },
+    {
+      "name": "plvli_chat_toast_reconnect_success",
+      "value": "聊天室重连成功"
+    },
+    {
+      "name": "plvli_chat_toast_login_failed",
+      "value": "聊天室连接失败"
+    },
+    {
+      "name": "plvli_chat_restrict_max_viewer_hint",
+      "value": "直播间太过火爆了，请稍后再来"
+    },
+    {
+      "name": "plvli_chat_input_tips_chat",
+      "value": "聊点什么吧~"
+    },
+    {
+      "name": "plvli_chat_input_tips_quiz",
+      "value": "发起提问"
+    },
+    {
+      "name": "plvli_chat_send",
+      "value": "发送"
+    },
+    {
+      "name": "plvli_chat_toast_send_text_empty",
+      "value": "发送内容不能为空！"
+    },
+    {
+      "name": "plvli_chat_me",
+      "value": "%s(我)%s"
+    },
+    {
+      "name": "plvli_chat_quiz_channel",
+      "value": "提问频道"
+    },
+    {
+      "name": "plvli_chat_quiz_default_tips",
+      "value": "你已进入专属的提问频道，提问内容不会公开"
+    },
+    {
+      "name": "plvli_chat_input_tips_chatroom_close",
+      "value": "聊天室已关闭"
+    },
+    {
+      "name": "plvli_chat_view_new_msg",
+      "value": "查看新信息"
+    },
+    {
+      "name": "plvli_chat_welcome_join",
+      "value": "欢迎 %s 进入直播间"
+    },
+    {
+      "name": "plvli_chat_welcome_join_multi",
+      "value": "欢迎 %s 等%s人进入直播间"
+    },
+    {
+      "name": "plvli_chat_copy",
+      "value": "复制"
+    },
+    {
+      "name": "plvli_chat_more",
+      "value": "更多"
+    },
+    {
+      "name": "plvli_chat_full_text",
+      "value": "全文"
+    },
+    {
+      "name": "plvli_chat_answer",
+      "value": "回复"
+    },
+    {
+      "name": "plvli_chat_copy_success",
+      "value": "复制成功"
+    },
+    {
+      "name": "plvli_chat_input_tips_focus",
+      "value": "当前为专注模式.."
+    },
+    {
+      "name": "plvli_chat_toast_been_kicked",
+      "value": "您已被管理员踢出聊天室！"
+    },
+    {
+      "name": "plvli_chat_toast_account_login_elsewhere",
+      "value": "当前账号已在其他地方登录，您将被退出本直播间"
+    },
+    {
+      "name": "plvli_chat_toast_chatroom_close",
+      "value": "聊天室已经关闭"
+    },
+    {
+      "name": "plvli_chat_toast_chatroom_open",
+      "value": "聊天室已经打开"
+    },
+    {
+      "name": "plvli_chat_toast_history_load_failed",
+      "value": "历史记录加载失败%s"
+    },
+    {
+      "name": "plvli_chat_playback_tips",
+      "value": "聊天重放功能已开启，将会显示历史消息"
+    },
+    {
+      "name": "plvli_reward_give",
+      "value": "赠送%s"
+    },
+    {
+      "name": "plvli_reward_type_point",
+      "value": "积分打赏"
+    },
+    {
+      "name": "plvli_reward_type_cash",
+      "value": "道具打赏"
+    },
+    {
+      "name": "plvli_reward_remain_point",
+      "value": "我的积分: %s"
+    },
+    {
+      "name": "plvli_reward_text",
+      "value": "打赏"
+    },
+    {
+      "name": "plvli_reward_select_cash_hint",
+      "value": "请选择打赏道具"
+    },
+    {
+      "name": "plvli_commodity_free",
+      "value": "免费"
+    },
+    {
+      "name": "plvli_commodity_toast_empty_link",
+      "value":  "APP内不支持购买"
+    },
+    {
+      "name": "plvli_red_paper_send_msg",
+      "value": "%s 发了一个"
+    },
+    {
+      "name": "plvli_red_paper_dot",
+      "value": "，"
+    },
+    {
+      "name": "plvli_red_paper_get",
+      "value": "点击领取"
+    },
+    {
+      "name": "plvli_common_dialog_tip_warm",
+      "value": "温馨提示"
+    },
+    {
+      "name": "plvli_common_dialog_confirm",
+      "value": "确定"
+    },
+    {
+      "name": "plvli_common_dialog_cancel",
+      "value": "取消"
+    },
+    {
+      "name": "plvli_player_no_live_hint_text",
+      "value": "暂无直播"
+    },
+    {
+      "name": "plvli_interact_question",
+      "value": "问卷"
+    },
+    {
+      "name": "plvli_card_push_reward_hint",
+      "value": "连续观看有奖励哦"
+    },
+    {
+      "name": "plvli_lottery_over",
+      "value": "已开奖"
+    },
+    {
+      "name": "plvli_lottery_will_start",
+      "value": "抽奖即将开始"
+    },
+    {
+      "name": "plvli_lottery_no_start",
+      "value": "抽奖暂未开始"
+    },
+    {
+      "name": "plvli_lottery_running",
+      "value": "开奖中"
+    },
+    {
+      "name": "plv_red_paper_get",
+      "value": "点击领取"
+    },
+    {
+      "name": "plv_red_paper_red_pack_hint",
+      "value": "口令红包即将来袭"
+    }
+  ]
+}

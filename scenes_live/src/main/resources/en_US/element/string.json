@@ -1,0 +1,248 @@
+{
+  "string": [
+    {
+      "name": "shared_desc",
+      "value": "description"
+    },
+    {
+      "name": "plvli_live_bulletin",
+      "value": "Bulletin"
+    },
+    {
+      "name": "plvli_live_intro",
+      "value": "Intro"
+    },
+    {
+      "name": "plvli_live_no_intro",
+      "value": "No live broadcast introduction~"
+    },
+    {
+      "name": "plvli_live_bulletin_tip",
+      "value": "Bulletin: "
+    },
+    {
+      "name": "plvli_live_language_switch",
+      "value": "Language"
+    },
+    {
+      "name": "plvli_live_language_switch_zh",
+      "value": "简体中文-ZH"
+    },
+    {
+      "name": "plvli_live_language_switch_en",
+      "value": "English-EN"
+    },
+    {
+      "name": "plvli_live_language_switch_hint",
+      "value": "Change language to re-enter live stream, confirm to switch"
+    },
+    {
+      "name": "plvli_chat_toast_logging",
+      "value": "Chatroom logging"
+    },
+    {
+      "name": "plvli_chat_toast_login_success",
+      "value": "Chatroom login successful"
+    },
+    {
+      "name": "plvli_chat_toast_reconnecting",
+      "value": "Chatroom reconnecting"
+    },
+    {
+      "name": "plvli_chat_toast_reconnect_success",
+      "value": "Chatroom reconnected successfully"
+    },
+    {
+      "name": "plvli_chat_toast_login_failed",
+      "value": "Chatroom login failed"
+    },
+    {
+      "name": "plvli_chat_restrict_max_viewer_hint",
+      "value": "The live room is too popular, please come back later"
+    },
+    {
+      "name": "plvli_chat_input_tips_chat",
+      "value": "Join the chat"
+    },
+    {
+      "name": "plvli_chat_input_tips_quiz",
+      "value": "Initiate a question"
+    },
+    {
+      "name": "plvli_chat_send",
+      "value": "Send"
+    },
+    {
+      "name": "plvli_chat_toast_send_text_empty",
+      "value": "The sending content cannot be empty!"
+    },
+    {
+      "name": "plvli_chat_me",
+      "value": "%s(me)%s"
+    },
+    {
+      "name": "plvli_chat_quiz_channel",
+      "value": "Question Channel"
+    },
+    {
+      "name": "plvli_chat_quiz_default_tips",
+      "value": "You have entered the exclusive question channel, and the content of the question will not be made public"
+    },
+    {
+      "name": "plvli_chat_input_tips_chatroom_close",
+      "value": "Chatroom is closed"
+    },
+    {
+      "name": "plvli_chat_view_new_msg",
+      "value": "News"
+    },
+    {
+      "name": "plvli_chat_welcome_join",
+      "value": "welcome %s join"
+    },
+    {
+      "name": "plvli_chat_welcome_join_multi",
+      "value": "welcome %s and other %s people join"
+    },
+    {
+      "name": "plvli_chat_copy",
+      "value": "Copy"
+    },
+    {
+      "name": "plvli_chat_more",
+      "value": "More"
+    },
+    {
+      "name": "plvli_chat_full_text",
+      "value": "Full text"
+    },
+    {
+      "name": "plvli_chat_answer",
+      "value": "Reply"
+    },
+    {
+      "name": "plvli_chat_copy_success",
+      "value": "Copy success"
+    },
+    {
+      "name": "plvli_chat_input_tips_focus",
+      "value": "In focus mode"
+    },
+    {
+      "name": "plvli_chat_toast_been_kicked",
+      "value": "You have been kicked out of the chatroom by the administrator!"
+    },
+    {
+      "name": "plvli_chat_toast_account_login_elsewhere",
+      "value": "The current account has been logged in elsewhere, you will be logged out of this live room"
+    },
+    {
+      "name": "plvli_chat_toast_chatroom_close",
+      "value": "Chatroom has been closed"
+    },
+    {
+      "name": "plvli_chat_toast_chatroom_open",
+      "value": "Chatroom has been opened"
+    },
+    {
+      "name": "plvli_chat_toast_history_load_failed",
+      "value": "History loading failed%s"
+    },
+    {
+      "name": "plvli_chat_playback_tips",
+      "value": "Chat replay is on, showing historical messages"
+    },
+    {
+      "name": "plvli_reward_give",
+      "value": "given%s"
+    },
+    {
+      "name": "plvli_reward_type_point",
+      "value": "Points Reward"
+    },
+    {
+      "name": "plvli_reward_type_cash",
+      "value": "Gifts Reward"
+    },
+    {
+      "name": "plvli_reward_remain_point",
+      "value": "My points: %s"
+    },
+    {
+      "name": "plvli_reward_text",
+      "value": "Reward"
+    },
+    {
+      "name": "plvli_reward_select_cash_hint",
+      "value": "Please select a reward gift"
+    },
+    {
+      "name": "plvli_commodity_free",
+      "value": "Free"
+    },
+    {
+      "name": "plvli_commodity_toast_empty_link",
+      "value":  "In-app purchases are not supported"
+    },
+    {
+      "name": "plvli_red_paper_send_msg",
+      "value": "%s sent a "
+    },
+    {
+      "name": "plvli_red_paper_dot",
+      "value": ", "
+    },
+    {
+      "name": "plvli_red_paper_get",
+      "value": "Click to receive"
+    },
+    {
+      "name": "plvli_common_dialog_tip_warm",
+      "value": "Warm Tips"
+    },
+    {
+      "name": "plvli_common_dialog_confirm",
+      "value": "Confirm"
+    },
+    {
+      "name": "plvli_common_dialog_cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "plvli_player_no_live_hint_text",
+      "value": "Not Live"
+    },
+    {
+      "name": "plvli_interact_question",
+      "value": "Question"
+    },
+    {
+      "name": "plvli_card_push_reward_hint",
+      "value": "Continuous viewing rewards"
+    },
+    {
+      "name": "plvli_lottery_over",
+      "value": "Lottery over"
+    },
+    {
+      "name": "plvli_lottery_will_start",
+      "value": "Lottery is about to begin"
+    },
+    {
+      "name": "plvli_lottery_no_start",
+      "value": "Lottery has not yet started"
+    },
+    {
+      "name": "plvli_lottery_running",
+      "value": "In lottery"
+    },
+    {
+      "name": "plv_red_paper_get",
+      "value": "Click to receive"
+    },
+    {
+      "name": "plv_red_paper_red_pack_hint",
+      "value": "Password red envelope coming soon"
+    }
+  ]
+}
