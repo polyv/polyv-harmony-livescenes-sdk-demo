@@ -182,7 +182,7 @@
     },
     {
       "name": "plvli_commodity_toast_empty_link",
-      "value":  "APP内不支持购买"
+      "value": "APP内不支持购买"
     },
     {
       "name": "plvli_red_paper_send_msg",
@@ -211,6 +211,22 @@
     {
       "name": "plvli_player_no_live_hint_text",
       "value": "暂无直播"
+    },
+    {
+      "name": "plvli_player_error_message_code",
+      "value": "(错误码:%s)"
+    },
+    {
+      "name": "plvli_player_error_message_restricted",
+      "value": "存在观看限制，暂不支持进入%s"
+    },
+    {
+      "name": "plvli_player_error_message_general",
+      "value": "视频加载失败，请检查网络或退出重进%s"
+    },
+    {
+      "name": "plvli_player_error_action_refresh",
+      "value": "刷新"
     },
     {
       "name": "plvli_interact_question",
@@ -243,6 +259,54 @@
     {
       "name": "plv_red_paper_red_pack_hint",
       "value": "口令红包即将来袭"
+    },
+    {
+      "name": "plvli_linkmic_tip_request_join_video",
+      "value": "申请视频连麦"
+    },
+    {
+      "name": "plvli_linkmic_tip_request_join_audio",
+      "value": "申请音频连麦"
+    },
+    {
+      "name": "plvli_linkmic_tip_requesting",
+      "value": "请求中…"
+    },
+    {
+      "name": "plvli_linkmic_tip_request_order",
+      "value": "排队%s"
+    },
+    {
+      "name": "plvli_linkmic_invitation_title_video",
+      "value": "邀请你视频连麦"
+    },
+    {
+      "name": "plvli_linkmic_invitation_title_audio",
+      "value": "邀请你语音连麦"
+    },
+    {
+      "name": "plvli_linkmic_invitation_camera",
+      "value": "摄像头"
+    },
+    {
+      "name": "plvli_linkmic_invitation_microphone",
+      "value": "麦克风"
+    },
+    {
+      "name": "plvli_linkmic_invitation_privacy_notify",
+      "value": "连麦将收集人像信息，确认上麦视为同意"
+    },
+    {
+      "name": "plvli_linkmic_invitation_refuse_text",
+      "value": "暂不连麦(%ss)"
+    },
+    {
+      "name": "plvli_linkmic_invitation_accept_text",
+      "value": "开始连麦"
+    },
+    {
+      "name": "plvli_linkmic_invitation_camera_closed_text",
+      "value": "已关摄像头"
     }
   ]
 }

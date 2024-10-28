@@ -32,6 +32,7 @@ import { PLVLILotteryView } from './interact/lottery/PLVLILotteryView'
 import { PLVLIRedpackView } from './chatroom/PLVLIRedpackView'
 import { PLVLIEventHub } from '../common/PLVLIEventHub'
 import { PLVLIToTopView } from './chatroom/PLVLIToTopView'
+import { PLVLILinkMicControlBarPort } from './linkmic/PLVLILinkMicControlBarPort'
 
 const TAG = '[PLVLILiveHomeLayout]'
 
@@ -235,7 +236,14 @@ export struct PLVLILiveHomeLayout {
       })
 
       // </editor-fold>
-
+      // <editor-fold defaultstate="collapsed" desc="连麦控制条">
+      PLVLILinkMicControlBarPort()
+        .id('linkmic_control_bar_port')
+        .alignRules({
+          center: { anchor: PLVCommonConstants.CONTAINER, align: VerticalAlign.Center },
+          end: { anchor: PLVCommonConstants.CONTAINER, align: HorizontalAlign.End }
+        })
+      // </editor-fold>
       // <editor-fold defaultstate="collapsed" desc="互动WebView">
       PLVLIInteractWebView({
         viewController: this.interactWebViewController

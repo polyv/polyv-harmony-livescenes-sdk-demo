@@ -6,6 +6,7 @@ import {
   PLVCommonConstants,
   PLVDeviceUtils,
   PLVJSONUtils,
+  PLVLinkMicState,
   PLVLiveSceneSDK,
   PLVLoginType,
   PLVRemoveBulletinEvent,
@@ -21,6 +22,9 @@ import { PLVLILiveHomeLayout, PLVLiveHomeLayoutController } from '../components/
 import { PLVLIPlaybackHomeLayout, PLVPlaybackHomeLayoutController } from '../components/PLVLIPlaybackHomeLayout'
 import { PLVLIPlayerLayout } from './player/PLVLIPlayerLayout'
 import { common } from '@kit.AbilityKit'
+import { PLVLILinkMicLayout } from './linkmic/PLVLILinkMicLayout'
+import { MutableObserver } from '@polyvharmony/media-player-sdk'
+import { PLVLILinkMicInvitationLayout } from './linkmic/PLVLILinkMicInvitationLayout'
 
 const TAG = '[PLVLIWatchLayout]'
 
@@ -32,16 +36,21 @@ export struct PLVLIWatchLayout {
   @State liveHomeLayoutController: PLVLiveHomeLayoutController = new PLVLiveHomeLayoutController()
   @State playbackHomeLayoutController: PLVPlaybackHomeLayoutController = new PLVPlaybackHomeLayoutController()
   @State detailLayoutController: PLVDetailLayoutController = new PLVDetailLayoutController()
+  @State isLinkMic: boolean = false
   @LocalStorageLink('sdk') sdk?: PLVLiveSceneSDK = undefined
   @LocalStorageLink('channelData') channelData?: PLVChannelData = undefined
+  private observers: MutableObserver[] = []
 
   override aboutToAppear(): void {
     this.initData()
     this.onChatData()
     this.loginSocket()
+    this.observeLinkMic()
   }
 
   override aboutToDisappear(): void {
+    MutableObserver.disposeAll(this.observers)
+    this.observers = []
     this.sdk?.destroy()
   }
 
@@ -49,7 +58,11 @@ export struct PLVLIWatchLayout {
     Stack() {
       // player layout
       Stack() {
-        PLVLIPlayerLayout()
+        if (!this.isLinkMic) {
+          PLVLIPlayerLayout()
+        } else {
+          PLVLILinkMicLayout()
+        }
       }
       .width(PLVCommonConstants.FULL_PERCENT)
       .height(PLVCommonConstants.FULL_PERCENT)
@@ -98,6 +111,11 @@ export struct PLVLIWatchLayout {
       .hitTestBehavior(HitTestMode.None)
       .width(PLVCommonConstants.FULL_PERCENT)
       .height(PLVCommonConstants.FULL_PERCENT)
+
+      // 邀请连麦
+      if (PLVLoginType.LIVE == this.channelData?.loginType) {
+        PLVLILinkMicInvitationLayout()
+      }
     }
     .width(PLVCommonConstants.FULL_PERCENT)
     .height(PLVCommonConstants.FULL_PERCENT)
@@ -175,6 +193,12 @@ export struct PLVLIWatchLayout {
       }
     }, this)
     this.sdk?.socketManager.login()
+  }
+
+  private observeLinkMic() {
+    this.sdk?.linkmicManager.linkmicState.observe((linkmicState) => {
+      this.isLinkMic = linkmicState === PLVLinkMicState.Joined
+    }).pushTo(this.observers)
   }
 
   showExitDialog(message: Resource) {

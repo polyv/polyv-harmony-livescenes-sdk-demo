@@ -19,7 +19,16 @@
   ],
   "targets": [
     {
-      "name": "default"
+      "name": "default",
+      "config": {
+        "buildOption": {
+          "nativeLib": {
+            "filter": {
+              "excludes": ["**/*_extension.so"]
+            }
+          }
+        }
+      }
     }
   ]
 }

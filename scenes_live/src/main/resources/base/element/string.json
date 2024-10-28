@@ -182,7 +182,7 @@
     },
     {
       "name": "plvli_commodity_toast_empty_link",
-      "value":  "In-app purchases are not supported"
+      "value": "In-app purchases are not supported"
     },
     {
       "name": "plvli_red_paper_send_msg",
@@ -211,6 +211,22 @@
     {
       "name": "plvli_player_no_live_hint_text",
       "value": "Not Live"
+    },
+    {
+      "name": "plvli_player_error_message_code",
+      "value": "(Error code: %s)"
+    },
+    {
+      "name": "plvli_player_error_message_restricted",
+      "value": "Viewing restrictions exist, currently does not support access to %s"
+    },
+    {
+      "name": "plvli_player_error_message_general",
+      "value": "The video failed to load, please check the network or exit and re-enter %s"
+    },
+    {
+      "name": "plvli_player_error_action_refresh",
+      "value": "Refresh"
     },
     {
       "name": "plvli_interact_question",
@@ -243,6 +259,54 @@
     {
       "name": "plv_red_paper_red_pack_hint",
       "value": "Password red envelope coming soon"
+    },
+    {
+      "name": "plvli_linkmic_tip_request_join_video",
+      "value": "Apply video call"
+    },
+    {
+      "name": "plvli_linkmic_tip_request_join_audio",
+      "value": "Apply audio call"
+    },
+    {
+      "name": "plvli_linkmic_tip_requesting",
+      "value": "Requesting"
+    },
+    {
+      "name": "plvli_linkmic_tip_request_order",
+      "value": "In queue %s"
+    },
+    {
+      "name": "plvli_linkmic_invitation_title_video",
+      "value": "Inviting you to join the video call"
+    },
+    {
+      "name": "plvli_linkmic_invitation_title_audio",
+      "value": "Inviting you to join the audio call"
+    },
+    {
+      "name": "plvli_linkmic_invitation_camera",
+      "value": "Camera"
+    },
+    {
+      "name": "plvli_linkmic_invitation_microphone",
+      "value": "Microphone"
+    },
+    {
+      "name": "plvli_linkmic_invitation_privacy_notify",
+      "value": "Video Call will collect portrait information, confirm on the microphone as consent"
+    },
+    {
+      "name": "plvli_linkmic_invitation_refuse_text",
+      "value": "Not Now(%ss)"
+    },
+    {
+      "name": "plvli_linkmic_invitation_accept_text",
+      "value": "Accept"
+    },
+    {
+      "name": "plvli_linkmic_invitation_camera_closed_text",
+      "value": "The camera has been off"
     }
   ]
 }

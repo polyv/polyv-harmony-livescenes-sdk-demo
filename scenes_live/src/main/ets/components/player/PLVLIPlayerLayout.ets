@@ -4,6 +4,8 @@ import {
   lateInit,
   MutableObserver,
   PLVLiveStatusEnum,
+  PLVMediaPlayerAppContext,
+  PLVMediaPlayerBusinessErrorEnum,
   PLVMediaPlayerPlayingState,
   PLVMediaPlayerState
 } from '@polyvharmony/media-player-sdk'
@@ -35,6 +37,9 @@ export struct PLVLIPlayerLayout {
       }
       .onLoad((component) => {
         this.sdk.playerManager.startMainMediaPlayerWithComponent(component!)
+      })
+      .onDestroy(() => {
+        this.sdk.playerManager.release()
       })
       .id('plvli_player_xcomponent')
       .width(this.videoWidth)
@@ -82,6 +87,13 @@ export struct PLVLIPlayerLayout {
       .backgroundColor('#00021A')
       .visibility(this.isNoLive ? Visibility.Visible : Visibility.None)
       .hitTestBehavior(HitTestMode.None)
+
+      // 播放器异常提示
+      PLVLIPlayerErrorOverlayLayout()
+        .id('plvli_player_error_overlay_layout')
+        .width(PLVCommonConstants.FULL_PERCENT)
+        .height(PLVCommonConstants.FULL_PERCENT)
+        .hitTestBehavior(HitTestMode.None)
     }
   }
 
@@ -148,6 +160,75 @@ export struct PLVLIPlayerLayout {
   private async setKeepScreenOn(keepScreenOn: boolean) {
     const lastWindow = await window.getLastWindow(this.context);
     lastWindow.setWindowKeepScreenOn(keepScreenOn);
+  }
+
+  aboutToDisappear(): void {
+    MutableObserver.disposeAll(this.observers)
+    this.observers = []
+    this.sdk.playerManager.mainMediaPlayer.pause()
+  }
+}
+
+@Component
+struct PLVLIPlayerErrorOverlayLayout {
+  @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @State error: PLVMediaPlayerBusinessErrorEnum | null = null
+  private observers: MutableObserver[] = []
+
+  aboutToAppear(): void {
+    this.sdk.playerManager.mainMediaPlayer.getBusinessListenerRegistry()
+      .businessErrorState
+      .observe((error) => {
+        this.error = error
+      })
+      .pushTo(this.observers)
+  }
+
+  build() {
+    if (this.error !== null) {
+      Column({ space: 12 }) {
+        Image($r("app.media.plvli_player_error_placeholder"))
+          .width(150)
+          .height(116)
+
+        Text(this.getErrorMessage())
+          .fontSize(12)
+          .fontColor('#e4e4e4')
+
+        Text($r("app.string.plvli_player_error_action_refresh"))
+          .fontSize(12)
+          .fontColor('#e4e4e4')
+          .borderRadius(30)
+          .backgroundColor('#4880f6')
+          .padding({
+            left: 12,
+            right: 12,
+            top: 4,
+            bottom: 4
+          })
+          .onClick(() => {
+            this.sdk.playerManager.mainMediaPlayer.restart()
+          })
+      }
+      .width(PLVCommonConstants.FULL_PERCENT)
+      .height(PLVCommonConstants.FULL_PERCENT)
+      .justifyContent(FlexAlign.Center)
+      .alignItems(HorizontalAlign.Center)
+      .backgroundColor('#00021A')
+      .hitTestBehavior(HitTestMode.None)
+    }
+  }
+
+  private getErrorMessage(): string {
+    if (this.error === null) {
+      return ""
+    }
+    const errorCodeMessage = PLVMediaPlayerAppContext.getString($r('app.string.plvli_player_error_message_code'), this.error.code)
+    if (this.error.code === PLVMediaPlayerBusinessErrorEnum.ERROR_RESTRICT_WATCH.code) {
+      return PLVMediaPlayerAppContext.getString($r('app.string.plvli_player_error_message_restricted'), errorCodeMessage)
+    } else {
+      return PLVMediaPlayerAppContext.getString($r('app.string.plvli_player_error_message_general'), errorCodeMessage)
+    }
   }
 
   aboutToDisappear(): void {

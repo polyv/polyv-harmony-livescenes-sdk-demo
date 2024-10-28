@@ -3,6 +3,7 @@ import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import { PLVLiveSceneSDK } from 'scenes_live';
 import { PLVMediaPlayerStartUp } from '../startup/PLVMediaPlayerStartUp';
+import { PLVRTCEngineStartUp } from '../startup/PLVRTCEngineStartUp';
 
 export default class PLVEntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
@@ -18,6 +19,7 @@ export default class PLVEntryAbility extends UIAbility {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
     PLVLiveSceneSDK.init(this.context, windowStage)
     PLVMediaPlayerStartUp.start(this.context.getApplicationContext())
+    PLVRTCEngineStartUp.start()
     windowStage.loadContent('pages/PLVLoginPage', (err) => {
       if (err.code) {
         hilog.error(0x0000, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
