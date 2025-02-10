@@ -84,13 +84,13 @@ export struct PLVLILinkMicInvitationLayout {
                   this.localViewer!.linkmicId,
                   this.localViewer!.xcomponentId
                 )
-                this.sdk.linkmicManager.setVideoRender(param)
+                this.sdk.linkmicManager.setupVideoRender(param)
               }).onDestroy(() => {
                 const param = new PLVLinkMicVideoRenderParam(
                   this.localViewer!.linkmicId,
                   null
                 )
-                this.sdk.linkmicManager.setVideoRender(param)
+                this.sdk.linkmicManager.removeVideoRender(param)
               })
             }
 

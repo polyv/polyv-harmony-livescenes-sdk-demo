@@ -1,0 +1,660 @@
+{
+  "string": [
+    {
+      "name": "plv_chat_pin",
+      "value": "上墙"
+    },
+    {
+      "name": "plv_chat_pin_cancel",
+      "value": "下墙"
+    },
+    {
+      "name": "plv_red_paper_get",
+      "value": "点击领取"
+    },
+    {
+      "name": "plv_red_paper_red_pack_hint",
+      "value": "口令红包即将来袭"
+    },
+    {
+      "name": "plvsa_chat_answer",
+      "value": "回复"
+    },
+    {
+      "name": "plvsa_chat_cancel_close_room_text",
+      "value": "取消全体禁言"
+    },
+    {
+      "name": "plvsa_chat_cancel_close_room_toast",
+      "value": "已解除全体禁言"
+    },
+    {
+      "name": "plvsa_chat_close_room_text",
+      "value": "开启全体禁言"
+    },
+    {
+      "name": "plvsa_chat_close_room_toast",
+      "value": "已开启全体禁言"
+    },
+    {
+      "name": "plvsa_chat_copy",
+      "value": "复制"
+    },
+    {
+      "name": "plvsa_chat_copy_success",
+      "value": "复制成功"
+    },
+    {
+      "name": "plvsa_chat_full_text",
+      "value": "全文"
+    },
+    {
+      "name": "plvsa_chat_input_tips_chat",
+      "value": "聊点什么吧~"
+    },
+    {
+      "name": "plvsa_chat_input_tips_chatroom_close",
+      "value": "聊天室已关闭"
+    },
+    {
+      "name": "plvsa_chat_input_tips_focus",
+      "value": "当前为专注模式.."
+    },
+    {
+      "name": "plvsa_chat_input_tips_quiz",
+      "value": "发起提问"
+    },
+    {
+      "name": "plvsa_chat_me",
+      "value": "%s(我)%s"
+    },
+    {
+      "name": "plvsa_chat_more",
+      "value": "更多"
+    },
+    {
+      "name": "plvsa_chat_playback_tips",
+      "value": "聊天重放功能已开启，将会显示历史消息"
+    },
+    {
+      "name": "plvsa_chat_quiz_channel",
+      "value": "提问频道"
+    },
+    {
+      "name": "plvsa_chat_quiz_default_tips",
+      "value": "你已进入专属的提问频道，提问内容不会公开"
+    },
+    {
+      "name": "plvsa_chat_restrict_max_viewer_hint",
+      "value": "直播间太过火爆了，请稍后再来"
+    },
+    {
+      "name": "plvsa_chat_send",
+      "value": "发送"
+    },
+    {
+      "name": "plvsa_chat_toast_account_login_elsewhere",
+      "value": "当前账号已在其他地方登录，您将被退出本直播间"
+    },
+    {
+      "name": "plvsa_chat_toast_been_kicked",
+      "value": "您已被管理员踢出聊天室！"
+    },
+    {
+      "name": "plvsa_chat_toast_chatroom_close",
+      "value": "聊天室已经关闭"
+    },
+    {
+      "name": "plvsa_chat_toast_chatroom_open",
+      "value": "聊天室已经打开"
+    },
+    {
+      "name": "plvsa_chat_toast_history_load_failed",
+      "value": "历史记录加载失败%s"
+    },
+    {
+      "name": "plvsa_chat_toast_logging",
+      "value": "聊天室登录中"
+    },
+    {
+      "name": "plvsa_chat_toast_login_failed",
+      "value": "聊天室连接失败"
+    },
+    {
+      "name": "plvsa_chat_toast_login_success",
+      "value": "聊天室登录成功"
+    },
+    {
+      "name": "plvsa_chat_toast_reconnect_success",
+      "value": "聊天室重连成功"
+    },
+    {
+      "name": "plvsa_chat_toast_reconnecting",
+      "value": "聊天室重连中"
+    },
+    {
+      "name": "plvsa_chat_toast_send_text_empty",
+      "value": "发送内容不能为空！"
+    },
+    {
+      "name": "plvsa_chat_view_new_msg",
+      "value": "查看新信息"
+    },
+    {
+      "name": "plvsa_chat_welcome_join",
+      "value": "欢迎 %s 进入直播间"
+    },
+    {
+      "name": "plvsa_chat_welcome_join_multi",
+      "value": "欢迎 %s 等%s人进入直播间"
+    },
+    {
+      "name": "plvsa_confirm_dialog_cancel",
+      "value": "取消"
+    },
+    {
+      "name": "plvsa_confirm_dialog_confirm",
+      "value": "确定"
+    },
+    {
+      "name": "plvsa_confirm_dialog_content",
+      "value": "提示"
+    },
+    {
+      "name": "plvsa_confirm_dialog_title",
+      "value": "提示"
+    },
+    {
+      "name": "plvsa_finish_stream_confirm_dialog_content",
+      "value": "确认结束直播吗？"
+    },
+    {
+      "name": "plvsa_last_stream_not_finish_cancel_recover",
+      "value": "结束直播"
+    },
+    {
+      "name": "plvsa_last_stream_not_finish_confirm_recover",
+      "value": "恢复直播"
+    },
+    {
+      "name": "plvsa_last_stream_not_finish_hint",
+      "value": "检测到之前异常退出\n是否恢复直播？"
+    },
+    {
+      "name": "plvsa_linkmic_close_confirm_content",
+      "value": "关闭后将挂断进行中的所有连麦"
+    },
+    {
+      "name": "plvsa_linkmic_close_confirm_title",
+      "value": "确定关闭连麦吗？"
+    },
+    {
+      "name": "plvsa_linkmic_guest_cancel_request_text",
+      "value": "等待接听中，是否取消"
+    },
+    {
+      "name": "plvsa_linkmic_guest_leave_linkmic_text",
+      "value": "确定结束连麦吗？"
+    },
+    {
+      "name": "plvsa_linkmic_guest_state_joined",
+      "value": "连麦中"
+    },
+    {
+      "name": "plvsa_linkmic_guest_state_not_joined",
+      "value": "未连麦"
+    },
+    {
+      "name": "plvsa_linkmic_hang_up_all_confirm_content",
+      "value": "确认下麦所有连麦观众吗？"
+    },
+    {
+      "name": "plvsa_linkmic_hang_up_all_text",
+      "value": "观众下麦"
+    },
+    {
+      "name": "plvsa_linkmic_hang_up_all_toast",
+      "value": "已下麦观众"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_accept_text",
+      "value": "开始连麦"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_camera",
+      "value": "摄像头"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_camera_closed_text",
+      "value": "已关摄像头"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_dialog_accept",
+      "value": "接受"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_dialog_content",
+      "value": "讲师正在邀请你上麦 (%ss)"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_dialog_refuse",
+      "value": "拒绝"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_dialog_title",
+      "value": "提示"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_microphone",
+      "value": "麦克风"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_not_accept",
+      "value": "%s没有接受你的邀请"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_privacy_notify",
+      "value": "连麦将收集人像信息，确认上麦视为同意"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_refuse_text",
+      "value": "暂不连麦(%ss)"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_title_audio",
+      "value": "邀请你语音连麦"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_title_video",
+      "value": "邀请你视频连麦"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_full_screen",
+      "value": "全屏"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_grant_speaker_confirm_content",
+      "value": "当前已有主讲人，确认后将替换为新的主讲人"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_grant_speaker_confirm_title",
+      "value": "确定授予ta主讲权限吗？"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_hang_up_linkmic",
+      "value": "下麦"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_hang_up_linkmic_confirm_title",
+      "value": "确定下麦吗？"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_withdraw_speaker_confirm_content",
+      "value": "移除后主讲人的屏幕共享将会自动结束"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_withdraw_speaker_confirm_title",
+      "value": "确定移除ta的主讲权限吗？"
+    },
+    {
+      "name": "plvsa_linkmic_mode_audio",
+      "value": "音频连麦"
+    },
+    {
+      "name": "plvsa_linkmic_mode_video",
+      "value": "视频连麦"
+    },
+    {
+      "name": "plvsa_linkmic_new_request_check_text",
+      "value": "查看"
+    },
+    {
+      "name": "plvsa_linkmic_new_request_hint_text",
+      "value": "有人正在申请连麦"
+    },
+    {
+      "name": "plvsa_linkmic_no_stream_place_holder_text",
+      "value": "当前暂无直播"
+    },
+    {
+      "name": "plvsa_linkmic_reach_limit",
+      "value": "当前连麦人数已达上限"
+    },
+    {
+      "name": "plvsa_linkmic_setting_default_linkmic_type",
+      "value": "默认连麦方式"
+    },
+    {
+      "name": "plvsa_linkmic_setting_default_setting_hint",
+      "value": "若需要固定该配置，请前往频道下-角色设置-角色权限-功能配置-连麦设置-默认连麦方式修改"
+    },
+    {
+      "name": "plvsa_linkmic_setting_linkmic_type_audio",
+      "value": "语音连麦"
+    },
+    {
+      "name": "plvsa_linkmic_setting_linkmic_type_video",
+      "value": "视频连麦"
+    },
+    {
+      "name": "plvsa_linkmic_setting_not_open",
+      "value": "尚未开通，请联系管理员"
+    },
+    {
+      "name": "plvsa_linkmic_setting_switch_hint",
+      "value": "注：更改连麦方式时，需要确保当前无人正在连麦"
+    },
+    {
+      "name": "plvsa_linkmic_setting_switch_type_hang_up_viewer_dialog_confirm",
+      "value": "切换并下麦所有用户"
+    },
+    {
+      "name": "plvsa_linkmic_setting_switch_type_hang_up_viewer_dialog_content",
+      "value": "当前有用户在连麦，无法切换连麦方式，若要切换，需将麦上用户全部下麦，确认切换连麦方式吗？"
+    },
+    {
+      "name": "plvsa_linkmic_setting_text",
+      "value": "连麦设置"
+    },
+    {
+      "name": "plvsa_linkmic_viewer_raise_hand_disable_toast",
+      "value": "已关闭观众连麦"
+    },
+    {
+      "name": "plvsa_linkmic_viewer_raise_hand_enable_toast",
+      "value": "已开启观众连麦"
+    },
+    {
+      "name": "plvsa_linkmic_viewer_raise_hand_text",
+      "value": "开启观众连麦"
+    },
+    {
+      "name": "plvsa_linkmic_viewer_raise_hand_timeout_toast",
+      "value": "当前网络信号弱，开启失败，请检查网络！"
+    },
+    {
+      "name": "plvsa_live_duration_text",
+      "value": "直播时长"
+    },
+    {
+      "name": "plvsa_live_end_text",
+      "value": "直播已结束"
+    },
+    {
+      "name": "plvsa_live_timestamp_text",
+      "value": "直播时间"
+    },
+    {
+      "name": "plvsa_network_disconnect_mask_hint",
+      "value": "网络断开，直播已暂停"
+    },
+    {
+      "name": "plvsa_member_ban_confirm_title",
+      "value": "确定禁言%s吗？"
+    },
+    {
+      "name": "plvsa_member_hang_up_linkmic_confirm_title",
+      "value": "确定挂断连麦吗？"
+    },
+    {
+      "name": "plvsa_member_kick_confirm_content",
+      "value": "踢出后24小时内无法进入"
+    },
+    {
+      "name": "plvsa_member_kick_confirm_title",
+      "value": "确定踢出%s吗？"
+    },
+    {
+      "name": "plvsa_member_more_ban_chat",
+      "value": "禁言"
+    },
+    {
+      "name": "plvsa_member_more_grant_speaker_permission",
+      "value": "授予主讲权限"
+    },
+    {
+      "name": "plvsa_member_more_kick_out",
+      "value": "踢出"
+    },
+    {
+      "name": "plvsa_member_more_unban_chat",
+      "value": "解除禁言"
+    },
+    {
+      "name": "plvsa_member_more_withdraw_speaker_permission",
+      "value": "移除主讲权限"
+    },
+    {
+      "name": "plvsa_member_online_count",
+      "value": "在线人数 (%s)"
+    },
+    {
+      "name": "plvsa_more_bitrate_description_text",
+      "value": "分辨率：%s，码率：%s，帧率：%s"
+    },
+    {
+      "name": "plvsa_more_bitrate_select_title",
+      "value": "清晰度设置"
+    },
+    {
+      "name": "plvsa_more_camera",
+      "value": "摄像头"
+    },
+    {
+      "name": "plvsa_more_camera_facing_switch",
+      "value": "翻转"
+    },
+    {
+      "name": "plvsa_more_camera_mirror",
+      "value": "镜像"
+    },
+    {
+      "name": "plvsa_more_layout_title",
+      "value": "更多"
+    },
+    {
+      "name": "plvsa_more_microphone",
+      "value": "麦克风"
+    },
+    {
+      "name": "plvsa_more_mix_layout",
+      "value": "混流布局"
+    },
+    {
+      "name": "plvsa_more_mix_layout_select_title",
+      "value": "混流布局"
+    },
+    {
+      "name": "plvsa_more_mix_layout_type_single",
+      "value": "单人模式"
+    },
+    {
+      "name": "plvsa_more_mix_layout_type_speaker",
+      "value": "主讲模式"
+    },
+    {
+      "name": "plvsa_more_mix_layout_type_tile",
+      "value": "平铺模式"
+    },
+    {
+      "name": "plvsa_more_orientation",
+      "value": "横竖屏"
+    },
+    {
+      "name": "plvsa_more_push_resolution_ratio",
+      "value": "开播比例"
+    },
+    {
+      "name": "plvsa_more_share_action_cancel",
+      "value": "取消"
+    },
+    {
+      "name": "plvsa_more_share_action_copy_link",
+      "value": "复制链接"
+    },
+    {
+      "name": "plvsa_more_share_action_save_image",
+      "value": "保存图片"
+    },
+    {
+      "name": "plvsa_more_share_action_save_image_fail_toast",
+      "value": "保存图片失败"
+    },
+    {
+      "name": "plvsa_more_share_action_save_image_success_toast",
+      "value": "保存图片成功"
+    },
+    {
+      "name": "plvsa_more_share_title",
+      "value": "分享"
+    },
+    {
+      "name": "plvsa_push_downgrade_fluency_desc",
+      "value": "当网络状态差时，优先保证画面流畅度，但清晰度会下降"
+    },
+    {
+      "name": "plvsa_push_downgrade_fluency_title",
+      "value": "流畅优先"
+    },
+    {
+      "name": "plvsa_push_downgrade_notify_action",
+      "value": "马上切换"
+    },
+    {
+      "name": "plvsa_push_downgrade_notify_switch_success",
+      "value": "已切换到流畅优先模式"
+    },
+    {
+      "name": "plvsa_push_downgrade_notify_text",
+      "value": "当前网络较差，建议切换为流畅模式"
+    },
+    {
+      "name": "plvsa_push_downgrade_preference_title",
+      "value": "弱网处理"
+    },
+    {
+      "name": "plvsa_push_downgrade_quality_desc",
+      "value": "当网络状态差时，优先保证画面清晰度，但会造成观看画面卡顿"
+    },
+    {
+      "name": "plvsa_push_downgrade_quality_title",
+      "value": "画质优先"
+    },
+    {
+      "name": "plvsa_red_paper_dot",
+      "value": "，"
+    },
+    {
+      "name": "plvsa_red_paper_get",
+      "value": "点击领取"
+    },
+    {
+      "name": "plvsa_red_paper_send_msg",
+      "value": "%s 发了一个"
+    },
+    {
+      "name": "plvsa_reward_gift_give",
+      "value": "赠送"
+    },
+    {
+      "name": "plvsa_reward_give",
+      "value": "赠送%s"
+    },
+    {
+      "name": "plvsa_reward_money_give",
+      "value": "打赏"
+    },
+    {
+      "name": "plvsa_reward_money_give_unit_cny",
+      "value": "元"
+    },
+    {
+      "name": "plvsa_startup_start_live",
+      "value": "开始直播"
+    },
+    {
+      "name": "plvsa_startup_title_placeholder",
+      "value": "点击输入直播标题"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info",
+      "value": "频道信息"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info_channel_id",
+      "value": "频道号:"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info_copy",
+      "value": "复制"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info_copy_success",
+      "value": "已复制"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info_live_title",
+      "value": "直播名称:"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info_start_time",
+      "value": "开始时间:"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info_start_time_not_set",
+      "value": "未设置"
+    },
+    {
+      "name": "plvsa_status_bar_network_delay_text",
+      "value": "网络延迟: %sms"
+    },
+    {
+      "name": "plvsa_status_bar_network_loss_rate_text",
+      "value": "丢包率: ↑%s% ↓%s%"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_bad",
+      "value": "网络较差"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_disconnect",
+      "value": "网络断开"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_excellent",
+      "value": "网络优秀"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_good",
+      "value": "网络良好"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_poor",
+      "value": "网络一般"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_unknown",
+      "value": "未知网络"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_very_bad",
+      "value": "网络很差"
+    },
+    {
+      "name": "plvsa_status_bar_notification",
+      "value": "通知"
+    },
+    {
+      "name": "plvsa_status_bar_notify_camera_disabled",
+      "value": "你的摄像头已关闭"
+    },
+    {
+      "name": "plvsa_status_bar_notify_camera_microphone_disabled",
+      "value": "你的摄像头和麦克风已关闭"
+    },
+    {
+      "name": "plvsa_status_bar_notify_microphone_disabled",
+      "value": "你的麦克风已关闭"
+    }
+  ]
+}

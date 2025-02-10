@@ -98,7 +98,9 @@ struct PLVLILinkMicViewerItemView {
     this.viewer.isVideoEnable.observe((videoEnable) => this.isVideoEnable = videoEnable).pushTo(this.observers)
     this.viewer.isAudioEnable.observe((audioEnable) => this.isAudioEnable = audioEnable).pushTo(this.observers)
     this.viewer.audioVolume.observe((audioVolume) => this.audioVolume = audioVolume).pushTo(this.observers)
-    this.viewerName = this.viewer.isMyself ? $r('app.string.plvli_chat_me', this.viewer.viewerName ?? "", "") : (this.viewer.viewerName ?? "")
+    this.viewer.viewerName.observe((viewerName) => {
+      this.viewerName = this.viewer.isMyself ? $r('app.string.plvli_chat_me', viewerName ?? "", "") : (viewerName ?? "")
+    }).pushTo(this.observers)
     if (this.viewer.isMyself) {
       this.sdk.linkmicManager.linkmicNetworkQuality.observe((networkQuality) => {
         this.networkQualityIcon = this.getNetworkQualityIcon(networkQuality)
@@ -123,14 +125,14 @@ struct PLVLILinkMicViewerItemView {
               this.viewer.linkmicId,
               this.viewer.xcomponentId
             )
-            this.sdk.linkmicManager.setVideoRender(renderParam)
+            this.sdk.linkmicManager.setupVideoRender(renderParam)
           })
           .onDestroy(() => {
             const renderParam = new PLVLinkMicVideoRenderParam(
               this.viewer.linkmicId,
               null
             )
-            this.sdk.linkmicManager.setVideoRender(renderParam)
+            this.sdk.linkmicManager.removeVideoRender(renderParam)
           })
       } else {
         // 未开启摄像头占位图

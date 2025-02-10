@@ -1,13 +1,13 @@
 {
   "name": "scenes_live",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Please describe the basic information.",
   "main": "Index.ets",
   "author": "",
   "license": "MIT",
   "packageType": "InterfaceHar",
   "dependencies": {
-    "@polyvharmony/live-scenes-sdk": "1.1.0",
-    "@polyvharmony/media-player-sdk": "2.3.1"
+    "@polyvharmony/live-scenes-sdk": "1.2.0",
+    "@polyvharmony/media-player-sdk": "2.4.0"
   }
 }

@@ -1,0 +1,13 @@
+{
+  "name": "scenes_streamerAlone",
+  "version": "1.2.0",
+  "description": "Please describe the basic information.",
+  "main": "Index.ets",
+  "author": "",
+  "license": "MIT",
+  "packageType": "InterfaceHar",
+  "dependencies": {
+    "@polyvharmony/live-scenes-sdk": "1.2.0",
+    "@polyvharmony/media-player-sdk": "2.4.0"
+  }
+}

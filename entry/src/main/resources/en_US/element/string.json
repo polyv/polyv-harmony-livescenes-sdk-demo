@@ -11,6 +11,50 @@
     {
       "name": "EntryAbility_label",
       "value": "POLYV多场景"
+    },
+    {
+      "name": "plv_login_streamer_live_broadcast",
+      "value": "Mobile Live Broadcast"
+    },
+    {
+      "name": "plv_login_streamer_enter_channel_number",
+      "value": "Please enter the channel number"
+    },
+    {
+      "name": "plv_login_streamer_enter_password",
+      "value": "Please enter the password"
+    },
+    {
+      "name": "plv_login_streamer_enter_nickname",
+      "value": "Please enter your nickname"
+    },
+    {
+      "name": "plv_login_streamer_login",
+      "value": "Login"
+    },
+    {
+      "name": "plv_login_streamer_remember_password",
+      "value": "Remember password"
+    },
+    {
+      "name": "plv_login_streamer_read_and_agree",
+      "value": "I have read and agree to"
+    },
+    {
+      "name": "plv_login_streamer_privacy_policy",
+      "value": " Privacy Policy "
+    },
+    {
+      "name": "plv_login_streamer_and",
+      "value": "and"
+    },
+    {
+      "name": "plv_login_streamer_user_agreement",
+      "value": " User Agreement "
+    },
+    {
+      "name": "plv_login_streamer_check_the_agreement",
+      "value": "Please check the agreement"
     }
   ]
 }

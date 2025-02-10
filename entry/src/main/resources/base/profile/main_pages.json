@@ -1,5 +1,7 @@
 {
   "src": [
-    "pages/PLVLoginPage"
+    "pages/PLVEntrancePage",
+    "pages/PLVLoginPage",
+    "pages/PLVLoginStreamerPage"
   ]
 }

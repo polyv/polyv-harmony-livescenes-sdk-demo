@@ -1,0 +1,660 @@
+{
+  "string": [
+    {
+      "name": "plv_chat_pin",
+      "value": "Pin"
+    },
+    {
+      "name": "plv_chat_pin_cancel",
+      "value": "Unpin"
+    },
+    {
+      "name": "plv_red_paper_get",
+      "value": "Click to receive"
+    },
+    {
+      "name": "plv_red_paper_red_pack_hint",
+      "value": "Password red envelope coming soon"
+    },
+    {
+      "name": "plvsa_chat_answer",
+      "value": "Reply"
+    },
+    {
+      "name": "plvsa_chat_cancel_close_room_text",
+      "value": "Unmute all"
+    },
+    {
+      "name": "plvsa_chat_cancel_close_room_toast",
+      "value": "Mute all canceled"
+    },
+    {
+      "name": "plvsa_chat_close_room_text",
+      "value": "Mute all"
+    },
+    {
+      "name": "plvsa_chat_close_room_toast",
+      "value": "Mute all enabled"
+    },
+    {
+      "name": "plvsa_chat_copy",
+      "value": "Copy"
+    },
+    {
+      "name": "plvsa_chat_copy_success",
+      "value": "Copy success"
+    },
+    {
+      "name": "plvsa_chat_full_text",
+      "value": "Full text"
+    },
+    {
+      "name": "plvsa_chat_input_tips_chat",
+      "value": "Join the chat"
+    },
+    {
+      "name": "plvsa_chat_input_tips_chatroom_close",
+      "value": "Chatroom is closed"
+    },
+    {
+      "name": "plvsa_chat_input_tips_focus",
+      "value": "In focus mode"
+    },
+    {
+      "name": "plvsa_chat_input_tips_quiz",
+      "value": "Initiate a question"
+    },
+    {
+      "name": "plvsa_chat_me",
+      "value": "%s(me)%s"
+    },
+    {
+      "name": "plvsa_chat_more",
+      "value": "More"
+    },
+    {
+      "name": "plvsa_chat_playback_tips",
+      "value": "Chat replay is on, showing historical messages"
+    },
+    {
+      "name": "plvsa_chat_quiz_channel",
+      "value": "Question Channel"
+    },
+    {
+      "name": "plvsa_chat_quiz_default_tips",
+      "value": "You have entered the exclusive question channel, and the content of the question will not be made public"
+    },
+    {
+      "name": "plvsa_chat_restrict_max_viewer_hint",
+      "value": "The live room is too popular, please come back later"
+    },
+    {
+      "name": "plvsa_chat_send",
+      "value": "Send"
+    },
+    {
+      "name": "plvsa_chat_toast_account_login_elsewhere",
+      "value": "The current account has been logged in elsewhere, you will be logged out of this live room"
+    },
+    {
+      "name": "plvsa_chat_toast_been_kicked",
+      "value": "You have been kicked out of the chatroom by the administrator!"
+    },
+    {
+      "name": "plvsa_chat_toast_chatroom_close",
+      "value": "Chatroom has been closed"
+    },
+    {
+      "name": "plvsa_chat_toast_chatroom_open",
+      "value": "Chatroom has been opened"
+    },
+    {
+      "name": "plvsa_chat_toast_history_load_failed",
+      "value": "History loading failed%s"
+    },
+    {
+      "name": "plvsa_chat_toast_logging",
+      "value": "Chatroom logging"
+    },
+    {
+      "name": "plvsa_chat_toast_login_failed",
+      "value": "Chatroom login failed"
+    },
+    {
+      "name": "plvsa_chat_toast_login_success",
+      "value": "Chatroom login successful"
+    },
+    {
+      "name": "plvsa_chat_toast_reconnect_success",
+      "value": "Chatroom reconnected successfully"
+    },
+    {
+      "name": "plvsa_chat_toast_reconnecting",
+      "value": "Chatroom reconnecting"
+    },
+    {
+      "name": "plvsa_chat_toast_send_text_empty",
+      "value": "The sending content cannot be empty!"
+    },
+    {
+      "name": "plvsa_chat_view_new_msg",
+      "value": "News"
+    },
+    {
+      "name": "plvsa_chat_welcome_join",
+      "value": "welcome %s join"
+    },
+    {
+      "name": "plvsa_chat_welcome_join_multi",
+      "value": "welcome %s and other %s people join"
+    },
+    {
+      "name": "plvsa_confirm_dialog_cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "plvsa_confirm_dialog_confirm",
+      "value": "Confirm"
+    },
+    {
+      "name": "plvsa_confirm_dialog_content",
+      "value": "Hint"
+    },
+    {
+      "name": "plvsa_confirm_dialog_title",
+      "value": "Hint"
+    },
+    {
+      "name": "plvsa_finish_stream_confirm_dialog_content",
+      "value": "Confirm to end the live stream?"
+    },
+    {
+      "name": "plvsa_last_stream_not_finish_cancel_recover",
+      "value": "End live stream"
+    },
+    {
+      "name": "plvsa_last_stream_not_finish_confirm_recover",
+      "value": "Resume live stream"
+    },
+    {
+      "name": "plvsa_last_stream_not_finish_hint",
+      "value": "Abnormal exit before detection\nResume live stream?"
+    },
+    {
+      "name": "plvsa_linkmic_close_confirm_content",
+      "value": "Closing will hang up all current calls"
+    },
+    {
+      "name": "plvsa_linkmic_close_confirm_title",
+      "value": "Confirm disconnecting the call?"
+    },
+    {
+      "name": "plvsa_linkmic_guest_cancel_request_text",
+      "value": "Call pending. Cancel call?"
+    },
+    {
+      "name": "plvsa_linkmic_guest_leave_linkmic_text",
+      "value": "Confirm disconnecting the call?"
+    },
+    {
+      "name": "plvsa_linkmic_guest_state_joined",
+      "value": "In a call"
+    },
+    {
+      "name": "plvsa_linkmic_guest_state_not_joined",
+      "value": "Not in a call"
+    },
+    {
+      "name": "plvsa_linkmic_hang_up_all_confirm_content",
+      "value": "Hang up all audiences?"
+    },
+    {
+      "name": "plvsa_linkmic_hang_up_all_text",
+      "value": "Hang up audiences"
+    },
+    {
+      "name": "plvsa_linkmic_hang_up_all_toast",
+      "value": "Audiences have been hanged up"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_accept_text",
+      "value": "Accept"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_camera",
+      "value": "Camera"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_camera_closed_text",
+      "value": "The camera has been off"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_dialog_accept",
+      "value": "Accept"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_dialog_content",
+      "value": "The lecturer is inviting you to speak (%ss)"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_dialog_refuse",
+      "value": "Refuse"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_dialog_title",
+      "value": "Prompt"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_microphone",
+      "value": "Microphone"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_not_accept",
+      "value": "%s did not accept your invitation"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_privacy_notify",
+      "value": "Video Call will collect portrait information, confirm on the microphone as consent"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_refuse_text",
+      "value": "Not Now(%ss)"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_title_audio",
+      "value": "Inviting you to join the audio call"
+    },
+    {
+      "name": "plvsa_linkmic_invitation_title_video",
+      "value": "Inviting you to join the video call"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_full_screen",
+      "value": "Full screen"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_grant_speaker_confirm_content",
+      "value": "There is currently a lecturer presenting. Confirming will replace the current lecturer with a new one"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_grant_speaker_confirm_title",
+      "value": "Are you sure you want to grant him the lecture permission?"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_hang_up_linkmic",
+      "value": "Hang up"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_hang_up_linkmic_confirm_title",
+      "value": "Confirm disconnecting them from the call?"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_withdraw_speaker_confirm_content",
+      "value": "The lecture\u0027s screen sharing will automatically end after removal"
+    },
+    {
+      "name": "plvsa_linkmic_member_control_withdraw_speaker_confirm_title",
+      "value": "Are you sure you want to withdrawn his lecture permission?"
+    },
+    {
+      "name": "plvsa_linkmic_mode_audio",
+      "value": "Audio call"
+    },
+    {
+      "name": "plvsa_linkmic_mode_video",
+      "value": "Video call"
+    },
+    {
+      "name": "plvsa_linkmic_new_request_check_text",
+      "value": "View"
+    },
+    {
+      "name": "plvsa_linkmic_new_request_hint_text",
+      "value": "Someone is requesting to join the call"
+    },
+    {
+      "name": "plvsa_linkmic_no_stream_place_holder_text",
+      "value": "No live streaming at the moment"
+    },
+    {
+      "name": "plvsa_linkmic_reach_limit",
+      "value": "No more connections available"
+    },
+    {
+      "name": "plvsa_linkmic_setting_default_linkmic_type",
+      "value": "Default voice chat type"
+    },
+    {
+      "name": "plvsa_linkmic_setting_default_setting_hint",
+      "value": "To set a default voice chat method, adjust the settings in the Channel \u003e Role Permissions \u003e Functional Configuration"
+    },
+    {
+      "name": "plvsa_linkmic_setting_linkmic_type_audio",
+      "value": "Audio"
+    },
+    {
+      "name": "plvsa_linkmic_setting_linkmic_type_video",
+      "value": "Video"
+    },
+    {
+      "name": "plvsa_linkmic_setting_not_open",
+      "value": "Not activated yet, please contact the administrator"
+    },
+    {
+      "name": "plvsa_linkmic_setting_switch_hint",
+      "value": "Note: Before switching voice chat type, you should make sure nobody connected"
+    },
+    {
+      "name": "plvsa_linkmic_setting_switch_type_hang_up_viewer_dialog_confirm",
+      "value": "Switch and hang up viewers"
+    },
+    {
+      "name": "plvsa_linkmic_setting_switch_type_hang_up_viewer_dialog_content",
+      "value": "Can not switch voice chat type because viewers are connecting. To continue, all connected viewers will be hanged up. Confirm to switch type?"
+    },
+    {
+      "name": "plvsa_linkmic_setting_text",
+      "value": "Voice chat setting"
+    },
+    {
+      "name": "plvsa_linkmic_viewer_raise_hand_disable_toast",
+      "value": "Viewer voice chat disabled"
+    },
+    {
+      "name": "plvsa_linkmic_viewer_raise_hand_enable_toast",
+      "value": "Viewer voice chat enabled"
+    },
+    {
+      "name": "plvsa_linkmic_viewer_raise_hand_text",
+      "value": "Allow voice chat"
+    },
+    {
+      "name": "plvsa_linkmic_viewer_raise_hand_timeout_toast",
+      "value": "Weak network signal, activation failed. Check your connection!"
+    },
+    {
+      "name": "plvsa_live_duration_text",
+      "value": "Live duration"
+    },
+    {
+      "name": "plvsa_live_end_text",
+      "value": "Live has ended"
+    },
+    {
+      "name": "plvsa_live_timestamp_text",
+      "value": "Live time"
+    },
+    {
+      "name": "plvsa_network_disconnect_mask_hint",
+      "value": "Network down, live stream paused"
+    },
+    {
+      "name": "plvsa_member_ban_confirm_title",
+      "value": "Are you sure you want to ban %s?"
+    },
+    {
+      "name": "plvsa_member_hang_up_linkmic_confirm_title",
+      "value": "Confirm disconnecting the call?"
+    },
+    {
+      "name": "plvsa_member_kick_confirm_content",
+      "value": "Banned from rejoining for 24 hours after being kicked out"
+    },
+    {
+      "name": "plvsa_member_kick_confirm_title",
+      "value": "Are you sure you want to kick %s?"
+    },
+    {
+      "name": "plvsa_member_more_ban_chat",
+      "value": "Ban"
+    },
+    {
+      "name": "plvsa_member_more_grant_speaker_permission",
+      "value": "Grant lecture permission"
+    },
+    {
+      "name": "plvsa_member_more_kick_out",
+      "value": "Kick out"
+    },
+    {
+      "name": "plvsa_member_more_unban_chat",
+      "value": "Unban"
+    },
+    {
+      "name": "plvsa_member_more_withdraw_speaker_permission",
+      "value": "Withdrawn lecture permission"
+    },
+    {
+      "name": "plvsa_member_online_count",
+      "value": "Online (%s)"
+    },
+    {
+      "name": "plvsa_more_bitrate_description_text",
+      "value": "Resolution: %s, Bitrate: %s, Frame Rate: %s"
+    },
+    {
+      "name": "plvsa_more_bitrate_select_title",
+      "value": "Clarity settings"
+    },
+    {
+      "name": "plvsa_more_camera",
+      "value": "Camera"
+    },
+    {
+      "name": "plvsa_more_camera_facing_switch",
+      "value": "Turn"
+    },
+    {
+      "name": "plvsa_more_camera_mirror",
+      "value": "Mirror"
+    },
+    {
+      "name": "plvsa_more_layout_title",
+      "value": "More"
+    },
+    {
+      "name": "plvsa_more_microphone",
+      "value": "Microphone"
+    },
+    {
+      "name": "plvsa_more_mix_layout",
+      "value": "Mix layout"
+    },
+    {
+      "name": "plvsa_more_mix_layout_select_title",
+      "value": "Mix layout"
+    },
+    {
+      "name": "plvsa_more_mix_layout_type_single",
+      "value": "Single"
+    },
+    {
+      "name": "plvsa_more_mix_layout_type_speaker",
+      "value": "Speaker"
+    },
+    {
+      "name": "plvsa_more_mix_layout_type_tile",
+      "value": "Tile"
+    },
+    {
+      "name": "plvsa_more_orientation",
+      "value": "Orient"
+    },
+    {
+      "name": "plvsa_more_push_resolution_ratio",
+      "value": "Ratio"
+    },
+    {
+      "name": "plvsa_more_share_action_cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "plvsa_more_share_action_copy_link",
+      "value": "Copy link"
+    },
+    {
+      "name": "plvsa_more_share_action_save_image",
+      "value": "Save picture"
+    },
+    {
+      "name": "plvsa_more_share_action_save_image_fail_toast",
+      "value": "Save picture fail"
+    },
+    {
+      "name": "plvsa_more_share_action_save_image_success_toast",
+      "value": "Save picture success"
+    },
+    {
+      "name": "plvsa_more_share_title",
+      "value": "Share"
+    },
+    {
+      "name": "plvsa_push_downgrade_fluency_desc",
+      "value": "When network condition is poor, video fluency is prioritized but may cause lower clarity"
+    },
+    {
+      "name": "plvsa_push_downgrade_fluency_title",
+      "value": "Fluency priority"
+    },
+    {
+      "name": "plvsa_push_downgrade_notify_action",
+      "value": "Switch now"
+    },
+    {
+      "name": "plvsa_push_downgrade_notify_switch_success",
+      "value": "Switched to fluency priority mode"
+    },
+    {
+      "name": "plvsa_push_downgrade_notify_text",
+      "value": "The network condition is currently poor. It\u0027s recommended to switch to fluency mode"
+    },
+    {
+      "name": "plvsa_push_downgrade_preference_title",
+      "value": "Weak net"
+    },
+    {
+      "name": "plvsa_push_downgrade_quality_desc",
+      "value": "When network condition is poor, video quality is prioritized but may cause lagging"
+    },
+    {
+      "name": "plvsa_push_downgrade_quality_title",
+      "value": "Quality priority"
+    },
+    {
+      "name": "plvsa_red_paper_dot",
+      "value": ", "
+    },
+    {
+      "name": "plvsa_red_paper_get",
+      "value": "Click to receive"
+    },
+    {
+      "name": "plvsa_red_paper_send_msg",
+      "value": "%s sent a "
+    },
+    {
+      "name": "plvsa_reward_gift_give",
+      "value": "given"
+    },
+    {
+      "name": "plvsa_reward_give",
+      "value": "given%s"
+    },
+    {
+      "name": "plvsa_reward_money_give",
+      "value": "reward"
+    },
+    {
+      "name": "plvsa_reward_money_give_unit_cny",
+      "value": "yuan"
+    },
+    {
+      "name": "plvsa_startup_start_live",
+      "value": "Start live"
+    },
+    {
+      "name": "plvsa_startup_title_placeholder",
+      "value": "Click to enter live title"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info",
+      "value": "Channel info"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info_channel_id",
+      "value": "Channel id:"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info_copy",
+      "value": "Copy"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info_copy_success",
+      "value": "Copied"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info_live_title",
+      "value": "Live title:"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info_start_time",
+      "value": "Start time:"
+    },
+    {
+      "name": "plvsa_status_bar_channel_info_start_time_not_set",
+      "value": "Not set"
+    },
+    {
+      "name": "plvsa_status_bar_network_delay_text",
+      "value": "Network latency: %sms"
+    },
+    {
+      "name": "plvsa_status_bar_network_loss_rate_text",
+      "value": "Packet loss rate: ↑%s% ↓%s%"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_bad",
+      "value": "Network bad"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_disconnect",
+      "value": "Network disconnected"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_excellent",
+      "value": "Network excellent"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_good",
+      "value": "Network good"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_poor",
+      "value": "Network poor"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_unknown",
+      "value": "Unknown Network"
+    },
+    {
+      "name": "plvsa_status_bar_network_quality_very_bad",
+      "value": "Network very bad"
+    },
+    {
+      "name": "plvsa_status_bar_notification",
+      "value": "Notify"
+    },
+    {
+      "name": "plvsa_status_bar_notify_camera_disabled",
+      "value": "Your camera is off"
+    },
+    {
+      "name": "plvsa_status_bar_notify_camera_microphone_disabled",
+      "value": "Your camera and microphone are turned off"
+    },
+    {
+      "name": "plvsa_status_bar_notify_microphone_disabled",
+      "value": "Your microphone is off"
+    }
+  ]
+}

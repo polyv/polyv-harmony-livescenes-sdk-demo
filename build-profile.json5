@@ -39,6 +39,10 @@
     {
       "name": "scenes_live",
       "srcPath": "./scenes_live"
+    },
+    {
+      "name": "scenes_streamerAlone",
+      "srcPath": "./scenes_streamerAlone"
     }
   ]
 }

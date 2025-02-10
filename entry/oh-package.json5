@@ -1,16 +1,17 @@
 {
   "name": "entry",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Please describe the basic information.",
   "main": "",
   "author": "",
   "license": "MIT",
   "dependencies": {
     "scenes_live": "file:../scenes_live",
-    "@polyvharmony/media-player-sdk": "2.3.1",
-    "@polyvharmony/media-player-core-ijk": "2.3.1",
-    "@polyvharmony/rtc-sdk": "1.0.0",
-    "@polyvharmony/rtc-core-artc": "4.4.0-p1",
+    "scenes_streamerAlone": "file:../scenes_streamerAlone",
+    "@polyvharmony/media-player-sdk": "2.4.0",
+    "@polyvharmony/media-player-core-ijk": "2.4.0",
+    "@polyvharmony/rtc-sdk": "1.1.0",
+    "@polyvharmony/rtc-core-artc": "1.1.0-v4.4.2",
   }
 }
 
