@@ -373,7 +373,7 @@ export struct PLVLIChatListLayout {
             }
             if (baseIdEvent instanceof PLVHistoryRedPaperEvent) {
               const historyRedPagerEvent = baseIdEvent as PLVHistoryRedPaperEvent
-              const type = this.sdk?.redpackManager.geLocalCachedReceiveStatus(historyRedPagerEvent.redpackId)
+              const type = this.sdk?.redpackManager.getLocalCachedReceiveStatus(historyRedPagerEvent.redpackId)
                 .then((value) => {
                   historyRedPagerEvent.receiveType = PLVRedPaperReceiveType.getValue(value as RedPaperReceiveTypeEvent)
                 })

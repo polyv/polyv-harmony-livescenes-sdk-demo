@@ -1,15 +1,14 @@
 import {
+  PLVCardLookTimeLocalRepository,
   PLVCardPushVO,
   PLVCommonConstants,
   PLVLiveSceneSDK,
-  PLVLogger,
   PLVNewsPushEvent,
   PLVShowPushCardEvent,
   PLVSocketPushCardEvent,
   PLVTextUtils,
   PLVTimeUtils
 } from '@polyvharmony/live-scenes-sdk'
-import { PLVCardLookTimeLocalRepository } from './PLVCardLookTimeLocalRepository'
 
 @Component
 @Preview

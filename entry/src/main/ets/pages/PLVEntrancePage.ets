@@ -11,7 +11,8 @@ struct PLVEntrancePage {
 
       Column() {
         LoginStreamerEntry()
-        LoginWatchEntry()
+        LoginLiveEcommerceEntry()
+        LoginLiveWatchEntry()
       }
     }
     .width('100%')
@@ -41,21 +42,52 @@ struct LoginStreamerEntry {
 }
 
 @Component
-struct LoginWatchEntry {
+struct LoginLiveEcommerceEntry {
   build() {
     Stack() {
       Image($r('app.media.plv_entrance_live_bg'))
-      Text("云直播观看")
-        .fontColor('#FFFFFF')
-        .fontSize(24)
-        .margin(36)
+      Text() {
+        Span('直播带货\n')
+        Span('(废弃，不再新增功能)')
+          .fontSize(16)
+      }
+      .fontColor('#FFFFFF')
+      .fontSize(24)
+      .margin(36)
     }
     .alignContent(Alignment.TopStart)
     .width(244)
     .height(140)
     .onClick(() => {
       router.pushUrl({
-        url: "pages/PLVLoginPage"
+        url: "pages/PLVLoginPage",
+        params: { 'newLiveWatch': false }
+      })
+    })
+  }
+}
+
+@Component
+struct LoginLiveWatchEntry {
+  build() {
+    Stack() {
+      Image($r('app.media.plv_entrance_live_bg'))
+      Text() {
+        Span('云直播观看\n')
+        Span('(推荐)')
+          .fontSize(16)
+      }
+      .fontColor('#FFFFFF')
+      .fontSize(24)
+      .margin(36)
+    }
+    .alignContent(Alignment.TopStart)
+    .width(244)
+    .height(140)
+    .onClick(() => {
+      router.pushUrl({
+        url: "pages/PLVLoginPage",
+        params: { 'newLiveWatch': true }
       })
     })
   }

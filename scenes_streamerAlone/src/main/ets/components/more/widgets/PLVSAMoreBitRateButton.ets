@@ -1,6 +1,7 @@
 import { PLVLinkMicBitRate, PLVLiveSceneSDK } from '@polyvharmony/live-scenes-sdk';
-import { lateInit, MutableObserver, toRaw } from '@polyvharmony/media-player-sdk';
+import { lateInit, MutableObserver } from '@polyvharmony/media-player-sdk';
 import { PLVSAMoreBitRateSelectLayout } from './PLVSAMoreBitRateSelectLayout';
+import { UIUtils } from '@kit.ArkUI';
 
 @Component
 export struct PLVSAMoreBitRateButton {
@@ -42,7 +43,7 @@ export struct PLVSAMoreBitRateButton {
   }
 
   private bitRateIcon(): Resource {
-    switch (toRaw(this.currentBitRate)) {
+    switch (UIUtils.getTarget(this.currentBitRate)) {
       case PLVLinkMicBitRate.STANDARD:
       default:
         return $r("app.media.plvsa_more_bitrate_icon_standard")

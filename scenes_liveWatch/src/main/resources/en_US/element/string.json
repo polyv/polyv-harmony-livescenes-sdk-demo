@@ -1,0 +1,324 @@
+{
+  "string": [
+    {
+      "name": "shared_desc",
+      "value": "description"
+    },
+    {
+      "name": "plvlw_common_dialog_tip_warm",
+      "value": "Warm Tips"
+    },
+    {
+      "name": "plvlw_common_dialog_confirm",
+      "value": "Confirm"
+    },
+    {
+      "name": "plvlw_live_room_watch_count",
+      "value": "%s watching"
+    },
+    {
+      "name": "plvlw_live_intro",
+      "value": "Intro"
+    },
+    {
+      "name": "plvlw_live_intro_2",
+      "value": "Intro"
+    },
+    {
+      "name": "plvlw_live_publisher_default",
+      "value": "Anchor"
+    },
+    {
+      "name": "plvlw_live_state_un_start",
+      "value": "Not Started"
+    },
+    {
+      "name": "plvlw_live_state_live",
+      "value": "Live"
+    },
+    {
+      "name": "plvlw_live_state_stop",
+      "value": "Pause"
+    },
+    {
+      "name": "plvlw_live_state_end",
+      "value": "Not Live"
+    },
+    {
+      "name": "plvlw_live_state_waiting",
+      "value": "Waiting"
+    },
+    {
+      "name": "plvlw_live_state_playback",
+      "value": "Replaying"
+    },
+    {
+      "name": "plvlw_live_state_playback_cached",
+      "value": "Cached"
+    },
+    {
+      "name": "plvlw_player_lecturer",
+      "value": "Lecturer"
+    },
+    {
+      "name": "plvlw_player_no_live_hint_text",
+      "value": "Not Live"
+    },
+    {
+      "name": "plvlw_player_error_message_code",
+      "value": "(Error code: %s)"
+    },
+    {
+      "name": "plvlw_player_error_message_restricted",
+      "value": "Viewing restrictions exist, currently does not support access to %s"
+    },
+    {
+      "name": "plvlw_player_error_message_general",
+      "value": "The video failed to load, please check the network or exit and re-enter %s"
+    },
+    {
+      "name": "plvlw_player_error_action_refresh",
+      "value": "Refresh"
+    },
+    {
+      "name": "plvlw_reward_give",
+      "value": "given %s"
+    },
+    {
+      "name": "plvlw_chatroom_red_paper_receive",
+      "value": "Receive"
+    },
+    {
+      "name": "plvlw_chatroom_red_paper_result_receive",
+      "value": "received"
+    },
+    {
+      "name": "plvlw_chat_view_new_msg",
+      "value": "%s new messages"
+    },
+    {
+      "name": "plvlw_chat_toast_logging",
+      "value": "Chatroom logging"
+    },
+    {
+      "name": "plvlw_chat_toast_login_success",
+      "value": "Chatroom login successful"
+    },
+    {
+      "name": "plvlw_chat_toast_reconnecting",
+      "value": "Chatroom reconnecting"
+    },
+    {
+      "name": "plvlw_chat_toast_reconnect_success",
+      "value": "Chatroom reconnected successfully"
+    },
+    {
+      "name": "plvlw_chat_toast_login_failed",
+      "value": "Chatroom login failed"
+    },
+    {
+      "name": "plvlw_chat_restrict_max_viewer_hint",
+      "value": "The live room is too popular, please come back later"
+    },
+    {
+      "name": "plvlw_chat_toast_been_kicked",
+      "value": "You have been kicked out of the chatroom by the administrator!"
+    },
+    {
+      "name": "plvlw_chat_toast_account_login_elsewhere",
+      "value": "The current account has been logged in elsewhere, you will be logged out of this live room"
+    },
+    {
+      "name": "plvlw_interact_side_bar_more",
+      "value": "More"
+    },
+    {
+      "name": "plvlw_interact_card_push_receive",
+      "value": "Receive"
+    },
+    {
+      "name": "plvlw_commodity_toast_empty_link",
+      "value": "In-app purchases are not supported"
+    },
+    {
+      "name": "plvlw_reward_type_point",
+      "value": "Points Reward"
+    },
+    {
+      "name": "plvlw_reward_type_cash",
+      "value": "Gifts Reward"
+    },
+    {
+      "name": "plvlw_reward_remain_point",
+      "value": "My points: %s"
+    },
+    {
+      "name": "plvlw_commodity_free",
+      "value": "Free"
+    },
+    {
+      "name": "plvlw_reward_select_cash_hint",
+      "value": "Please select a reward gift"
+    },
+    {
+      "name": "plvlw_reward_text",
+      "value": "Reward"
+    },
+    {
+      "name": "plvlw_tool_bar_chat_input_hint",
+      "value": "Join chat"
+    },
+    {
+      "name": "plvlw_chat_input_tips_quiz",
+      "value": "Initiate a question"
+    },
+    {
+      "name": "plvlw_chat_send",
+      "value": "Send"
+    },
+    {
+      "name": "plvlw_chatroom_quiz_hint_title",
+      "value": "Quiz Channel"
+    },
+    {
+      "name": "plvlw_tool_bar_chat_input_quiz_new_message",
+      "value": "New message"
+    },
+    {
+      "name": "plvlw_chatroom_quiz_hint_content",
+      "value": "You have entered the exclusive question channel, and the question content will not be published"
+    },
+    {
+      "name": "plvlw_chatroom_login_message_single",
+      "value": "Welcome %s join"
+    },
+    {
+      "name": "plvlw_chatroom_login_message_multiple",
+      "value": "Welcome %s and other %s people join"
+    },
+    {
+      "name": "plvlw_chat_pinned_announcement_span_text",
+      "value": "Announcement"
+    },
+    {
+      "name": "plvlw_chat_pinned_announcement_image_alt",
+      "value": "[Image]"
+    },
+    {
+      "name": "plvlw_chatroom_show_only_teacher_message",
+      "value": "Only watch the host"
+    },
+    {
+      "name": "plvlw_live_bulletin",
+      "value": "Bulletin"
+    },
+    {
+      "name": "plvlw_player_playing",
+      "value": "Playing"
+    },
+    {
+      "name": "plvlw_player_definition",
+      "value": "Quality"
+    },
+    {
+      "name": "plvlw_player_route",
+      "value": "Line"
+    },
+    {
+      "name": "plvlw_player_speed",
+      "value": "Rate"
+    },
+    {
+      "name": "plvlw_live_language_switch",
+      "value": "Language"
+    },
+    {
+      "name": "plvlw_live_language_switch_zh",
+      "value": "简体中文-ZH"
+    },
+    {
+      "name": "plvlw_live_language_switch_en",
+      "value": "English-EN"
+    },
+    {
+      "name": "plvlw_player_audio_mode",
+      "value": "Audio mode"
+    },
+    {
+      "name": "plvlw_interact_action_default_title",
+      "value": "Interactive function"
+    },
+    {
+      "name": "plvlw_commodity_buy",
+      "value": "Buy"
+    },
+    {
+      "name": "plvlw_product_push_hot_effect_text_normal",
+      "value": "On Sale"
+    },
+    {
+      "name": "plvlw_product_push_hot_effect_text_finance",
+      "value": "Purchasing"
+    },
+    {
+      "name": "plvlw_product_push_hot_effect_text_job",
+      "value": "In Transit"
+    },
+    {
+      "name": "plvlw_interact_questionnaire_icon_text",
+      "value": "Questionnaire"
+    },
+    {
+      "name": "plvlw_interact_questionnaire_title",
+      "value": "Questionnaire"
+    },
+    {
+      "name": "plvlw_lottery_running",
+      "value": "In lottery"
+    },
+    {
+      "name": "plvlw_lottery_over",
+      "value": "Lottery over"
+    },
+    {
+      "name": "plvlw_live_more_interact",
+      "value": "Interact"
+    },
+    {
+      "name": "plvlw_interact_card_push_title",
+      "value": "Card"
+    },
+    {
+      "name": "plvlw_interact_lottery_title",
+      "value": "Lottery"
+    },
+    {
+      "name": "plvlw_commodity_price_not_opened",
+      "value": "To Be Revealed"
+    },
+    {
+      "name": "plvlw_chat_copy",
+      "value": "Copy"
+    },
+    {
+      "name": "plvlw_chat_copy_success",
+      "value": "Copy success"
+    },
+    {
+      "name": "plvlw_chat_reply",
+      "value": "Reply"
+    },
+    {
+      "name": "plvlw_player_speed_short",
+      "value": "Rate"
+    },
+    {
+      "name": "plvlw_chat_more",
+      "value": "More"
+    },
+    {
+      "name": "plvlw_chat_full_text",
+      "value": "Full text"
+    }
+  ]
+}

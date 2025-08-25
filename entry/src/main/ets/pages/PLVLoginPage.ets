@@ -1,21 +1,40 @@
-import { PLVCommonConstants, PLVLiveChannelType, PLVLiveSceneSDK, PLVLogger, PLVTextUtils, PLVToastUtils, PLVUserConstants, PLVUtils, pushToWatchPage } from 'scenes_live';
+import {
+  isSupportChannelType,
+  PLVCommonConstants,
+  PLVJSONObject,
+  PLVLiveScene,
+  PLVLiveSceneSDK,
+  PLVLogger,
+  PLVTextUtils,
+  PLVToastUtils,
+  PLVUserConstants,
+  PLVUtils,
+  pushToWatchPage
+} from 'scenes_live';
+import { router } from '@kit.ArkUI';
+import { pushToLiveWatchPage } from 'scenes_liveWatch';
+import BuildProfile from 'BuildProfile';
 
 const TAG = '[PLVLoginPage]'
 
 @Entry
 @Component
 struct PLVLoginPage {
-  // live data
-  @State @Watch('onDataChanged') liveUserId: string = ''
-  @State @Watch('onDataChanged') liveChannelId: string = ''
-  @State @Watch('onDataChanged') liveAppId: string = ''
-  @State @Watch('onDataChanged') liveAppSecret: string = ''
-  // playback data
-  @State @Watch('onDataChanged') playbackUserId: string = ''
-  @State @Watch('onDataChanged') playbackChannelId: string = ''
-  @State @Watch('onDataChanged') playbackAppId: string = ''
-  @State @Watch('onDataChanged') playbackAppSecret: string = ''
-  @State playbackVid: string = ''
+  // TODO 开发环境请在项目根目录的 local.properties 配置初始化频道账号参数，格式如下
+  // liveChannelId=xxxxxxxxxx
+  // liveUserId=xxxxxxxxxx
+  // liveAppId=xxxxxxxxxx
+  // liveAppSecret=xxxxxxxxxx
+  // playback 与 live 类似，不再列举
+  @State @Watch('onDataChanged') liveUserId: string = BuildProfile['property_liveUserId'] ?? ''
+  @State @Watch('onDataChanged') liveChannelId: string = BuildProfile['property_liveChannelId'] ?? ''
+  @State @Watch('onDataChanged') liveAppId: string = BuildProfile['property_liveAppId'] ?? ''
+  @State @Watch('onDataChanged') liveAppSecret: string = BuildProfile['property_liveAppSecret'] ?? ''
+  @State @Watch('onDataChanged') playbackUserId: string = BuildProfile['property_playbackUserId'] ?? ''
+  @State @Watch('onDataChanged') playbackChannelId: string = BuildProfile['property_playbackChannelId'] ?? ''
+  @State @Watch('onDataChanged') playbackAppId: string = BuildProfile['property_playbackAppId'] ?? ''
+  @State @Watch('onDataChanged') playbackAppSecret: string = BuildProfile['property_playbackAppSecret'] ?? ''
+  @State playbackVideoId: string = BuildProfile['property_playbackVideoId'] ?? ''
   @State isOnVodList: boolean = false
   // common data
   @State @Watch('onDataChanged') tabSelIndex: number = 0
@@ -24,6 +43,9 @@ struct PLVLoginPage {
   viewerId?: string
   viewerName?: string
   viewerAvatar?: string
+  newLiveWatch: boolean = (router.getParams() as PLVJSONObject)['newLiveWatch'] as boolean
+  @State liveScene: PLVLiveScene = this.newLiveWatch ? PLVLiveScene.LAND_TEMPLATE : PLVLiveScene.LIVE_ECOMMERCE
+  currentYear: number = new Date().getFullYear();
 
   override async aboutToAppear(): Promise<void> {
     // todo 请务必在这里替换为你的学员(用户)ID，设置学员(用户)ID的意义详细可以查看：https://github.com/polyv/polyv-android-cloudClass-sdk-demo/wiki/6-设置学员唯一标识的意义
@@ -37,7 +59,7 @@ struct PLVLoginPage {
   build() {
     Stack() {
       Column() {
-        Text('直播带货')
+        Text(this.newLiveWatch ? '直播观看' : '直播带货')
           .fontSize(30)
           .fontColor(Color.Gray)
           .margin({ top: 30 })
@@ -66,7 +88,7 @@ struct PLVLoginPage {
                 .showUnderline(true)
               TextInput({ placeholder: 'AppSecret', text: $$this.playbackAppSecret })
                 .showUnderline(true)
-              TextInput({ placeholder: '视频Id', text: $$this.playbackVid })
+              TextInput({ placeholder: '视频Id', text: $$this.playbackVideoId })
                 .showUnderline(true)
               Row() {
                 Text('点播列表')
@@ -95,7 +117,36 @@ struct PLVLoginPage {
               this.loginPlayback()
             }
           })
-        Text('2013 – 2024 易方信息科技股份有限公司 版权所有')
+
+        if (this.newLiveWatch) {
+          Row() {
+            Radio({ value: 'land', group: 'template' })
+              .checked(this.liveScene == PLVLiveScene.LAND_TEMPLATE)
+              .hitTestBehavior(HitTestMode.None)
+            Text('横屏模版')
+              .margin({ left: 2 })
+          }
+          .margin({ top: 16 })
+          .justifyContent(FlexAlign.Start)
+          .onClick(() => {
+            this.liveScene = PLVLiveScene.LAND_TEMPLATE
+          })
+
+          Row() {
+            Radio({ value: 'portrait', group: 'template' })
+              .checked(this.liveScene == PLVLiveScene.PORTRAIT_TEMPLATE)
+              .hitTestBehavior(HitTestMode.None)
+            Text('竖屏模版')
+              .margin({ left: 2 })
+          }
+          .margin({ top: 16 })
+          .justifyContent(FlexAlign.Start)
+          .onClick(() => {
+            this.liveScene = PLVLiveScene.PORTRAIT_TEMPLATE
+          })
+        }
+
+        Text(`2013 – ${this.currentYear} 易方信息科技股份有限公司 版权所有`)
           .fontSize(14)
           .fontColor(Color.Gray)
           .align(Alignment.Bottom)
@@ -143,6 +194,7 @@ struct PLVLoginPage {
     sdk.channelData.viewerId = this.viewerId
     sdk.channelData.viewerName = this.viewerName
     sdk.channelData.viewerAvatar = this.viewerAvatar
+    sdk.channelData.liveScene = this.liveScene
     return sdk
   }
 
@@ -150,16 +202,21 @@ struct PLVLoginPage {
     const sdk = this.createSDK()
     sdk.loginManager.loginLive(this.liveUserId, this.liveChannelId, this.liveAppId, this.liveAppSecret)
       .then((channelData) => {
-        if (PLVLiveChannelType.ALONE != channelData.channelType) {
+        if (!isSupportChannelType(this.liveScene, channelData.channelType)) {
           PLVLogger.error(TAG, `loginLive error while channelType=${channelData.channelType}`)
-          PLVToastUtils.shortShow('直播带货场景仅支持纯视频频道类型')
+          const toastMessage = this.newLiveWatch ? '直播观看场景仅支持三分屏和纯视频频道类型' : '直播带货场景仅支持纯视频频道类型'
+          PLVToastUtils.shortShow(toastMessage)
           this.loadingVisibility = Visibility.None
           sdk.destroy()
           return
         }
         PLVLogger.info(TAG, `loginLive success`)
         this.loadingVisibility = Visibility.None
-        pushToWatchPage(sdk.uniqueId)
+        if (this.newLiveWatch) {
+          pushToLiveWatchPage(sdk.uniqueId)
+        } else {
+          pushToWatchPage(sdk.uniqueId)
+        }
       })
       .catch((err: Error) => {
         this.loadingVisibility = Visibility.None
@@ -170,11 +227,12 @@ struct PLVLoginPage {
 
   loginPlayback() {
     const sdk = this.createSDK()
-    sdk.loginManager.loginPlayback(this.playbackUserId, this.playbackChannelId, this.playbackAppId, this.playbackAppSecret, this.playbackVid)
+    sdk.loginManager.loginPlayback(this.playbackUserId, this.playbackChannelId, this.playbackAppId, this.playbackAppSecret, this.playbackVideoId)
       .then((channelData) => {
-        if (PLVLiveChannelType.ALONE != channelData.channelType) {
+        if (!isSupportChannelType(this.liveScene, channelData.channelType)) {
           PLVLogger.error(TAG, `loginPlayback error while channelType=${channelData.channelType}`)
-          PLVToastUtils.shortShow('直播带货场景仅支持纯视频频道类型')
+          const toastMessage = this.newLiveWatch ? '直播观看场景仅支持三分屏和纯视频频道类型' : '直播带货场景仅支持纯视频频道类型'
+          PLVToastUtils.shortShow(toastMessage)
           this.loadingVisibility = Visibility.None
           sdk.destroy()
           return
@@ -182,7 +240,11 @@ struct PLVLoginPage {
         PLVLogger.info(TAG, `loginPlayback success`)
         this.loadingVisibility = Visibility.None
         sdk.channelData.setupPlaybackListType(this.isOnVodList)
-        pushToWatchPage(sdk.uniqueId)
+        if (this.newLiveWatch) {
+          pushToLiveWatchPage(sdk.uniqueId)
+        } else {
+          pushToWatchPage(sdk.uniqueId)
+        }
       })
       .catch((err: Error) => {
         PLVToastUtils.shortShow(`loginPlayback error: ${err.message}`)

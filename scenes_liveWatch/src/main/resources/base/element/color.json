@@ -1,0 +1,440 @@
+{
+  "color": [
+    {
+      "name": "white",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_theme_bg_blue",
+      "value": "#3F76FC"
+    },
+    {
+      "name": "plvlw_theme_bg_blue_merge_dark_70",
+      "value": "#13234C"
+    },
+    {
+      "name": "plvlw_theme_bg_blue_merge_dark_70_transparent",
+      "value": "#0013234C"
+    },
+    {
+      "name": "plvlw_theme_bg_blue_60",
+      "value": "#993F76FC"
+    },
+    {
+      "name": "plvlw_theme_bg_blue_10",
+      "value": "#1A3F76FC"
+    },
+    {
+      "name": "plvlw_theme_fg_dark_70",
+      "value": "#B3000000"
+    },
+    {
+      "name": "plvlw_theme_fg_light_70",
+      "value": "#B3FFFFFF"
+    },
+    {
+      "name": "plvlw_function_color_green",
+      "value": "#23AA4F"
+    },
+    {
+      "name": "plvlw_function_color_green_60",
+      "value": "#9923AA4F"
+    },
+    {
+      "name": "plvlw_function_color_green_10",
+      "value": "#1A23AA4F"
+    },
+    {
+      "name": "plvlw_function_color_orange",
+      "value": "#FF9F45"
+    },
+    {
+      "name": "plvlw_function_color_orange_60",
+      "value": "#99FF9F45"
+    },
+    {
+      "name": "plvlw_function_color_orange_10",
+      "value": "#1AFF9F45"
+    },
+    {
+      "name": "plvlw_function_color_red",
+      "value": "#FF5252"
+    },
+    {
+      "name": "plvlw_function_color_red_60",
+      "value": "#99FF5252"
+    },
+    {
+      "name": "plvlw_function_color_red_10",
+      "value": "#1AFF5252"
+    },
+    {
+      "name": "plvlw_neutral_light_black",
+      "value": "#000000"
+    },
+    {
+      "name": "plvlw_neutral_light_black_80",
+      "value": "#CC000000"
+    },
+    {
+      "name": "plvlw_neutral_light_black_70",
+      "value": "#B3000000"
+    },
+    {
+      "name": "plvlw_neutral_light_black_60",
+      "value": "#99000000"
+    },
+    {
+      "name": "plvlw_neutral_light_black_40",
+      "value": "#66000000"
+    },
+    {
+      "name": "plvlw_neutral_light_black_30",
+      "value": "#4D000000"
+    },
+    {
+      "name": "plvlw_neutral_light_black_20",
+      "value": "#33000000"
+    },
+    {
+      "name": "plvlw_neutral_light_black_10",
+      "value": "#1A000000"
+    },
+    {
+      "name": "plvlw_neutral_light_black_6",
+      "value": "#0F000000"
+    },
+    {
+      "name": "plvlw_neutral_dark_white",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_neutral_dark_white_80",
+      "value": "#CCFFFFFF"
+    },
+    {
+      "name": "plvlw_neutral_dark_white_60",
+      "value": "#99FFFFFF"
+    },
+    {
+      "name": "plvlw_neutral_dark_white_40",
+      "value": "#66FFFFFF"
+    },
+    {
+      "name": "plvlw_neutral_dark_white_20",
+      "value": "#33FFFFFF"
+    },
+    {
+      "name": "plvlw_neutral_dark_white_10",
+      "value": "#1AFFFFFF"
+    },
+    {
+      "name": "plvlw_neutral_dark_white_6",
+      "value": "#0FFFFFFF"
+    },
+    {
+      "name": "plvlw_web_content_in_dialog_color",
+      "value": "#313131"
+    },
+    {
+      "name": "plvlw_web_content_color",
+      "value": "#ADADC0"
+    },
+    {
+      "name": "plvlw_player_background",
+      "value": "#000000"
+    },
+    {
+      "name": "plvlw_player_progress_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_actor_foreground_color",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_actor_background_teacher",
+      "value": "#2987FF"
+    },
+    {
+      "name": "plvlw_chat_actor_background_assistant",
+      "value": "#04B888"
+    },
+    {
+      "name": "plvlw_chat_actor_background_guest",
+      "value": "#FF8165"
+    },
+    {
+      "name": "plvlw_chat_actor_background_manager",
+      "value": "#716AF7"
+    },
+    {
+      "name": "plvlw_chat_name_foreground_teacher",
+      "value": "#358DFF"
+    },
+    {
+      "name": "plvlw_chat_name_foreground_assistant",
+      "value": "#0CBF8F"
+    },
+    {
+      "name": "plvlw_chat_name_foreground_guest",
+      "value": "#FF8D73"
+    },
+    {
+      "name": "plvlw_chat_name_foreground_manager",
+      "value": "#6F68FD"
+    },
+    {
+      "name": "plvlw_chat_name_foreground_viewer",
+      "value": "#99FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_content_speak_message_color",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_content_item_background",
+      "value": "#1A000000"
+    },
+    {
+      "name": "plvlw_chat_reward_message_give_text",
+      "value": "#FF9F45"
+    },
+    {
+      "name": "plvlw_chat_content_red_paper_blessing_message_color",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_content_red_paper_type_color",
+      "value": "#99FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_content_red_paper_receive_button_text",
+      "value": "#FF5252"
+    },
+    {
+      "name": "plvlw_chat_red_paper_result_receive_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_red_paper_result_receive_type",
+      "value": "#FF5252"
+    },
+    {
+      "name": "plvlw_chat_file_share_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_unread_message_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_unread_message_background",
+      "value": "#3F76FC"
+    },
+    {
+      "name": "plvlw_interact_side_bar_more_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_interact_side_bar_more_background_stroke",
+      "value": "#1AFFFFFF"
+    },
+    {
+      "name": "plvlw_interact_side_bar_more_background_solid",
+      "value": "#0A000000"
+    },
+    {
+      "name": "plvlw_interact_side_bar_action_background",
+      "value": "#0C000000"
+    },
+    {
+      "name": "plvlw_interact_side_bar_action_text_background",
+      "value": "#FFF5F7"
+    },
+    {
+      "name": "plvlw_interact_side_bar_action_text",
+      "value": "#FF4E41"
+    },
+    {
+      "name": "plvlw_interact_side_bar_action_name",
+      "value": "#99000000"
+    },
+    {
+      "name": "plvlw_tool_bar_chat_input_background",
+      "value": "#33000000"
+    },
+    {
+      "name": "plvlw_tool_bar_chat_input_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_tool_bar_chat_input_text_hint",
+      "value": "#CCFFFFFF"
+    },
+    {
+      "name": "plvlw_tool_bar_like_count_background",
+      "value": "#3F76FC"
+    },
+    {
+      "name": "plvlw_tool_bar_like_count_foreground",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_more_setting_action_title",
+      "value": "#99000000"
+    },
+    {
+      "name": "plvlw_common_popup_background",
+      "value": "#F7F8FA"
+    },
+    {
+      "name": "plvlw_common_popup_title",
+      "value": "#CC000000"
+    },
+    {
+      "name": "plvlw_chat_input_window_background",
+      "value": "#F7F8FA"
+    },
+    {
+      "name": "plvlw_chat_input_edit_text_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_quiz_hint_background",
+      "value": "#33000000"
+    },
+    {
+      "name": "plvlw_chat_quiz_hint_text_title",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_quiz_hint_text_content",
+      "value": "#FFA958"
+    },
+    {
+      "name": "plvlw_chat_top_message_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_top_message_login_background",
+      "value": "#4D6314ED"
+    },
+    {
+      "name": "plvlw_reward_message_nick_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_reward_message_gift_text",
+      "value": "#99FFFFFF"
+    },
+    {
+      "name": "plvlw_pinned_announcement_span_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_pinned_announcement_span_text",
+      "value": "#cc000000"
+    },
+    {
+      "name": "plvlw_pinned_announcement_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_more_setting_action_popup_layout_title",
+      "value": "#CC000000"
+    },
+    {
+      "name": "plvlw_more_setting_action_popup_layout_selected_item_solid",
+      "value": "#1A3F76FC"
+    },
+    {
+      "name": "plvlw_more_setting_action_popup_layout_selected_item_stroke",
+      "value": "#3F76FC"
+    },
+    {
+      "name": "plvlw_more_setting_action_popup_layout_not_selected_item_solid",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_more_setting_action_popup_layout_selected_item_text",
+      "value": "#3F76FC"
+    },
+    {
+      "name": "plvlw_more_setting_action_popup_layout_not_selected_item_text",
+      "value": "#CC000000"
+    },
+    {
+      "name": "plvlw_more_setting_action_popup_layout_selected_item_tint",
+      "value": "#3F76FC"
+    },
+    {
+      "name": "plvlw_more_setting_action_popup_layout_not_selected_item_tint",
+      "value": "#CC000000"
+    },
+    {
+      "name": "plvlw_product_push_card_layout_background_with_image",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_product_push_card_layout_background_outer_no_image",
+      "value": "#FF5252"
+    },
+    {
+      "name": "plvlw_product_push_card_layout_background_inner_no_image",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_product_push_card_index_background",
+      "value": "#99000000"
+    },
+    {
+      "name": "plvlw_product_push_card_index_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_product_push_card_tag_background_with_image",
+      "value": "#FF5252"
+    },
+    {
+      "name": "plvlw_product_push_card_tag_background_stroke_no_image",
+      "value": "#99FF5252"
+    },
+    {
+      "name": "plvlw_product_push_card_tag_text_with_image",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_product_push_card_tag_text_no_image",
+      "value": "#FF5252"
+    },
+    {
+      "name": "plvlw_product_push_card_name",
+      "value": "#3D3D3D"
+    },
+    {
+      "name": "plvlw_product_push_card_price",
+      "value": "#FF5252"
+    },
+    {
+      "name": "plvlw_product_push_card_buy_action_background",
+      "value": "#FF5252"
+    },
+    {
+      "name": "plvlw_product_push_card_buy_action_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_player_controller_top_toolbar_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_content_quote_speak_message_color",
+      "value": "#99FFFFFF"
+    },
+    {
+      "name": "plvlw_chat_content_quote_message_divider_color",
+      "value": "#14FFFFFF"
+    }
+  ]
+}

@@ -1,16 +1,20 @@
 import {
   IPLVKVStore,
   Logger,
+  PLVCommonLogger,
   PLVKVStore,
   PLVMediaPlayerAppContext,
   PLVMediaPlayerFactory,
-  PLVMediaPlayerLogger,
+  PLVMediaPlayerHttpDns,
   runCatching
 } from '@polyvharmony/media-player-sdk';
 import { PLVMediaPlayerCoreIjkProvider } from '@polyvharmony/media-player-core-ijk';
 import { Context } from '@ohos.abilityAccessCtrl';
 import distributedKVStore from '@ohos.data.distributedKVStore';
 import { PLVLogger } from 'scenes_live';
+import { PLVHttpDnsManager } from '@polyvharmony/httpdns-api';
+import { PLVLocalDnsService } from '@polyvharmony/httpdns-impl-local';
+import { PLVHttpDnsService } from '@polyvharmony/httpdns-impl-ali';
 
 export class PLVMediaPlayerStartUp {
   private static isInit = false
@@ -22,9 +26,16 @@ export class PLVMediaPlayerStartUp {
     PLVMediaPlayerStartUp.isInit = true
 
     PLVMediaPlayerAppContext.getInstance().setupAppContext(context)
-    PLVMediaPlayerLogger.loggerImpl = new PLVLoggerImpl()
+    PLVCommonLogger.loggerImpl = new PLVLoggerImpl()
     PLVKVStore.setupImplement(new PLVKVStoreOhosImpl(context))
     PLVMediaPlayerFactory.getInstance().register(PLVMediaPlayerCoreIjkProvider.getInstance())
+
+    PLVHttpDnsManager.getInstance().logger = (tag: string, message: string) => {
+      PLVLogger.info(tag, message)
+    }
+    PLVMediaPlayerHttpDns.getInstance().register(PLVLocalDnsService.getInstance())
+    PLVMediaPlayerHttpDns.getInstance().register(PLVHttpDnsService.getInstance())
+    PLVMediaPlayerHttpDns.getInstance().enable = true
   }
 }
 

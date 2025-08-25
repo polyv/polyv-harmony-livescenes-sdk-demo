@@ -48,7 +48,7 @@ sdk.loginManager.loginPlayback(userId?: string, channelId?: string, appId?: stri
 
 ### 5.直播页面数据初始化
 
-在进入直播页面后，需要对直播页面的数据进行初始化，在调用 SDK 对象的`initData`方法后，SDK 内部会进行本地资源的初始化，以及网络资源的请求，详细使用代码可以参考 demo项目的`PLVLIWatchLayout`类：
+在进入直播页面后，需要对直播页面的数据进行初始化，在调用 SDK 对象的`initData`方法后，SDK 内部会进行本地资源的初始化，以及网络资源的请求，详细使用代码可以参考 demo项目的`PLVLWWatchLayout`类：
 
 ```ts
 // 初始化sdk数据，如果当前模块(scenes_live模块)为har类型，传getContext()；如果为hsp类型，则需要传getContext().createModuleContext('模块名')
@@ -58,7 +58,7 @@ sdk.initData(getContext() as common.UIAbilityContext)
 
 ### 6.SDK 对象销毁
 
-除了登录失败需要销毁 SDK 对象外，在退出直播页面的时候，也需要对 SDK 对象进行销毁以释放资源，详细使用代码可以参考 demo项目的`PLVLIWatchLayout`类：
+除了登录失败需要销毁 SDK 对象外，在退出直播页面的时候，也需要对 SDK 对象进行销毁以释放资源，详细使用代码可以参考 demo项目的`PLVLWWatchLayout`类：
 
 ```ts
 sdk.destroy()

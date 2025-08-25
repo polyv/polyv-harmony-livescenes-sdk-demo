@@ -1,5 +1,6 @@
 import { PLVLinkMicPushResolutionRatio, PLVLiveSceneSDK } from '@polyvharmony/live-scenes-sdk';
-import { lateInit, MutableObserver, toRaw } from '@polyvharmony/media-player-sdk';
+import { lateInit, MutableObserver } from '@polyvharmony/media-player-sdk';
+import { UIUtils } from '@kit.ArkUI';
 
 @Component
 export struct PLVSAMoreResolutionRatioButton {
@@ -31,7 +32,7 @@ export struct PLVSAMoreResolutionRatioButton {
   }
 
   private ratioIcon(): Resource {
-    switch (toRaw(this.ratio)) {
+    switch (UIUtils.getTarget(this.ratio)) {
       case PLVLinkMicPushResolutionRatio.RATIO_16_9:
       default:
         return $r('app.media.plvsa_more_push_resolution_ratio_16_9')
@@ -41,7 +42,7 @@ export struct PLVSAMoreResolutionRatioButton {
   }
 
   private nextResolutionRatio(): PLVLinkMicPushResolutionRatio {
-    if (toRaw(this.ratio) === PLVLinkMicPushResolutionRatio.RATIO_16_9) {
+    if (UIUtils.getTarget(this.ratio) === PLVLinkMicPushResolutionRatio.RATIO_16_9) {
       return PLVLinkMicPushResolutionRatio.RATIO_4_3
     } else {
       return PLVLinkMicPushResolutionRatio.RATIO_16_9

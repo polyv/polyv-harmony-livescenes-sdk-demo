@@ -352,7 +352,7 @@ export struct PLVChatRedPaperView {
   @LocalStorageLink('sdk') sdk?: PLVLiveSceneSDK = undefined
 
   aboutToAppear(): void {
-    this.sdk?.redpackManager.geLocalCachedReceiveStatus(this.itemData.redpackId)
+    this.sdk?.redpackManager.getLocalCachedReceiveStatus(this.itemData.redpackId)
       .then((value) => {
         this.itemData.receiveType = PLVRedPaperReceiveType.getValue(value as RedPaperReceiveTypeEvent)
         this.sdk?.redpackManager.cacheRedPaper(this.itemData)

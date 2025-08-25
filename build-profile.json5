@@ -41,6 +41,10 @@
       "srcPath": "./scenes_live"
     },
     {
+      "name": "scenes_liveWatch",
+      "srcPath": "./scenes_liveWatch"
+    },
+    {
       "name": "scenes_streamerAlone",
       "srcPath": "./scenes_streamerAlone"
     }

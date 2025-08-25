@@ -4,9 +4,9 @@ import {
   PLVLinkMicBitRateEncodeParam,
   PLVLiveSceneSDK
 } from '@polyvharmony/live-scenes-sdk'
-import { lateInit, MutableObserver, toRaw } from '@polyvharmony/media-player-sdk'
+import { lateInit, MutableObserver } from '@polyvharmony/media-player-sdk'
 import { PLVSAPreferenceCardView } from '../../../common/widget/PLVSAPreferenceCardView'
-import { display } from '@kit.ArkUI'
+import { display, UIUtils } from '@kit.ArkUI'
 import { PLVSAPageDataBus } from '../../../common/PLVSAPageDataBus'
 
 @CustomDialog
@@ -68,7 +68,7 @@ struct PLVSAMoreBitRateSelectLayoutPort {
             (encodeParam: PLVLinkMicBitRateEncodeParam) => {
               PLVSAMoreBitRateSelectItem({
                 encodeParam: encodeParam,
-                selected: encodeParam.bitRate === toRaw(this.currentBitRate)
+                selected: encodeParam.bitRate === UIUtils.getTarget(this.currentBitRate)
               })
                 .margin({
                   left: 32,
@@ -77,7 +77,7 @@ struct PLVSAMoreBitRateSelectLayoutPort {
                   bottom: 6
                 })
                 .onClick(() => {
-                  const selected = encodeParam.bitRate === toRaw(this.currentBitRate)
+                  const selected = encodeParam.bitRate === UIUtils.getTarget(this.currentBitRate)
                   if (!selected) {
                     this.sdk.streamerManager.setBitRate(encodeParam.bitRate)
                     this.pageDataBus.recoverSetting.update({
@@ -155,7 +155,7 @@ struct PLVSAMoreBitRateSelectLayoutLand {
             (encodeParam: PLVLinkMicBitRateEncodeParam) => {
               PLVSAMoreBitRateSelectItem({
                 encodeParam: encodeParam,
-                selected: encodeParam.bitRate === toRaw(this.currentBitRate)
+                selected: encodeParam.bitRate === UIUtils.getTarget(this.currentBitRate)
               })
                 .margin({
                   left: 32,
@@ -164,7 +164,7 @@ struct PLVSAMoreBitRateSelectLayoutLand {
                   bottom: 6
                 })
                 .onClick(() => {
-                  const selected = encodeParam.bitRate === toRaw(this.currentBitRate)
+                  const selected = encodeParam.bitRate === UIUtils.getTarget(this.currentBitRate)
                   if (!selected) {
                     this.sdk.streamerManager.setBitRate(encodeParam.bitRate)
                     this.pageDataBus.recoverSetting.update({
