@@ -30,9 +30,13 @@ polyv-harmony-livescenes-sdk-demo
 |   |-- pages
 |   |   `-- PLVLoginPage (登录页)
 |   `-- startup (播放器初始化)
-`-- scenes_live (直播带货场景模块)
-    |-- pages (观看页)
-    `-- components (功能组件)
+|-- scenes_live (直播带货场景模块)
+|   |-- pages (观看页)
+|   `-- components (功能组件)
+`-- scenes_liveWatch (观看端场景模块)
+    |-- common (场景内通用组件)
+    |-- components (功能组件)
+    `-- pages (观看页)
 ```
 
 ### 2 下载安装
