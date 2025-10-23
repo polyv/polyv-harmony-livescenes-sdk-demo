@@ -137,14 +137,16 @@ export struct PLVSAStartUpLayout {
               bottom: 6
             })
 
-          PLVSAMoreCameraMirrorButton({
-            iconPadding: 12
-          })
-            .width(62)
-            .padding({
-              top: 6,
-              bottom: 6
+          if (this.actionSwitcher.value.showMirrorButton) {
+            PLVSAMoreCameraMirrorButton({
+              iconPadding: 12
             })
+              .width(62)
+              .padding({
+                top: 6,
+                bottom: 6
+              })
+          }
 
           PLVSAMoreBitRateButton({
             iconPadding: 12

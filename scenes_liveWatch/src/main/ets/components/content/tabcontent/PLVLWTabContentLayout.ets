@@ -5,7 +5,7 @@ import {
   PLVCommonConstants,
   PLVI18NDataMapper,
   PLVLiveScene,
-  PLVLiveSceneSDK,
+  PLVLiveSceneSDK, PLVLogger,
 } from '@polyvharmony/live-scenes-sdk';
 import { lateInit } from '@polyvharmony/media-player-sdk';
 import { PLVLWLayoutDataBus } from '../../../common/PLVLWLayoutDataBus';
@@ -17,6 +17,8 @@ import { PLVLWTuwenTabLayout } from './tab/PLVLWTuwenTabLayout';
 import { PLVLWQATabLayout } from './tab/PLVLWQATabLayout';
 import { PLVLWPreviousTabLayout, PreviousTabData } from './tab/PLVLWPreviousTabLayout';
 import { ChapterTabData, PLVLWChapterTabLayout } from './tab/PLVLWChapterTabLayout';
+
+const TAG = '[PLVLWTabContentLayout]'
 
 @Preview
 @Component
@@ -91,65 +93,83 @@ export struct PLVLWTabContentLayout {
     let hasChatMenu = false
     let chatTabName: string | undefined
     let hasQuizMenu = false
+    let chatTabOrdered: number | undefined = -1
     // 往期tab
     let previousTabName: ResourceStr | undefined = this.channelData?.getPreviousMenuName($r('app.string.plv_sdk_live_menu_name_previous'))
     let hasPreviousMenu = this.channelData?.hasPreviousMenu()
     let chapterTabName = $r('app.string.plv_sdk_live_menu_name_micro_chapter')
     let hasChapterMenu = this.channelData?.hasChapterMenu()
+    let previousTabOrdered: number | undefined = -1
     this.channelData?.liveDetail?.channelMenus?.forEach((item?: ChannelMenusBean) => {
+      PLVLogger.info(TAG, "channelMenus：" + item?.menuType)
       switch (item?.menuType) {
         case MenuType.DESC:
-          this.pushTab(item.menuType, item.name)
+          this.pushTab(item.menuType, item.name, item.ordered)
           break
         case MenuType.CHAT:
           hasChatMenu = "Y" === item.displayEnabled
           chatTabName = item.name
+          chatTabOrdered = item.ordered
           break
         case MenuType.QUIZ:
           hasQuizMenu = true
           break
         case MenuType.TEXT:
-          this.pushTab(item.menuType, item.name)
+          this.pushTab(item.menuType, item.name, item.ordered)
           break
         case MenuType.IFRAME:
-          this.pushTab(item.menuType, item.name)
+          this.pushTab(item.menuType, item.name, item.ordered)
           break
         case MenuType.TUWEN:
-          this.pushTab(item.menuType, item.name)
+          this.pushTab(item.menuType, item.name, item.ordered)
           break
         case MenuType.QA:
-          this.pushTab(item.menuType, item.name)
+          this.pushTab(item.menuType, item.name, item.ordered)
+          break
+        case MenuType.PREVIOUS:
+          previousTabOrdered = item.ordered
           break
       }
     })
     if (hasChatMenu || hasQuizMenu) {
-      this.pushChatTab(chatTabName, hasChatMenu, hasQuizMenu)
+      this.pushChatTab(chatTabName, hasChatMenu, hasQuizMenu, chatTabOrdered)
     }
     if (hasPreviousMenu) {
-      this.pushTab(MenuType.PREVIOUS, previousTabName)
+      this.pushTab(MenuType.PREVIOUS, previousTabName, previousTabOrdered)
     }
     if (hasChapterMenu) {
-      this.pushTab(MenuType.CHAPTER, chapterTabName)
+      const chapterTabOrdered = hasPreviousMenu ? previousTabOrdered + 1 : previousTabOrdered
+      this.pushTab(MenuType.CHAPTER, chapterTabName, chapterTabOrdered)
     }
+    this.tabDataBeanList.sort((a, b) => {
+      const aOrder = a.order ?? 0
+      const bOrder = b.order ?? 0
+      if (aOrder === bOrder) {
+        // 让章节跟在往期后面
+        return a.menuType === MenuType.CHAPTER ? -1 : 1
+      }
+      return aOrder - bOrder
+    })
   }
 
-  private pushChatTab(tabName?: string | Resource | undefined, hasChatMenu?: boolean, hasQuizMenu?: boolean) {
+  private pushChatTab(tabName?: string | Resource | undefined, hasChatMenu?: boolean, hasQuizMenu?: boolean, ordered?: number) {
     this.hasChatTab = true
-    let index = Math.min(1, this.tabDataBeanList.length)
-    this.tabDataBeanList.splice(index, 0, new TabDataBean()
+    this.tabDataBeanList.push(new TabDataBean()
       .setMenuType(MenuType.CHAT)
-      .setTabName(tabName))
+      .setTabName(tabName)
+      .setOrder(ordered))
     this.layoutDataBus.chatTabStatus.mutate({
       isEnableChatTab: hasChatMenu ?? false,
       isEnableQuizTab: hasQuizMenu ?? false
     })
   }
 
-  private pushTab(menuType?: MenuType, tabName?: string | Resource | undefined) {
+  private pushTab(menuType?: MenuType, tabName?: string | Resource | undefined, ordered?: number) {
     if (this.liveScene === PLVLiveScene.LAND_TEMPLATE) {
       this.tabDataBeanList.push(new TabDataBean()
         .setMenuType(menuType)
-        .setTabName(tabName))
+        .setTabName(tabName)
+        .setOrder(ordered))
     }
   }
 
@@ -164,6 +184,7 @@ export struct PLVLWTabContentLayout {
 class TabDataBean {
   menuType?: MenuType
   tabName?: string | Resource | undefined
+  order?: number
 
   setMenuType(menuType?: MenuType) {
     this.menuType = menuType
@@ -176,6 +197,11 @@ class TabDataBean {
     } else {
       this.tabName = tabName
     }
+    return this
+  }
+
+  setOrder(order?: number) {
+    this.order = order
     return this
   }
 }

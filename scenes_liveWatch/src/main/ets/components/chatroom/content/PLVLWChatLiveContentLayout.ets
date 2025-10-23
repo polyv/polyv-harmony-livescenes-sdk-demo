@@ -240,6 +240,15 @@ export struct PLVLWChatLiveContentLayout {
           }
           break;
         }
+        case PLVSocketOnEvent.EMOTION: {
+          const emotionEvent = PLVJSONUtils.toFillData(PLVEmotionEvent, data);
+          if (emotionEvent) {
+            if (this.sdk.channelData.viewerId !== emotionEvent.user?.userId) {
+              result.push(emotionEvent);
+            }
+          }
+          break;
+        }
         case PLVRewardEvent.EVENT: {
           const rewardEvent = PLVJSONUtils.toFillData(PLVRewardEvent, data);
           if (rewardEvent) {

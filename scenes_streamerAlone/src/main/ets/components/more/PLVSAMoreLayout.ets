@@ -11,7 +11,7 @@ import { PLVSAMoreHangupAllLinkMicButton } from './widgets/PLVSAMoreHangupAllLin
 import { PLVSAMoreAllowLinkMicButton } from './widgets/PLVSAMoreAllowLinkMicButton';
 import { PLVSAMoreLinkMicSettingButton } from './widgets/PLVSAMoreLinkMicSettingButton';
 import { PLVSAMorePushDowngradeButton } from './widgets/PLVSAMorePushDowngradeButton';
-import { PLVLiveSceneSDK, PLVUserType } from '@polyvharmony/live-scenes-sdk';
+import { PLVLinkMicRTCType, PLVLiveSceneSDK, PLVUserType } from '@polyvharmony/live-scenes-sdk';
 import { PLVSAMoreShareButton } from './widgets/PLVSAMoreShareButton';
 
 @CustomDialog
@@ -65,8 +65,10 @@ struct PLVSAMoreLayoutPort {
             PLVSAMoreCameraFacingButton()
           }
 
-          GridItem() {
-            PLVSAMoreCameraMirrorButton()
+          if (this.switcher.value.showMirrorButton) {
+            GridItem() {
+              PLVSAMoreCameraMirrorButton()
+            }
           }
 
           GridItem() {
@@ -192,8 +194,10 @@ struct PLVSAMoreLayoutLand {
             PLVSAMoreCameraFacingButton()
           }
 
-          GridItem() {
-            PLVSAMoreCameraMirrorButton()
+          if (this.switcher.value.showMirrorButton) {
+            GridItem() {
+              PLVSAMoreCameraMirrorButton()
+            }
           }
 
           GridItem() {
@@ -299,11 +303,13 @@ export class PLVSAMoreLayoutActionSwitcher {
   readonly showLinkMicSettingButton: boolean
   readonly showMixLayoutButton: boolean
   readonly showResolutionRatioButton: boolean
+  readonly showMirrorButton: boolean
 
   constructor(sdk: PLVLiveSceneSDK) {
     this.sdk = sdk
     const isTeacher = this.sdk.channelData.viewerType === PLVUserType.USERTYPE_TEACHER
     const isLinkMicStrategyV2 = this.sdk.linkmicManager.isLinkMicStrategyV2.value ?? false
+    const isMirrorSupport = this.sdk.channelData.liveDetail?.rtcType != PLVLinkMicRTCType.TRTC
 
     this.showCloseRoomButton = isTeacher
     this.showShareButton = isLiteralTrue(this.sdk.channelData.liveDetail?.pushSharingEnabled)
@@ -312,5 +318,6 @@ export class PLVSAMoreLayoutActionSwitcher {
     this.showLinkMicSettingButton = isTeacher && isLinkMicStrategyV2
     this.showMixLayoutButton = isTeacher
     this.showResolutionRatioButton = isTeacher && isLiteralTrue(this.sdk.channelData.streamerData?.appWebStartResolutionRatioEnabled)
+    this.showMirrorButton = isMirrorSupport
   }
 }
