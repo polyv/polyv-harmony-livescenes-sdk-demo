@@ -1,6 +1,7 @@
 import {
   PLVBaseIdEvent,
   PLVChatImgEvent,
+  PLVChatPlaybackDataVO,
   PLVCommonConstants,
   PLVEmotionEvent,
   PLVHistoryChatImgEvent,
@@ -281,7 +282,7 @@ export struct PLVLWChatQuizContentLayout {
         runCopyText(event.content)
       }
     }
-    this.chatItemActionCallback.onClickImage = (event: PLVChatImgEvent | PLVHistoryChatImgEvent | PLVEmotionEvent | PLVTAnswerEvent) => {
+    this.chatItemActionCallback.onClickImage = (event: PLVChatImgEvent | PLVHistoryChatImgEvent | PLVEmotionEvent | PLVTAnswerEvent | PLVChatPlaybackDataVO) => {
       Dialogs.showCustomDialog({
         context: this.getUIContext(),
         builder: PLVLWChatImageViewerBuilder,

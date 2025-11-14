@@ -60,6 +60,10 @@ export class PLVLWChatContentAdapter implements IDataSource {
     this.chatMessages.value = [...messages.slice(count)]
   }
 
+  clear() {
+    this.chatMessages.value = []
+  }
+
   setMessageFilter(filter: (message: PLVBaseIdEvent) => boolean) {
     this.messageFilter.value = filter
   }

@@ -1,6 +1,7 @@
 import {
   IPLVCanReplyEvent,
   PLVChatImgEvent,
+  PLVChatPlaybackDataVO,
   PLVChatQuoteDataBean,
   PLVCommonConstants,
   PLVEmotionEvent,
@@ -16,11 +17,12 @@ import {
   PLVUserType
 } from '@polyvharmony/live-scenes-sdk'
 import { LengthUnit } from '@kit.ArkUI'
-import { extendNumber, lateInit } from '@polyvharmony/media-player-sdk'
+import { extendNumber, isTextBlank, lateInit } from '@polyvharmony/media-player-sdk'
 import { PLVLWFaceManager } from '../../../../common/PLVLWFaceManager'
 
 @Component
 export struct PLVLWChatContentItemSpeakContent {
+  avatar?: ResourceStr
   actor?: string
   actorColorForeground?: ResourceColor
   actorColorBackground?: ResourceColor
@@ -32,6 +34,19 @@ export struct PLVLWChatContentItemSpeakContent {
 
   build() {
     Text() {
+      if (this.avatar) {
+        ImageSpan(this.avatar)
+          .verticalAlign(ImageSpanAlignment.CENTER)
+          .margin({
+            right: 2
+          })
+          .size({
+            width: 16,
+            height: 16
+          })
+          .borderRadius(16)
+      }
+
       if (this.actor) {
         Span(`  ${this.actor}  `)
           .fontSize(9)
@@ -225,6 +240,22 @@ export function ChatContentItemLongPressPopup(props?: LongPressPopupProps) {
   })
 }
 
+export function chatMessageAvatar(avatar: string | undefined, viewerType: string | undefined): ResourceStr {
+  if (!isTextBlank(avatar)) {
+    return PLVTextUtils.fixPic(avatar)
+  }
+  switch (viewerType) {
+    case PLVUserType.USERTYPE_TEACHER:
+      return $r('app.media.plvlw_chatroom_ic_teacher')
+    case PLVUserType.USERTYPE_ASSISTANT:
+      return $r('app.media.plvlw_chatroom_ic_assistant')
+    case PLVUserType.USERTYPE_GUEST:
+      return $r('app.media.plvlw_chatroom_ic_guest')
+    default:
+      return $r('app.media.plvlw_chatroom_ic_viewer')
+  }
+}
+
 export function actorBackgroundColor(viewerType: string | undefined): ResourceColor {
   switch (viewerType) {
     case PLVUserType.USERTYPE_TEACHER:
@@ -290,7 +321,7 @@ export function chatItemImageDisplaySize(sourceSize: Size): Size {
 export class ChatItemActionCallback {
   onClickCopy?: (event: PLVSpeakEvent | PLVHistorySpeakEvent | PLVLocalSpeakEvent | PLVLocalQuizEvent | PLVTAnswerEvent) => void
   onClickReply?: (event: IPLVCanReplyEvent) => void
-  onClickImage?: (event: PLVChatImgEvent | PLVHistoryChatImgEvent | PLVEmotionEvent | PLVTAnswerEvent) => void
+  onClickImage?: (event: PLVChatImgEvent | PLVHistoryChatImgEvent | PLVEmotionEvent | PLVTAnswerEvent | PLVChatPlaybackDataVO) => void
   onClickFileShare?: (event: PLVSpeakEvent | PLVHistoryFileShareEvent) => void
   onClickRedPaper?: (event: PLVRedPaperEvent) => void
   onClickOverLengthShowFullMessage?: (event: PLVSpeakEvent | PLVHistorySpeakEvent) => void

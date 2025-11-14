@@ -1,26 +1,44 @@
 import { PLVCommonConstants, PLVLiveSceneSDK, PLVNodeController } from '@polyvharmony/live-scenes-sdk';
 import { lateInit } from '@polyvharmony/media-player-sdk';
 import { PLVLWLayoutDataBus } from '../../../common/PLVLWLayoutDataBus';
+import { PLVLWMarqueeLayout } from '../marquee/PLVLWMarqueeLayout';
+import { PLVLWWatermarkLayout } from '../watermark/PLVLWWatermarkLayout';
 
 @Component
 export struct PLVLWPlayerView {
   @State viewData: PlayerViewData = lateInit()
 
   build() {
-    XComponent({
-      id: `plvlw_video_xcomponent`,
-      type: "surface",
-      libraryname: "plvplayer_xcomponent"
-    }) {
+    Stack() {
+      XComponent({
+        id: `plvlw_video_xcomponent`,
+        type: "surface",
+        libraryname: "plvplayer_xcomponent"
+      }) {
+      }
+      .onLoad((component) => {
+        this.viewData.sdk?.playerManager.startMainMediaPlayerWithComponent(component!)
+        this.onPreviousData()
+      })
+      .onDestroy(() => {
+        this.viewData.sdk?.playerManager.release()
+      })
+      .id('plvlw_player_xcomponent')
+      .width(PLVCommonConstants.FULL_PERCENT)
+      .height(PLVCommonConstants.FULL_PERCENT)
+
+      PLVLWMarqueeLayout({
+        sdk: this.viewData.sdk
+      })
+        .width(PLVCommonConstants.FULL_PERCENT)
+        .height(PLVCommonConstants.FULL_PERCENT)
+
+      PLVLWWatermarkLayout({
+        sdk: this.viewData.sdk
+      })
+        .width(PLVCommonConstants.FULL_PERCENT)
+        .height(PLVCommonConstants.FULL_PERCENT)
     }
-    .onLoad((component) => {
-      this.viewData.sdk?.playerManager.startMainMediaPlayerWithComponent(component!)
-      this.onPreviousData()
-    })
-    .onDestroy(() => {
-      this.viewData.sdk?.playerManager.release()
-    })
-    .id('plvlw_player_xcomponent')
     .width(PLVCommonConstants.FULL_PERCENT)
     .height(PLVCommonConstants.FULL_PERCENT)
   }

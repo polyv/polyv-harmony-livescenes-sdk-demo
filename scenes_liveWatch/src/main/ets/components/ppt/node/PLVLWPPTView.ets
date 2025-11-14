@@ -1,6 +1,15 @@
-import { PLVCommonConstants, PLVLazyValue, PLVLiveSceneSDK, PLVNodeController, PLVPPTStatus, PLVPPTWeb, PLVPPTWebController } from '@polyvharmony/live-scenes-sdk';
+import {
+  PLVCommonConstants,
+  PLVLazyValue,
+  PLVLiveSceneSDK,
+  PLVNodeController,
+  PLVPPTStatus,
+  PLVPPTWeb,
+  PLVPPTWebController
+} from '@polyvharmony/live-scenes-sdk';
 import { PLVLWLayoutDataBus } from '../../../common/PLVLWLayoutDataBus';
 import { lateInit, MutableObserver, watchStates } from '@polyvharmony/media-player-sdk';
+import { PLVLWWatermarkLayout } from '../../player/watermark/PLVLWWatermarkLayout';
 
 @Component
 export struct PLVLWPPTView {
@@ -21,12 +30,20 @@ export struct PLVLWPPTView {
   }
 
   build() {
-    PLVPPTWeb({
-      controller: this.webController.get()
-    })
-      .enabled(this.isPPTToMainScreen)
-      .width(PLVCommonConstants.FULL_PERCENT)
-      .height(PLVCommonConstants.FULL_PERCENT)
+    RelativeContainer() {
+      PLVPPTWeb({
+        controller: this.webController.get()
+      })
+        .enabled(this.isPPTToMainScreen)
+        .width(PLVCommonConstants.FULL_PERCENT)
+        .height(PLVCommonConstants.FULL_PERCENT)
+
+      PLVLWWatermarkLayout({
+        sdk: this.viewData.sdk
+      })
+        .width(PLVCommonConstants.FULL_PERCENT)
+        .height(PLVCommonConstants.FULL_PERCENT)
+    }
   }
 
   onPPTData() {

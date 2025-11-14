@@ -1,6 +1,7 @@
 import {
   PLVBaseIdEvent,
   PLVChatImgEvent,
+  PLVChatPlaybackDataVO,
   PLVEmotionEvent,
   PLVHistoryChatImgEvent,
   PLVHistoryFileShareEvent,
@@ -22,6 +23,8 @@ import { PLVLWChatContentItemImageMessage } from './item/PLVLWChatContentItemIma
 import { PLVLWChatContentItemLocalEmotionMessage } from './item/PLVLWChatContentItemLocalEmotionMessage'
 import { PLVLWChatContentItemLocalQuizMessage } from './item/PLVLWChatContentItemLocalQuizMessage'
 import { PLVLWChatContentItemLocalSpeakMessage } from './item/PLVLWChatContentItemLocalSpeakMessage'
+import { PLVLWChatContentItemPlaybackImageMessage } from './item/PLVLWChatContentItemPlaybackImageMessage'
+import { PLVLWChatContentItemPlaybackSpeakMessage } from './item/PLVLWChatContentItemPlaybackSpeakMessage'
 import { PLVLWChatContentItemQuizMessage } from './item/PLVLWChatContentItemQuizMessage'
 import { PLVLWChatContentItemRedPaperMessage } from './item/PLVLWChatContentItemRedPaperMessage'
 import { PLVLWChatContentItemRedPaperResultMessage } from './item/PLVLWChatContentItemRedPaperResultMessage'
@@ -96,6 +99,16 @@ export struct PLVLWChatContentItem {
       }
       if (this.message instanceof PLVLocalQuizEvent) {
         PLVLWChatContentItemLocalQuizMessage({
+          message: this.message
+        })
+      }
+      if (this.message instanceof PLVChatPlaybackDataVO && this.message.isSpeakMsgType()) {
+        PLVLWChatContentItemPlaybackSpeakMessage({
+          message: this.message
+        })
+      }
+      if (this.message instanceof PLVChatPlaybackDataVO && this.message.isImgMsgType()) {
+        PLVLWChatContentItemPlaybackImageMessage({
           message: this.message
         })
       }

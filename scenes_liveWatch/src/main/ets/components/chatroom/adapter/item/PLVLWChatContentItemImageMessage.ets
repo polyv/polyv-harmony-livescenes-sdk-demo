@@ -6,6 +6,7 @@ import {
   ChatItemActionCallback,
   chatItemImageDisplaySize,
   chatItemImageMaxSize,
+  chatMessageAvatar,
   nickForegroundColor,
   PLVLWChatContentItemSpeakContent
 } from './chat-content-item-common'
@@ -30,6 +31,7 @@ export struct PLVLWChatContentItemImageMessage {
   build() {
     Column() {
       PLVLWChatContentItemSpeakContent({
+        avatar: chatMessageAvatar(this.message.user?.getPic(), this.message.user?.userType),
         actor: this.message.user?.getActor(),
         actorColorForeground: $r('app.color.plvlw_chat_actor_foreground_color'),
         actorColorBackground: actorBackgroundColor(this.message.user?.userType),

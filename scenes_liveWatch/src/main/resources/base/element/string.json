@@ -173,6 +173,14 @@
       "value": "Initiate a question"
     },
     {
+      "name": "plvlw_chat_input_tips_chatroom_close",
+      "value": "Chatroom temporarily closed"
+    },
+    {
+      "name": "plvlw_chat_playback_tips",
+      "value": "Chat replay is on, showing historical messages"
+    },
+    {
       "name": "plvlw_chat_send",
       "value": "Send"
     },

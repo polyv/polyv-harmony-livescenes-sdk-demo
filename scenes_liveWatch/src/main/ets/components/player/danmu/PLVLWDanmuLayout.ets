@@ -9,11 +9,13 @@ import {
   IDanmakus
 } from '@ohos/danmakuflamemaster';
 import {
+  PLVChannelData,
   PLVCommonConstants,
   PLVJSONUtils,
   PLVLiveSceneSDK,
   PLVLocalSpeakEvent,
   PLVLogger,
+  PLVLoginType,
   PLVSocketOnEvent,
   PLVSpeakEvent
 } from '@polyvharmony/live-scenes-sdk';
@@ -25,6 +27,7 @@ const TAG = 'PLVLWDanmuLayout'
 @Component
 export struct PLVLWDanmuLayout {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @LocalStorageLink('channelData') channelData: PLVChannelData = lateInit()
   @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @State private readonly danmuModel: DanmakuView.Model = new DanmakuView.Model()
   @State private isVisible: boolean = false
@@ -101,6 +104,10 @@ export struct PLVLWDanmuLayout {
   }
 
   private observeChatMessage() {
+    if (this.channelData.loginType == PLVLoginType.PLAYBACK) {
+      // 回放不需要监听聊天消息
+      return
+    }
     this.sdk.chatroomManager.onData(PLVSocketOnEvent.MESSAGE, (data: string, event: string) => {
       switch (event) {
         case PLVSpeakEvent.EVENT: {

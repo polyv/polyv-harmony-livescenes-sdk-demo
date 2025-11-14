@@ -173,6 +173,14 @@
       "value": "发起提问"
     },
     {
+      "name": "plvlw_chat_input_tips_chatroom_close",
+      "value": "聊天室暂时关闭"
+    },
+    {
+      "name": "plvlw_chat_playback_tips",
+      "value": "聊天重放功能已开启，将会显示历史消息"
+    },
+    {
       "name": "plvlw_chat_send",
       "value": "发送"
     },

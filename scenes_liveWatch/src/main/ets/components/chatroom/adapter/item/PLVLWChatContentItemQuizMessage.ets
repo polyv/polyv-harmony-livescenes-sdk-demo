@@ -5,6 +5,7 @@ import {
   ChatContentItemLongPressPopup,
   ChatItemActionCallback,
   chatItemImageDisplaySize,
+  chatMessageAvatar,
   nickForegroundColor,
   PLVLWChatContentItemSpeakContent
 } from './chat-content-item-common'
@@ -38,6 +39,7 @@ export struct PLVLWChatContentItemQuizMessage {
     Column() {
       if (!this.isImageEvent) {
         PLVLWChatContentItemSpeakContent({
+          avatar: chatMessageAvatar(this.message.user?.getPic(), this.message.user?.userType),
           actor: this.message.user?.getActor(),
           actorColorForeground: $r('app.color.plvlw_chat_actor_foreground_color'),
           actorColorBackground: actorBackgroundColor(this.message.user?.userType),
@@ -48,6 +50,7 @@ export struct PLVLWChatContentItemQuizMessage {
         })
       } else {
         PLVLWChatContentItemSpeakContent({
+          avatar: chatMessageAvatar(this.message.user?.getPic(), this.message.user?.userType),
           actor: this.message.user?.getActor(),
           actorColorForeground: $r('app.color.plvlw_chat_actor_foreground_color'),
           actorColorBackground: actorBackgroundColor(this.message.user?.userType),

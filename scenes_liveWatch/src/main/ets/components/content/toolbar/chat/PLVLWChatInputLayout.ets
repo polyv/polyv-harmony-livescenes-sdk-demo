@@ -1,5 +1,6 @@
 import {
   IPLVCanReplyEvent,
+  PLVChannelData,
   PLVChatImgEvent,
   PLVChatroomError,
   PLVChatroomErrorCode,
@@ -13,10 +14,17 @@ import {
   PLVLocalQuizEvent,
   PLVLocalSpeakEvent,
   PLVLogger,
+  PLVLoginType,
   PLVSpeakEvent,
   PLVToastUtils
 } from '@polyvharmony/live-scenes-sdk';
-import { lateInit, MutableObserver, PLVMediaPlayerAppContext, runCatching } from '@polyvharmony/media-player-sdk';
+import {
+  lateInit,
+  MutableObserver,
+  PLVMediaPlayerAppContext,
+  runCatching,
+  watchStates
+} from '@polyvharmony/media-player-sdk';
 import { PLVLWLayoutDataBus } from '../../../../common/PLVLWLayoutDataBus';
 import { KeyboardAvoidMode, LengthUnit } from '@kit.ArkUI';
 import { ClickType, ItemInfo, ItemType, photoAccessHelper, } from '@kit.MediaLibraryKit';
@@ -46,8 +54,15 @@ export struct PLVLWChatInputLayout {
       this.replyMessage = status.replyMessage
     }).pushTo(this.observers)
     this.layoutDataBus.isPortrait.observe(it => this.isPortrait = it).pushTo(this.observers)
-    this.layoutDataBus.chatTabStatus.observe(status => {
-      this.isQuizTab = status.isSelectQuizTab
+    watchStates(() => {
+      this.isQuizTab = this.layoutDataBus.chatTabStatus.value?.isSelectQuizTab ?? false
+      const isChatroomClosed = this.layoutDataBus.preload.isChatroomClosed.value ?? false
+      if (isChatroomClosed && this.isVisible && !this.isQuizTab) {
+        this.layoutDataBus.chatInputStatus.mutate({
+          inputVisible: false,
+          emojiPanelVisible: false
+        })
+      }
     }).pushTo(this.observers)
     this.layoutDataBus.registerBackPressedHandler(this.onBackPressed, PLVLWCommonDef.BACK_PRIORITY_CHAT_INPUT)
   }
@@ -220,6 +235,7 @@ struct PLVLWChatInputLayoutPort {
   onSendEmotion: (emotion: PLVEmotionImageBean) => void = lateInit()
   onSendImage: (image: string) => void = lateInit()
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @LocalStorageLink('channelData') channelData: PLVChannelData = lateInit()
   @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @State private hasQuizTab: boolean = false
   @State private isQuizTab: boolean = false
@@ -304,6 +320,14 @@ struct PLVLWChatInputLayoutPort {
               .width(20)
               .height(20)
               .onClick(() => {
+                if (this.isQuizTab && !this.canInputChatMessage()) {
+                  if (this.isFocusInput) {
+                    this.getUIContext().getFocusController().clearFocus()
+                  }
+                  this.layoutDataBus.chatInputStatus.mutate({
+                    inputVisible: false
+                  })
+                }
                 this.layoutDataBus.chatTabStatus.mutate({
                   isSelectQuizTab: !this.isQuizTab
                 })
@@ -461,6 +485,10 @@ struct PLVLWChatInputLayoutPort {
     })
   }
 
+  private canInputChatMessage() {
+    return this.channelData.loginType != PLVLoginType.PLAYBACK
+  }
+
   aboutToDisappear(): void {
     MutableObserver.disposeAll(this.observers)
   }
@@ -472,6 +500,7 @@ struct PLVLWChatInputLayoutLand {
   onSendEmotion: (emotion: PLVEmotionImageBean) => void = lateInit()
   onSendImage: (image: string) => void = lateInit()
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @LocalStorageLink('channelData') channelData: PLVChannelData = lateInit()
   @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @State private hasQuizTab: boolean = false
   @State private isQuizTab: boolean = false
@@ -591,6 +620,14 @@ struct PLVLWChatInputLayoutLand {
                 .width(20)
                 .height(20)
                 .onClick(() => {
+                  if (this.isQuizTab && !this.canInputChatMessage()) {
+                    if (this.isFocusInput) {
+                      this.getUIContext().getFocusController().clearFocus()
+                    }
+                    this.layoutDataBus.chatInputStatus.mutate({
+                      inputVisible: false
+                    })
+                  }
                   this.layoutDataBus.chatTabStatus.mutate({
                     isSelectQuizTab: !this.isQuizTab
                   })
@@ -725,6 +762,10 @@ struct PLVLWChatInputLayoutLand {
         })
       }
     })
+  }
+
+  private canInputChatMessage() {
+    return this.channelData.loginType != PLVLoginType.PLAYBACK
   }
 
   aboutToDisappear(): void {

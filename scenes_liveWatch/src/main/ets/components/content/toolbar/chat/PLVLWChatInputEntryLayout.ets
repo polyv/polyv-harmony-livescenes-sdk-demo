@@ -1,11 +1,13 @@
-import { PLVCommonConstants, PLVLiveSceneSDK } from '@polyvharmony/live-scenes-sdk';
+import { PLVChannelData, PLVCommonConstants, PLVLiveSceneSDK, PLVLoginType } from '@polyvharmony/live-scenes-sdk';
 import { lateInit, millis, MutableObserver, Throttle } from '@polyvharmony/media-player-sdk';
 import { PLVLWLayoutDataBus } from '../../../../common/PLVLWLayoutDataBus';
 
 @Component
 export struct PLVLWChatInputEntryLayout {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @LocalStorageLink('channelData') channelData: PLVChannelData = lateInit()
   @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
+  @State private isChatroomClosed: boolean = false
   @State private isEnableQuizTab: boolean = false
   @State private isSelectQuizTab: boolean = false
   @State private quizHasNewMessage: boolean = false
@@ -17,6 +19,8 @@ export struct PLVLWChatInputEntryLayout {
       this.isSelectQuizTab = status.isSelectQuizTab
       this.quizHasNewMessage = status.quizUnreadMessageCount > 0
     }).pushTo(this.observers)
+    this.layoutDataBus.preload.isChatroomClosed.observe(it => this.isChatroomClosed = it)
+      .pushTo(this.observers)
   }
 
   build() {
@@ -39,7 +43,7 @@ export struct PLVLWChatInputEntryLayout {
           Blank().width(8)
         }
 
-        Text(this.isSelectQuizTab ? $r('app.string.plvlw_chat_input_tips_quiz') : $r('app.string.plvlw_tool_bar_chat_input_hint'))
+        Text(this.getChatInputHint())
           .fontSize(14)
           .fontColor($r('app.color.plvlw_tool_bar_chat_input_text_hint'))
       }
@@ -94,10 +98,12 @@ export struct PLVLWChatInputEntryLayout {
           right: 12
         })
         .onClick(() => {
-          this.layoutDataBus.chatInputStatus.mutate({
-            inputVisible: true,
-            emojiPanelVisible: true
-          })
+          if (this.canInputMessage()) {
+            this.layoutDataBus.chatInputStatus.mutate({
+              inputVisible: true,
+              emojiPanelVisible: true
+            })
+          }
         })
     }
     .width(PLVCommonConstants.FULL_PERCENT)
@@ -105,10 +111,12 @@ export struct PLVLWChatInputEntryLayout {
     .backgroundColor($r('app.color.plvlw_tool_bar_chat_input_background'))
     .borderRadius(18)
     .onClick(() => {
-      this.layoutDataBus.chatInputStatus.mutate({
-        inputVisible: true,
-        emojiPanelVisible: false
-      })
+      if (this.canInputMessage()) {
+        this.layoutDataBus.chatInputStatus.mutate({
+          inputVisible: true,
+          emojiPanelVisible: false
+        })
+      }
     })
   }
 
@@ -118,6 +126,32 @@ export struct PLVLWChatInputEntryLayout {
     this.layoutDataBus.chatTabStatus.mutate({
       isSelectQuizTab: !this.isSelectQuizTab
     })
+  }
+
+  private getChatInputHint() {
+    if (this.isSelectQuizTab) {
+      return $r('app.string.plvlw_chat_input_tips_quiz')
+    }
+    if (this.channelData.loginType == PLVLoginType.PLAYBACK) {
+      return $r('app.string.plvlw_chat_input_tips_chatroom_close')
+    }
+    if (this.isChatroomClosed) {
+      return $r('app.string.plvlw_chat_input_tips_chatroom_close')
+    }
+    return $r('app.string.plvlw_tool_bar_chat_input_hint')
+  }
+
+  private canInputMessage() {
+    if (this.isSelectQuizTab) {
+      return true
+    }
+    if (this.channelData.loginType == PLVLoginType.PLAYBACK) {
+      return false
+    }
+    if (this.isChatroomClosed) {
+      return false
+    }
+    return true
   }
 
   aboutToDisappear(): void {

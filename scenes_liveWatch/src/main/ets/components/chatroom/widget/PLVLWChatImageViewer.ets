@@ -1,5 +1,6 @@
 import {
   PLVChatImgEvent,
+  PLVChatPlaybackDataVO,
   PLVCommonConstants,
   PLVEmotionEvent,
   PLVHistoryChatImgEvent,
@@ -19,7 +20,7 @@ export function PLVLWChatImageViewerBuilder(payload: CustomDialogPayload<PLVLWCh
   })
 }
 
-type ImageMessageType = PLVChatImgEvent | PLVHistoryChatImgEvent | PLVEmotionEvent | PLVTAnswerEvent
+type ImageMessageType = PLVChatImgEvent | PLVHistoryChatImgEvent | PLVEmotionEvent | PLVTAnswerEvent | PLVChatPlaybackDataVO
 
 export class PLVLWChatImageViewerPayload {
   sdk: PLVLiveSceneSDK
@@ -55,6 +56,8 @@ struct PLVLWChatImageViewer {
       this.imageUrl = PLVImageBean.toImageBeanForEmotion(message, this.payload.param?.sdk.chatroomManager.emotions).url
     } else if (message instanceof PLVTAnswerEvent && message.isImgType()) {
       this.imageUrl = message.image?.url
+    } else if (message instanceof PLVChatPlaybackDataVO && message.isImgMsgType()) {
+      this.imageUrl = message.chatImgContent?.uploadImgUrl
     }
   }
 

@@ -4,6 +4,7 @@ import {
   actorBackgroundColor,
   ChatContentItemLongPressPopup,
   ChatItemActionCallback,
+  chatMessageAvatar,
   nickForegroundColor,
   PLVLWChatContentItemSpeakContent
 } from './chat-content-item-common'
@@ -17,6 +18,7 @@ export struct PLVLWChatContentItemHistoryFileShareMessage {
   build() {
     Column() {
       PLVLWChatContentItemSpeakContent({
+        avatar: chatMessageAvatar(this.message.user?.getPic(), this.message.user?.userType),
         actor: this.message.user?.getActor(),
         actorColorForeground: $r('app.color.plvlw_chat_actor_foreground_color'),
         actorColorBackground: actorBackgroundColor(this.message.user?.userType),

@@ -1,4 +1,5 @@
 import {
+  ChangePPTType,
   MenuType as ContentTabMenuType,
   IPLVCanReplyEvent,
   PLVBulletinEvent,
@@ -11,14 +12,13 @@ import {
   PLVLocalQuizEvent,
   PLVLocalSpeakEvent,
   PLVNewsPushEvent,
+  PLVPPTStatus,
   PLVRemoveBulletinEvent,
   PLVRewardSettingVO,
   PLVSocketOnEvent,
   PLVSocketPushCardEvent,
   PLVSparseArray,
-  PLVWebviewUpdateAppStatusVO,
-  PLVPPTStatus,
-  ChangePPTType
+  PLVWebviewUpdateAppStatusVO
 } from '@polyvharmony/live-scenes-sdk';
 import { MutableEvent, mutableStateOf, Rect } from '@polyvharmony/media-player-sdk';
 
@@ -153,6 +153,10 @@ class PreloadData {
    */
   readonly bulletinEvent = mutableStateOf<PLVBulletinEvent | undefined>()
   /**
+   * 聊天室关闭
+   */
+  readonly isChatroomClosed = mutableStateOf(false)
+  /**
    * 互动应用功能
    */
   readonly interactDynamicActions = mutableStateOf<PLVWebviewUpdateAppStatusVO | undefined>()
@@ -189,6 +193,10 @@ class PreloadData {
           break;
         }
       }
+    }, this)
+
+    sdk.chatroomManager.eventNotify.on('close_room', (isClose: boolean) => {
+      this.isChatroomClosed.setValue(isClose)
     }, this)
   }
 

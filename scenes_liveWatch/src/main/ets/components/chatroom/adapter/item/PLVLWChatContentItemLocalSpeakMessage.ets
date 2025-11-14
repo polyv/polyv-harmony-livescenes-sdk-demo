@@ -4,6 +4,7 @@ import {
   actorBackgroundColor,
   ChatContentItemLongPressPopup,
   ChatItemActionCallback,
+  chatMessageAvatar,
   nickForegroundColor,
   PLVLWChatContentItemSpeakContent,
   PLVLWChatQuoteContentLayout
@@ -32,6 +33,7 @@ export struct PLVLWChatContentItemLocalSpeakMessage {
       }
 
       PLVLWChatContentItemSpeakContent({
+        avatar: chatMessageAvatar(this.sdk.channelData.viewerAvatar, this.sdk.channelData.viewerType),
         actor: this.sdk.channelData.viewerActor,
         actorColorForeground: $r('app.color.plvlw_chat_actor_foreground_color'),
         actorColorBackground: actorBackgroundColor(this.sdk.channelData.viewerType),

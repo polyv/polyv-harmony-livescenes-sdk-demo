@@ -4,7 +4,9 @@ import {
   IPLVTimestampEvent,
   PLVBaseIdEvent,
   PLVBaseIdUserEvent,
+  PLVChannelData,
   PLVChatImgEvent,
+  PLVChatPlaybackDataVO,
   PLVCommonConstants,
   PLVEmotionEvent,
   PLVHistoryChatImgEvent,
@@ -14,6 +16,8 @@ import {
   PLVLiveSceneSDK,
   PLVLocalQuizEvent,
   PLVLocalSpeakEvent,
+  PLVLogger,
+  PLVLoginType,
   PLVRedPaperEvent,
   PLVRedPaperResultEvent,
   PLVRewardEvent,
@@ -49,6 +53,8 @@ import {
 import { PLVLWPinnedAnnouncementLayout } from '../widget/PLVLWPinnedAnnouncementLayout';
 import { PLVLWRewardMessageLayout } from '../widget/PLVLWRewardMessageLayout';
 
+const TAG = '[PLVLWChatLiveContentLayout]'
+
 // 有新消息到来时，限制最大保留的消息数量
 const MAX_CACHE_CHAT_MESSAGE_COUNT: number = 3000
 
@@ -58,9 +64,13 @@ const MAX_CACHE_MESSAGE_ALLOW_EXCEED_COUNT: number = 100
 // 正在查看顶部n条消息时，不要自动移除消息
 const AUTO_REMOVE_MESSAGE_LAST_VISIBLE_INDEX_AFTER: number = 300
 
+// 回放场景只请求当前回放场次的历史消息
+const PLAYBACK_REQUEST_HISTORY_MESSAGE_ONLY_SESSION: boolean = true
+
 @Component
 export struct PLVLWChatLiveContentLayout {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @LocalStorageLink('channelData') channelData: PLVChannelData = lateInit()
   @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @Provide('chatItemActionCallback') chatItemActionCallback: ChatItemActionCallback = new ChatItemActionCallback()
   private readonly messageBuffer = new PLVSimpleBuffer<PLVSocketEvent<string>>()
@@ -71,9 +81,14 @@ export struct PLVLWChatLiveContentLayout {
   @State private unreadMessageCount: number = 0
   private readonly readLatestMessageIndex = mutableStateOf(-1)
   private lastVisibleIndex: number = 0
+  private loadHistoryPage: number = 1
+  private lastRecordSessionId?: string
+  @State isChatPlaybackTipsVisible: boolean = this.isChatPlayback()
   private observers: MutableObserver[] = []
 
   aboutToAppear(): void {
+    this.onPlayerData()
+    this.onChatPlaybackData()
     this.observeOnlineChatroomMessages()
     this.loadHistoryMessage()
     this.setupMessageCallback()
@@ -117,6 +132,26 @@ export struct PLVLWChatLiveContentLayout {
         .id('plvlw_chat_pinned_announcement_layout')
         .alignRules({
           top: { anchor: PLVCommonConstants.CONTAINER, align: VerticalAlign.Top },
+          start: { anchor: PLVCommonConstants.CONTAINER, align: HorizontalAlign.Start }
+        })
+
+      Text($r('app.string.plvlw_chat_playback_tips'))
+        .fontSize(12)
+        .backgroundColor($r('app.color.plvlw_neutral_dark_white_80'))
+        .borderRadius(4)
+        .padding(8)
+        .textAlign(TextAlign.Center)
+        .margin({ bottom: 12 })
+        .fontColor($r('app.color.plvlw_neutral_light_black_80'))
+        .constraintSize({ minWidth: 258 })
+        .visibility(this.isChatPlaybackTipsVisible ? Visibility.Visible : Visibility.Hidden)
+        .onAppear(() => {
+          setTimeout(() => {
+            this.isChatPlaybackTipsVisible = false
+          }, 3500)
+        })
+        .alignRules({
+          top: { anchor: 'plvlw_chat_pinned_announcement_layout', align: VerticalAlign.Bottom },
           start: { anchor: PLVCommonConstants.CONTAINER, align: HorizontalAlign.Start }
         })
 
@@ -189,7 +224,53 @@ export struct PLVLWChatLiveContentLayout {
     }
   }
 
+  private onPlayerData() {
+    this.sdk?.playerManager.mainMediaPlayer.getBusinessListenerRegistry()
+      .playbackVideoData
+      .observe((value) => {
+        const playbackVideoData = value
+        const sessionId = playbackVideoData?.channelSessionId ?? ''
+        if (!sessionId) {
+          return
+        }
+        PLVLogger.info(TAG, `onPlayerData, sessionId=${sessionId}, lastRecordSessionId=${this.lastRecordSessionId}`)
+        if (this.lastRecordSessionId !== sessionId && !this.isChatPlayback() && this.tryGetLoadHistoryMode()?.[1]) {
+          this.adapter.clear()
+          this.loadHistoryPage = 1
+          this.enableRefresh = true
+          this.isRefreshing = false
+          this.loadHistoryMessage()
+        }
+        if (this.lastRecordSessionId !== sessionId && this.isChatPlayback()) {
+          const fileId = playbackVideoData?.fileId ?? ''
+          PLVLogger.info(TAG, `onPlayerData, fileId=${fileId}`)
+          this.sdk?.chatPlaybackManager.start(sessionId, fileId)
+        }
+        this.lastRecordSessionId = sessionId
+      })
+      .pushTo(this.observers)
+  }
+
+  private onChatPlaybackData() {
+    if (!this.isChatPlayback()) {
+      return
+    }
+    this.sdk?.chatPlaybackManager.setupPlayTimeCallback(() => {
+      return this.sdk?.playerManager.mainMediaPlayer.getCurrentPosition() ?? 0
+    })
+    this.sdk?.chatPlaybackManager.eventNotify.on('insert_data', (...dataList: PLVChatPlaybackDataVO[]) => {
+      this.appendOnlineMessage(dataList)
+    }, this)
+    this.sdk?.chatPlaybackManager.eventNotify.on('clear_data', () => {
+      this.adapter.clear()
+    }, this)
+  }
+
   private observeOnlineChatroomMessages() {
+    if (this.channelData.loginType == PLVLoginType.PLAYBACK) {
+      // 回放不需要监听聊天消息
+      return
+    }
     this.sdk.chatroomManager.onData(PLVSocketOnEvent.MESSAGE, (data: string, event: string) => {
       this.messageBuffer.push({
         eventName: event,
@@ -290,9 +371,11 @@ export struct PLVLWChatLiveContentLayout {
   }
 
   private async loadHistoryMessage() {
-    if (this.isRefreshing) {
+    const loadHistoryMode = this.tryGetLoadHistoryMode()
+    if (this.isRefreshing || !loadHistoryMode) {
       return
     }
+    PLVLogger.info(TAG, `loadHistoryMessage, loadHistoryMode=${loadHistoryMode}`)
     this.isRefreshing = true
     const chatMessages = this.adapter.getChatMessages();
     const isFirstLoad = chatMessages.length === 0
@@ -300,19 +383,24 @@ export struct PLVLWChatLiveContentLayout {
     const cursor = this.retrieveHistoryMessageCursor()
     const lastTimestamp = cursor[0]
     const lastTimestampCount = cursor[1]
-    const result = await runCatching(this.sdk.chatroomManager.getChatHistoryList(loadHistoryCount, lastTimestamp, lastTimestampCount));
+    const result = await runCatching(loadHistoryMode[1]
+      ? this.sdk.chatroomManager.getChatHistoryListBySessionId(loadHistoryCount, this.loadHistoryPage, loadHistoryMode[0] as string)
+      : this.sdk.chatroomManager.getChatHistoryList(loadHistoryCount, lastTimestamp, lastTimestampCount));
+    PLVLogger.info(TAG, `loadHistoryMessage, result=${result.success}`)
     if (result.success === false) {
       PLVToastUtils.shortShow(result.error.message);
       this.isRefreshing = false;
       return;
     }
+    this.loadHistoryPage++
     const historyObjects = result.data;
     const historyMessages = (await Promise.all(
       historyObjects.map(async (historyObject) => {
-        const parsedHistoryData = (await promisify(this.sdk.chatroomManager.parseChatHistoryData)(historyObject))[0]
+        const parsedHistoryData = (await promisify(this.sdk.chatroomManager.parseChatHistoryDataFromApi)(historyObject, loadHistoryMode[1] as boolean))[0]
         return parsedHistoryData['data'] as PLVBaseIdEvent
       })
     )).reverse()
+    PLVLogger.info(TAG, `loadHistoryMessage, parsedHistoryData finish`)
 
     const isTop = this.scroller.currentOffset().yOffset === 0
     const isNoMoreHistory = historyObjects.length < loadHistoryCount
@@ -394,12 +482,17 @@ export struct PLVLWChatLiveContentLayout {
       this.layoutDataBus.chatInputStatus.mutate({
         replyMessage: undefined
       })
-      this.layoutDataBus.chatInputStatus.mutate({
-        inputVisible: true,
-        replyMessage: event
-      })
+      const isChatroomClosed = this.layoutDataBus.preload.isChatroomClosed.value ?? false
+      if (!isChatroomClosed) {
+        this.layoutDataBus.chatInputStatus.mutate({
+          inputVisible: true,
+          replyMessage: event
+        })
+      } else {
+        PLVToastUtils.shortShow($r('app.string.plvlw_chat_input_tips_chatroom_close'))
+      }
     }
-    this.chatItemActionCallback.onClickImage = (event: PLVChatImgEvent | PLVHistoryChatImgEvent | PLVEmotionEvent | PLVTAnswerEvent) => {
+    this.chatItemActionCallback.onClickImage = (event: PLVChatImgEvent | PLVHistoryChatImgEvent | PLVEmotionEvent | PLVTAnswerEvent | PLVChatPlaybackDataVO) => {
       Dialogs.showCustomDialog({
         context: this.getUIContext(),
         builder: PLVLWChatImageViewerBuilder,
@@ -425,6 +518,23 @@ export struct PLVLWChatLiveContentLayout {
         }
       })
     }
+  }
+
+  private isChatPlayback() {
+    return (this.channelData?.liveDetail?.isChatPlaybackEnabled() ?? false) && this.channelData.loginType === PLVLoginType.PLAYBACK
+  }
+
+  private tryGetLoadHistoryMode() {
+    const requestSessionIdHistoryList = PLAYBACK_REQUEST_HISTORY_MESSAGE_ONLY_SESSION && this.channelData.loginType == PLVLoginType.PLAYBACK
+    const sessionId = this.sdk.playerManager.mainMediaPlayer.getBusinessListenerRegistry()
+      .playbackVideoData
+      .value?.channelSessionId
+    const noNeedSessionOrHasSessionId = this.channelData.loginType == PLVLoginType.LIVE || !PLAYBACK_REQUEST_HISTORY_MESSAGE_ONLY_SESSION || (requestSessionIdHistoryList && ((sessionId?.length ?? 0) > 0))
+    PLVLogger.info(TAG, `canLoadHistoryMessage, noNeedSessionOrHasSessionId=${noNeedSessionOrHasSessionId}, requestSessionIdHistoryList=${requestSessionIdHistoryList}, sessionId=${sessionId}, isChatPlayback=${this.isChatPlayback()}, isRefreshing=${this.isRefreshing}}`)
+    if (!noNeedSessionOrHasSessionId || this.isChatPlayback()) {
+      return undefined
+    }
+    return [sessionId, requestSessionIdHistoryList]
   }
 
   aboutToDisappear(): void {
