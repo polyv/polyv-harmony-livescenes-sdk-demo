@@ -164,7 +164,8 @@ struct LinkMicTileLayout {
           (viewer: PLVLinkMicViewer) => {
             GridItem() {
               PLVSALinkMicViewerItemView({
-                viewer: viewer
+                viewer: viewer,
+                viewerInfoOverlayVisible: this.linkmicViewers.length > 1
               })
             }
             .width(this.viewerItemWidth)
@@ -268,7 +269,8 @@ struct LinkMicSpeakerLayout {
     Stack() {
       if (this.linkmicViewers.length === 1) {
         PLVSALinkMicViewerItemView({
-          viewer: this.linkmicViewers[0]
+          viewer: this.linkmicViewers[0],
+          viewerInfoOverlayVisible: false
         })
           .width('100%')
           .height('100%')

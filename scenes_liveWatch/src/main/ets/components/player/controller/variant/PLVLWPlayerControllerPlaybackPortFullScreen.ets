@@ -1,9 +1,14 @@
 import { PLVCommonConstants } from '@polyvharmony/live-scenes-sdk';
+import { PLVLWPlayerControllerVariantState } from '../vo/PLVLWPlayerControllerVariantState';
 import { PLVLWPlayerControllerPlayPauseButton } from '../widget/PLVLWPlayerControllerPlayPauseButton';
 import { PLVLWPlayerControllerProgressLayout } from '../widget/PLVLWPlayerControllerProgressLayout';
 
 @Component
 export struct PLVLWPlayerControllerPlaybackPortFullScreen {
+  static match(variant: PLVLWPlayerControllerVariantState): boolean {
+    return !variant.isLive && variant.isPortrait && variant.isPlayerFullscreen && !variant.isCasting
+  }
+
   build() {
     RelativeContainer() {
       PLVLWPlayerControllerPlayPauseButton()

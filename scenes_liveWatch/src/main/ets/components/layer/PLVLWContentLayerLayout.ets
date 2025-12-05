@@ -3,12 +3,13 @@ import {
   PLVChannelData,
   PLVCommonConstants,
   PLVDeviceUtils,
+  PLVLinkMicState,
   PLVLiveScene,
   PLVLiveSceneSDK,
   PLVMediaQueryListener,
   PLVUtils
 } from '@polyvharmony/live-scenes-sdk';
-import { Rect } from '@polyvharmony/media-player-sdk';
+import { MutableObserver, Rect, watchStates } from '@polyvharmony/media-player-sdk';
 import { PLVLWLayoutDataBus } from '../../common/PLVLWLayoutDataBus';
 import { PLVLWInteractTopBarLayout } from '../content/interacttopbar/PLVLWInteractTopBarLayout';
 import { PLVLWTabContentLayout } from '../content/tabcontent/PLVLWTabContentLayout';
@@ -26,8 +27,10 @@ export struct PLVLWContentLayerLayout {
   private orientationListener: PLVMediaQueryListener | undefined
   private avoidAreaChangeListener: PLVAvoidAreaChangeListener | undefined
   @State isPortrait: boolean = true
+  @State isLinkmic: boolean = false
   @State topPadding: number = PLVDeviceUtils.getStatusBarHeight()
   @State bottomPadding: number = 6 + PLVDeviceUtils.getNavigationIndicatorHeight()
+  private observers: MutableObserver[] = []
 
   override aboutToAppear(): void {
     this.orientationListener = PLVUtils.listenerOrientation((result) => {
@@ -37,11 +40,15 @@ export struct PLVLWContentLayerLayout {
     this.avoidAreaChangeListener = PLVUtils.listenerAvoidAreaChange(() => {
       this.topPadding = !this.isPortrait ? 0 : PLVDeviceUtils.getStatusBarHeight()
     })
+    watchStates(() => {
+      this.isLinkmic = this.sdk?.linkmicManager.linkmicState.value === PLVLinkMicState.Joined
+    }).pushTo(this.observers)
   }
 
   aboutToDisappear(): void {
     this.orientationListener?.off()
     this.avoidAreaChangeListener?.off()
+    MutableObserver.disposeAll(this.observers)
   }
 
   build() {
@@ -65,16 +72,30 @@ export struct PLVLWContentLayerLayout {
               .id('interactTopBarLayout')
 
             // 播放器区域占位
-            Stack()
-              .id('plvlw_player_anchor_space')
-              .width(PLVCommonConstants.FULL_PERCENT)
-              .aspectRatio(16 / 9)
-              .alignRules({
-                top: { anchor: 'interactTopBarLayout', align: VerticalAlign.Bottom }
-              })
-              .onAreaChange((oldArea, newArea) => {
-                this.postPlayerLocationUpdate(newArea)
-              })
+            Column() {
+              if (this.isLinkmic) {
+                // 连麦列表区域占位
+                Stack()
+                  .id('plvlw_player_anchor_space_linkmic_list')
+                  .width(PLVCommonConstants.FULL_PERCENT)
+                  .height(90)
+                Blank()
+                  .height(8)
+              }
+              // 播放器区域、连麦主画面区域占位
+              Stack()
+                .id('plvlw_player_anchor_space_player')
+                .width(PLVCommonConstants.FULL_PERCENT)
+                .aspectRatio(16 / 9)
+            }
+            .id('plvlw_player_anchor_space')
+            .width(PLVCommonConstants.FULL_PERCENT)
+            .alignRules({
+              top: { anchor: 'interactTopBarLayout', align: VerticalAlign.Bottom }
+            })
+            .onAreaChange((oldArea, newArea) => {
+              this.postPlayerLocationUpdate(newArea)
+            })
 
             // 功能菜单区域
             PLVLWTabContentLayout()

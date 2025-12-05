@@ -9,6 +9,7 @@ import {
 import { lateInit, MutableObserver } from '@polyvharmony/media-player-sdk'
 import { PLVLWLayoutDataBus } from '../../../common/PLVLWLayoutDataBus'
 import { PLVLWChatInputEntryLayout } from './chat/PLVLWChatInputEntryLayout'
+import { PLVLWToolBarLinkMicControlIcon } from './linkmic/PLVLWLinkMicControlLayout'
 import { PLVLWMoreSettingIcon } from './moresetting/PLVLWMoreSettingLayout'
 import { PLVLWToolBarPreviousIcon } from './previous/PLVLWToolBarPreviousLayout'
 import { PLVLWToolBarProductIcon } from './product/PLVLWToolBarProductLayout'
@@ -19,6 +20,7 @@ export struct PLVLWToolBarLayout {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
   @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @State private isPortrait: boolean = true
+  @State private isLinkMicIconVisible: boolean = false
   @State private currentContentTabMenuType: ContentTabMenuType | undefined = undefined
   @State private rewardIconVisible: boolean = false
   @State private productIconVisible: boolean = false
@@ -62,6 +64,13 @@ export struct PLVLWToolBarLayout {
             .width(36)
             .height(36)
             .visibility(this.isPortrait ? Visibility.Visible : Visibility.None)
+
+          PLVLWToolBarLinkMicControlIcon({
+            isLinkMicIconVisible: this.isLinkMicIconVisible
+          })
+            .width(36)
+            .height(36)
+            .visibility(this.isPortrait && this.isLinkMicIconVisible ? Visibility.Visible : Visibility.None)
 
           PLVLWToolBarProductIcon()
             .width(36)

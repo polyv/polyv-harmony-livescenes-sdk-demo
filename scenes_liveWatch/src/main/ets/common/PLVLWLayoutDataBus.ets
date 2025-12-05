@@ -12,6 +12,7 @@ import {
   PLVLocalQuizEvent,
   PLVLocalSpeakEvent,
   PLVNewsPushEvent,
+  PLVNodeController,
   PLVPPTStatus,
   PLVRemoveBulletinEvent,
   PLVRewardSettingVO,
@@ -20,7 +21,18 @@ import {
   PLVSparseArray,
   PLVWebviewUpdateAppStatusVO
 } from '@polyvharmony/live-scenes-sdk';
-import { MutableEvent, mutableStateOf, Rect } from '@polyvharmony/media-player-sdk';
+import { PLVMediaCastController, PLVMediaCastDevice } from '@polyvharmony/media-cast';
+import {
+  derivedStateOf,
+  FixSizePool,
+  MutableEvent,
+  mutableStateOf,
+  PLVMediaBitRate,
+  Pool,
+  Rect,
+  requireNotNull
+} from '@polyvharmony/media-player-sdk';
+import { createPPTViewNodeController, PPTViewData } from '../components/ppt/node/PLVLWPPTView';
 
 export class PLVLWLayoutDataBus {
   /**
@@ -68,6 +80,10 @@ export class PLVLWLayoutDataBus {
    */
   readonly onClickLike = new MutableEvent<number>().async(false)
   /**
+   * ppt view
+   */
+  readonly pptController = new PPTController(this)
+  /**
    * PPT是否在主屏
    */
   readonly isPPTToMainScreen = mutableStateOf(false)
@@ -87,6 +103,10 @@ export class PLVLWLayoutDataBus {
    * 底层布局里的组件触摸事件拦截区域
    */
   readonly bottomLayerViewTouchArea = mutableStateOf<Rect>()
+  /**
+   * 投屏相关数据
+   */
+  readonly mediaCast = new MediaCast()
   // <editor-fold defaultstate="collapsed" desc="返回监听拦截">
   private readonly backHandlers: PLVSparseArray<PLVCallback<void, boolean>> = new PLVSparseArray<PLVCallback<void, boolean>>()
 
@@ -112,6 +132,10 @@ export class PLVLWLayoutDataBus {
   }
 
   // </editor-fold>
+
+  destroy() {
+    this.pptController.destroy()
+  }
 }
 
 export class PlayerControllerStatus {
@@ -231,4 +255,61 @@ class PreloadData {
     })
   }
 
+}
+
+class PPTController {
+  private readonly layoutDataBus: PLVLWLayoutDataBus
+  private pptViewNodePool: Pool<PLVNodeController> | undefined = undefined
+  private _internal_ref_controller: PLVNodeController | undefined = undefined
+
+  constructor(layoutDataBus: PLVLWLayoutDataBus) {
+    this.layoutDataBus = layoutDataBus
+  }
+
+  init(sdk: PLVLiveSceneSDK) {
+    this.pptViewNodePool = new FixSizePool(1, () => {
+      const controller = createPPTViewNodeController(true, new PPTViewData(sdk, this.layoutDataBus))
+      this._internal_ref_controller = controller
+      return controller
+    })
+  }
+
+  async require(): Promise<PLVNodeController> {
+    return requireNotNull(this.pptViewNodePool).require(null)
+  }
+
+  release(pptViewNodeController: PLVNodeController) {
+    requireNotNull(this.pptViewNodePool).release(pptViewNodeController)
+  }
+
+  destroy() {
+    this._internal_ref_controller?.destroy()
+  }
+}
+
+/**
+ * 投屏相关数据
+ */
+class MediaCast {
+  /**
+   * 当前投屏设备
+   */
+  readonly currentCastDevice = mutableStateOf<PLVMediaCastDevice | undefined>()
+  /**
+   * 当前投屏控制器
+   */
+  readonly castController = mutableStateOf<PLVMediaCastController | undefined>()
+  /**
+   * 当前投屏清晰度
+   */
+  readonly castBitRate = mutableStateOf<PLVMediaBitRate | undefined>()
+  /**
+   * 开始投屏事件
+   */
+  readonly onStartCast = new MutableEvent<PLVMediaCastDevice>()
+  /**
+   * 切换清晰度事件
+   */
+  readonly onSwitchBitRate = new MutableEvent<PLVMediaBitRate>()
+  readonly isCasting = derivedStateOf(() => this.castController.value !== undefined)
 }

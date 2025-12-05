@@ -1,9 +1,14 @@
 import { PLVCommonConstants } from '@polyvharmony/live-scenes-sdk';
+import { PLVLWPlayerControllerVariantState } from '../vo/PLVLWPlayerControllerVariantState';
 import { PLVLWPlayerControllerLockButton } from '../widget/PLVLWPlayerControllerLockButton';
 import { PLVLWPlayerControllerProgressLayout } from '../widget/PLVLWPlayerControllerProgressLayout';
 
 @Component
 export struct PLVLWPlayerControllerPlaybackLandLocked {
+  static match(variant: PLVLWPlayerControllerVariantState): boolean {
+    return !variant.isLive && !variant.isPortrait && variant.isLocked && !variant.isCasting
+  }
+
   build() {
     RelativeContainer() {
       PLVLWPlayerControllerProgressLayout()

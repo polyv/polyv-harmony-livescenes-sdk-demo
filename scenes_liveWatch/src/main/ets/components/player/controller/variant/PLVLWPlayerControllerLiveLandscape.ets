@@ -3,6 +3,7 @@ import { PLVLWRewardMessageLayout } from '../../../chatroom/widget/PLVLWRewardMe
 import { PLVLWInteractSideBarLayout } from '../../../content/interactsidebar/PLVLWInteractSideBarLayout';
 import { PLVLWProductPushCardLayout } from '../../../content/interactsidebar/product/PLVLWProductPushCardLayout';
 import { PLVLWToolBarLayout } from '../../../content/toolbar/PLVLWToolBarLayout';
+import { PLVLWPlayerControllerVariantState } from '../vo/PLVLWPlayerControllerVariantState';
 import { PLVLWPlayerControllerDanmuOpenButton } from '../widget/PLVLWPlayerControllerDanmuOpenButton';
 import { PLVLWPlayerControllerLockButton } from '../widget/PLVLWPlayerControllerLockButton';
 import { PLVLWPlayerControllerPlayPauseButton } from '../widget/PLVLWPlayerControllerPlayPauseButton';
@@ -11,6 +12,10 @@ import { PLVLWPlayerControllerTopToolBarLayout } from '../widget/PLVLWPlayerCont
 
 @Component
 export struct PLVLWPlayerControllerLiveLandscape {
+  static match(variant: PLVLWPlayerControllerVariantState): boolean {
+    return variant.isLive && !variant.isPortrait && !variant.isLocked && !variant.isCasting
+  }
+
   build() {
     RelativeContainer() {
       PLVLWPlayerControllerPlayPauseButton()

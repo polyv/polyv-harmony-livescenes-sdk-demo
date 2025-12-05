@@ -28,6 +28,7 @@ export struct PLVLWWatchLayout {
   aboutToAppear(): void {
     this.initData()
     this.layoutDataBus.preload.preload(this.sdk)
+    this.layoutDataBus.pptController.init(this.sdk)
     this.onChatData()
     this.loginSocket()
     this.layoutController.layoutDataBus = this.layoutDataBus
@@ -37,6 +38,7 @@ export struct PLVLWWatchLayout {
   }
 
   aboutToDisappear(): void {
+    this.layoutDataBus.destroy()
     this.sdk.destroy()
     this.orientationListener?.off()
   }

@@ -187,6 +187,7 @@ export struct PLVLWChatLiveContentLayout {
         top: { anchor: 'plvlw_chat_pinned_announcement_layout', align: VerticalAlign.Bottom },
         bottom: { anchor: PLVCommonConstants.CONTAINER, align: VerticalAlign.Bottom },
       })
+      .pullDownRatio(this.isChatPlayback() ? 0 : undefined)
 
       PLVLWRewardMessageLayout()
         .id('plvlw_chat_reward_message_layout')
@@ -249,6 +250,13 @@ export struct PLVLWChatLiveContentLayout {
         this.lastRecordSessionId = sessionId
       })
       .pushTo(this.observers)
+    this.sdk?.playerManager.mainMediaPlayer.getEventListenerRegistry()
+      .onSeekCompleteEvent
+      .observe(() => {
+        if (this.isChatPlayback()) {
+          this.sdk?.chatPlaybackManager.seek(this.sdk?.playerManager.mainMediaPlayer.getCurrentPosition() ?? 0)
+        }
+      })
   }
 
   private onChatPlaybackData() {

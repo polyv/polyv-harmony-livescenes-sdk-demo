@@ -1,16 +1,17 @@
 import {
   PLVCommonConstants,
+  PLVDeviceUtils,
   PLVLiveSceneSDK,
   PLVLogger,
   PLVSimpleWeb,
-  PLVWebController,
   PLVToastUtils,
-  PLVUtils
+  PLVUtils,
+  PLVWebController
 } from '@polyvharmony/live-scenes-sdk';
 import { lateInit, runCatching } from '@polyvharmony/media-player-sdk';
 import { photoAccessHelper } from '@kit.MediaLibraryKit';
 import { image } from '@kit.ImageKit';
-import fs from '@ohos.file.fs'
+import fs from '@ohos.file.fs';
 import { display } from '@kit.ArkUI';
 
 const TAG = 'PLVSAMoreShareLayout'
@@ -75,7 +76,7 @@ struct PLVSAMoreShareLayoutPort {
       .id('plvsa_more_share_poster_container')
       .width('100%')
       .margin({
-        top: 4,
+        top: 4 + PLVDeviceUtils.getStatusBarHeight(),
         bottom: 24
       })
       .alignRules({

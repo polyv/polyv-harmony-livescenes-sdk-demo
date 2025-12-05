@@ -1,4 +1,6 @@
 import { PLVCommonConstants } from '@polyvharmony/live-scenes-sdk';
+import { PLVLWPlayerControllerVariantState } from '../vo/PLVLWPlayerControllerVariantState';
+import { PLVLWPlayerControllerCastButton } from '../widget/PLVLWPlayerControllerCastButton';
 import { PLVLWPlayerControllerDanmuOpenButton } from '../widget/PLVLWPlayerControllerDanmuOpenButton';
 import { PLVLWPlayerControllerPlayPauseButton } from '../widget/PLVLWPlayerControllerPlayPauseButton';
 import { PLVLWPlayerControllerPPTStatusLayout } from '../widget/PLVLWPlayerControllerPPTStatusLayout';
@@ -6,6 +8,10 @@ import { PLVLWPlayerControllerToggleOrientationButton } from '../widget/PLVLWPla
 
 @Component
 export struct PLVLWPlayerControllerLivePortHalfScreen {
+  static match(variant: PLVLWPlayerControllerVariantState): boolean {
+    return variant.isLive && variant.isPortrait && !variant.isPlayerFullscreen && !variant.isCasting
+  }
+
   build() {
     RelativeContainer() {
       PLVLWPlayerControllerPlayPauseButton()
@@ -54,6 +60,18 @@ export struct PLVLWPlayerControllerLivePortHalfScreen {
         .margin({
           right: 8,
           bottom: 8
+        })
+
+      PLVLWPlayerControllerCastButton()
+        .width(36)
+        .height(36)
+        .alignRules({
+          top: { anchor: PLVCommonConstants.CONTAINER, align: VerticalAlign.Top },
+          end: { anchor: PLVCommonConstants.CONTAINER, align: HorizontalAlign.End }
+        })
+        .margin({
+          top: 8,
+          right: 8
         })
     }
     .width(PLVCommonConstants.FULL_PERCENT)

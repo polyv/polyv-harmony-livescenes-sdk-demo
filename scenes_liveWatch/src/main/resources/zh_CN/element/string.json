@@ -327,6 +327,146 @@
     {
       "name": "plvlw_chat_full_text",
       "value": "全文"
+    },
+    {
+      "name": "plvlw_cast_search_device_title",
+      "value": "投电视"
+    },
+    {
+      "name": "plvlw_cast_search_device_result_title",
+      "value": "已找到以下设备"
+    },
+    {
+      "name": "plvlw_cast_search_device_result_not_found",
+      "value": "未发现到可投屏设备，请重试…"
+    },
+    {
+      "name": "plvlw_cast_search_device_retry",
+      "value": "重试"
+    },
+    {
+      "name": "plvlw_cast_connect_device_title",
+      "value": "连接设备..."
+    },
+    {
+      "name": "plvlw_cast_connect_device_status_connecting",
+      "value": "正在连接..."
+    },
+    {
+      "name": "plvlw_cast_connect_device_switch",
+      "value": "切换设备 >"
+    },
+    {
+      "name": "plvlw_linkmic_tip_request_join",
+      "value": "申请连麦"
+    },
+    {
+      "name": "plvlw_linkmic_tip_requesting",
+      "value": "申请连麦中"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_title_video",
+      "value": "主讲邀请你加入连麦"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_title_audio",
+      "value": "主讲邀请你加入连麦"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_camera",
+      "value": "摄像头"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_microphone",
+      "value": "麦克风"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_refuse_text",
+      "value": "暂不连麦(%ss)"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_accept_text",
+      "value": "开始连麦"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_camera_closed_text",
+      "value": "设备摄像头未开启"
+    },
+    {
+      "name": "plvlw_chat_me",
+      "value": "%s(我)%s"
+    },
+    {
+      "name": "plvlw_confirm_dialog_cancel",
+      "value": "取消"
+    },
+    {
+      "name": "plvlw_confirm_dialog_confirm",
+      "value": "确定"
+    },
+    {
+      "name": "plvlw_confirm_dialog_content",
+      "value": "提示"
+    },
+    {
+      "name": "plvlw_confirm_dialog_title",
+      "value": "提示"
+    },
+    {
+      "name": "plvlw_linkmic_tip_requesting_2",
+      "value": "连麦申请成功，等待接通中..."
+    },
+    {
+      "name": "plvlw_linkmic_request_cancel",
+      "value": "取消申请"
+    },
+    {
+      "name": "plvlw_linkmic_toast_accept_request",
+      "value": "主讲已接受申请，马上进入连麦"
+    },
+    {
+      "name": "plvlw_linkmic_toast_camera_open",
+      "value": "摄像头已开启"
+    },
+    {
+      "name": "plvlw_linkmic_toast_camera_close",
+      "value": "摄像头已关闭"
+    },
+    {
+      "name": "plvlw_linkmic_toast_microphone_open",
+      "value": "麦克风已开启"
+    },
+    {
+      "name": "plvlw_linkmic_toast_microphone_close",
+      "value": "麦克风已关闭"
+    },
+    {
+      "name": "plvlw_linkmic_microphone_to_open",
+      "value": "开启麦克风"
+    },
+    {
+      "name": "plvlw_linkmic_microphone_to_close",
+      "value": "关闭麦克风"
+    },
+    {
+      "name": "plvlw_linkmic_camera_to_open",
+      "value": "开启摄像头"
+    },
+    {
+      "name": "plvlw_linkmic_camera_to_close",
+      "value": "关闭摄像头"
+    },
+    {
+      "name": "plvlw_linkmic_control_leave",
+      "value": "挂断连麦"
+    },
+    {
+      "name": "plvlw_linkmic_hang_off_dialog_content",
+      "value": "确认挂断连麦？"
+    },
+    {
+      "name": "plvlw_linkmic_hang_off_dialog_confirm",
+      "value": "挂断"
     }
   ]
 }

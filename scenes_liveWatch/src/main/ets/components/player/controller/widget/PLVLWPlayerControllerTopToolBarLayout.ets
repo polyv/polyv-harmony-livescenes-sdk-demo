@@ -9,6 +9,7 @@ import {
 import { PLVLWMoreBitRateSelectDialog } from '../../../content/toolbar/moresetting/actions/PLVLWMoreBitRateAction'
 import { PLVLWMoreSpeedSelectDialog } from '../../../content/toolbar/moresetting/actions/PLVLWMoreSpeedAction'
 import { PLVLWMoreSettingIcon } from '../../../content/toolbar/moresetting/PLVLWMoreSettingLayout'
+import { PLVLWPlayerControllerCastButton } from './PLVLWPlayerControllerCastButton'
 
 @Component
 export struct PLVLWPlayerControllerTopToolBarLayout {
@@ -47,6 +48,10 @@ export struct PLVLWPlayerControllerTopToolBarLayout {
 
   build() {
     Row({ space: 16 }) {
+      PLVLWPlayerControllerCastButton()
+        .width(36)
+        .height(36)
+
       Text($r('app.string.plvlw_player_speed_short'))
         .fontSize(16)
         .fontColor($r('app.color.plvlw_player_controller_top_toolbar_text'))

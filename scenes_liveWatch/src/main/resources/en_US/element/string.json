@@ -327,6 +327,146 @@
     {
       "name": "plvlw_chat_full_text",
       "value": "Full text"
+    },
+    {
+      "name": "plvlw_cast_search_device_title",
+      "value": "Invest in TV"
+    },
+    {
+      "name": "plvlw_cast_search_device_result_title",
+      "value": "The following devices have been found"
+    },
+    {
+      "name": "plvlw_cast_search_device_result_not_found",
+      "value": "No screen casting devices were found, please try again"
+    },
+    {
+      "name": "plvlw_cast_search_device_retry",
+      "value": "Retry"
+    },
+    {
+      "name": "plvlw_cast_connect_device_title",
+      "value": "Connect devices .."
+    },
+    {
+      "name": "plvlw_cast_connect_device_status_connecting",
+      "value": "Connecting .."
+    },
+    {
+      "name": "plvlw_cast_connect_device_switch",
+      "value": "Switch devices>"
+    },
+    {
+      "name": "plvlw_linkmic_tip_request_join",
+      "value": "Apply video call"
+    },
+    {
+      "name": "plvlw_linkmic_tip_requesting",
+      "value": "Voice call requesting"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_title_video",
+      "value": "The speaker invites you to join voice call"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_title_audio",
+      "value": "The speaker invites you to join voice call"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_camera",
+      "value": "Camera"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_microphone",
+      "value": "Microphone"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_refuse_text",
+      "value": "Not Now(%ss)"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_accept_text",
+      "value": "Accept"
+    },
+    {
+      "name": "plvlw_linkmic_invitation_camera_closed_text",
+      "value": "The device camera is not turned on"
+    },
+    {
+      "name": "plvlw_chat_me",
+      "value": "%s(me)%s"
+    },
+    {
+      "name": "plvlw_confirm_dialog_cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "plvlw_confirm_dialog_confirm",
+      "value": "Confirm"
+    },
+    {
+      "name": "plvlw_confirm_dialog_content",
+      "value": "Hint"
+    },
+    {
+      "name": "plvlw_confirm_dialog_title",
+      "value": "Hint"
+    },
+    {
+      "name": "plvlw_linkmic_tip_requesting_2",
+      "value": "Success to request voice call, and waiting for connection ..."
+    },
+    {
+      "name": "plvlw_linkmic_request_cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "plvlw_linkmic_toast_accept_request",
+      "value": "The speaker has accepted the application and will now enter the connected microphone"
+    },
+    {
+      "name": "plvlw_linkmic_toast_camera_open",
+      "value": "The camera is turned on"
+    },
+    {
+      "name": "plvlw_linkmic_toast_camera_close",
+      "value": "The camera is turned off"
+    },
+    {
+      "name": "plvlw_linkmic_toast_microphone_open",
+      "value": "The microphone is turned on"
+    },
+    {
+      "name": "plvlw_linkmic_toast_microphone_close",
+      "value": "The microphone is turned off"
+    },
+    {
+      "name": "plvlw_linkmic_microphone_to_open",
+      "value": "Turn on microphone"
+    },
+    {
+      "name": "plvlw_linkmic_microphone_to_close",
+      "value": "Turn off microphone"
+    },
+    {
+      "name": "plvlw_linkmic_camera_to_open",
+      "value": "Turn on camera"
+    },
+    {
+      "name": "plvlw_linkmic_camera_to_close",
+      "value": "Turn off camera"
+    },
+    {
+      "name": "plvlw_linkmic_control_leave",
+      "value": "Hang up voice call"
+    },
+    {
+      "name": "plvlw_linkmic_hang_off_dialog_content",
+      "value": "Are you sure to hang up the voice call?"
+    },
+    {
+      "name": "plvlw_linkmic_hang_off_dialog_confirm",
+      "value": "Hang up"
     }
   ]
 }

@@ -2,7 +2,7 @@ import { PLVCommonConstants, PLVLazyValue, PLVLiveSceneSDK, PLVNodeController } 
 import { lateInit, MutableObserver, watchStates } from '@polyvharmony/media-player-sdk'
 import { PLVLWLayoutDataBus } from '../../../common/PLVLWLayoutDataBus'
 import { createPlayerViewNodeController, PlayerViewData } from '../../player/node/PLVLWPlayerView'
-import { createPPTViewNodeController, PPTViewData } from './PLVLWPPTView'
+import { PLVLWPPTNodeContainer } from './PLVLWPPTNodeContainer'
 
 @Component
 export struct PLVLWPPTPlayerExchangeView {
@@ -10,9 +10,7 @@ export struct PLVLWPPTPlayerExchangeView {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
   @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @State isPPTToMainScreen: boolean = false
-  private pptViewNodeController: PLVLazyValue<PLVNodeController> = new PLVLazyValue(() => {
-    return createPPTViewNodeController(!this.isMainScreenUse, new PPTViewData(this.sdk, this.layoutDataBus))
-  })
+  @State private isPPTVisible: boolean = false
   private playerViewNodeController: PLVLazyValue<PLVNodeController> = new PLVLazyValue(() => {
     return createPlayerViewNodeController(this.isMainScreenUse, new PlayerViewData(this.sdk, this.layoutDataBus))
   })
@@ -23,25 +21,20 @@ export struct PLVLWPPTPlayerExchangeView {
   }
 
   aboutToDisappear(): void {
-    this.pptViewNodeController.get().destroy()
     this.playerViewNodeController.get().destroy()
     MutableObserver.disposeAll(this.observers)
   }
 
   build() {
     RelativeContainer() {
-      // 由于Web组件交换位置后，H5页面不会自适应容器的大小，因此这里需要让其节点容器重新挂载
-      if (this.isMainScreenUse && this.isPPTToMainScreen || (!this.isMainScreenUse && !this.isPPTToMainScreen)) {
-        NodeContainer(this.pptViewNodeController.get())
+      if (this.isPPTVisible) {
+        PLVLWPPTNodeContainer()
+      } else {
+        NodeContainer(this.playerViewNodeController.get())
           .hitTestBehavior(HitTestMode.Transparent)
           .width(PLVCommonConstants.FULL_PERCENT)
           .height(PLVCommonConstants.FULL_PERCENT)
       }
-      NodeContainer(this.playerViewNodeController.get())
-        .hitTestBehavior(HitTestMode.Transparent)
-        .width(PLVCommonConstants.FULL_PERCENT)
-        .height(PLVCommonConstants.FULL_PERCENT)
-
     }
     .width(PLVCommonConstants.FULL_PERCENT)
     .height(PLVCommonConstants.FULL_PERCENT)
@@ -49,11 +42,11 @@ export struct PLVLWPPTPlayerExchangeView {
   }
 
   onLayoutData() {
-    watchStates(() => {
+    watchStates(async () => {
       const isPPTToMainScreen = this.layoutDataBus.isPPTToMainScreen.value ?? false
       this.isPPTToMainScreen = isPPTToMainScreen
       const shouldShowPPT = this.isMainScreenUse ? isPPTToMainScreen : !isPPTToMainScreen
-      this.pptViewNodeController.get().show(shouldShowPPT)
+      this.isPPTVisible = shouldShowPPT
       this.playerViewNodeController.get().show(!shouldShowPPT)
     }).pushTo(this.observers)
   }

@@ -1,19 +1,28 @@
-import { PLVCommonConstants, PLVUtils } from '@polyvharmony/live-scenes-sdk';
-import { MutableObserver, watchStates, Rect } from '@polyvharmony/media-player-sdk';
+import {
+  PLVCommonConstants,
+  PLVLinkMicState,
+  PLVLiveSceneSDK,
+  PLVLoginType,
+  PLVUtils
+} from '@polyvharmony/live-scenes-sdk';
+import { lateInit, MutableObserver, Rect, watchStates } from '@polyvharmony/media-player-sdk';
 import { PLVLWLayoutDataBus } from '../../common/PLVLWLayoutDataBus';
 import { PLVLWChatInputLayout } from '../content/toolbar/chat/PLVLWChatInputLayout';
 import { PLVLWLikesParticleLayout } from '../content/toolbar/likes/PLVLWLikesParticleLayout';
 import { PLVLWInteractLayout } from '../interact/PLVLWInteractLayout';
+import { PLVLWLinkMicInvitationLayout } from '../linkmic/PLVLWLinkMicInvitationLayout';
 import { PLVLWPPTLayout } from '../ppt/PLVLWPPTLayout';
 
 @Preview
 @Component
 export struct PLVLWTopLayerLayout {
+  @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
   @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @State responseRegionX: Length = 0
   @State responseRegionY: Length = 0
   @State responseRegionWidth: Length = 0
   @State responseRegionHeight: Length = 0
+  @State private isLinkmic: boolean = false
   private observers: MutableObserver[] = []
 
   aboutToAppear(): void {
@@ -26,8 +35,10 @@ export struct PLVLWTopLayerLayout {
 
   build() {
     RelativeContainer() {
-      // PPT布局
-      PLVLWPPTLayout()
+      if (!this.isLinkmic) {
+        // PPT布局
+        PLVLWPPTLayout()
+      }
 
       // 点赞动画
       PLVLWLikesParticleLayout()
@@ -41,6 +52,11 @@ export struct PLVLWTopLayerLayout {
           bottom: 52
         })
         .hitTestBehavior(HitTestMode.None)
+
+      // 邀请连麦
+      if (PLVLoginType.LIVE == this.sdk.channelData?.loginType) {
+        PLVLWLinkMicInvitationLayout()
+      }
 
       // 聊天室输入框
       PLVLWChatInputLayout()
@@ -61,12 +77,15 @@ export struct PLVLWTopLayerLayout {
 
   onLayoutData() {
     watchStates(() => {
+      const isLinkMic = this.sdk?.linkmicManager.linkmicState.value === PLVLinkMicState.Joined
       const topLayerViewArea = this.layoutDataBus.topLayerViewTouchArea.value ?? new Rect()
+      const pptLayoutVisible = !isLinkMic
+      this.isLinkmic = isLinkMic
       PLVUtils.debounce(() => {
-        this.responseRegionX = topLayerViewArea.left
-        this.responseRegionY = topLayerViewArea.top
-        this.responseRegionWidth = topLayerViewArea.width()
-        this.responseRegionHeight = topLayerViewArea.height()
+        this.responseRegionX = pptLayoutVisible ? topLayerViewArea.left : 0
+        this.responseRegionY = pptLayoutVisible ? topLayerViewArea.top : 0
+        this.responseRegionWidth = pptLayoutVisible ? topLayerViewArea.width() : 0
+        this.responseRegionHeight = pptLayoutVisible ? topLayerViewArea.height() : 0
       }, 100, 'topLayerViewAreaEvent')
     }).pushTo(this.observers)
   }

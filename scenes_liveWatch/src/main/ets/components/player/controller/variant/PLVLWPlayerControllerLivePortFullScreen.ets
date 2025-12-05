@@ -6,12 +6,17 @@ import {
   PLVMediaPlayerState,
   watchStates
 } from '@polyvharmony/media-player-sdk';
+import { PLVLWPlayerControllerVariantState } from '../vo/PLVLWPlayerControllerVariantState';
 
 @Component
 export struct PLVLWPlayerControllerLivePortFullScreen {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
   @State private showToPlayButton: boolean = false
   private observers: MutableObserver[] = []
+
+  static match(variant: PLVLWPlayerControllerVariantState): boolean {
+    return variant.isLive && variant.isPortrait && variant.isPlayerFullscreen && !variant.isCasting
+  }
 
   aboutToAppear(): void {
     watchStates(() => {
