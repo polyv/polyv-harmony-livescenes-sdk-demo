@@ -116,11 +116,12 @@ export struct PLVLWChatInputLayout {
       this.layoutDataBus.chatInputStatus.mutate({
         inputVisible: false,
         emojiPanelVisible: false,
-        inputContent: ''
+        inputContent: '',
+        replyMessage: undefined
       })
     }
 
-    this.sdk.chatroomManager.speak(content, this.replyMessage?._replyQuoteBean?.get())
+    this.sdk.chatroomManager.speak(content, this.replyMessage?._replyQuoteBean?.get(this.sdk.chatroomManager.emotions))
       .then((speakEvent) => {
         onSuccess(speakEvent)
       })

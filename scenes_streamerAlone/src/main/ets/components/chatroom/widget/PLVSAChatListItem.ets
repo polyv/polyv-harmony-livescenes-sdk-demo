@@ -107,6 +107,7 @@ export struct PLVChatSpeakView {
       this.nick,
       this.itemData.isFileShareEvent() ? toImageBeanForFileShare(this.itemData.fileData) : undefined,
       this.itemData.quote,
+      this.itemData.quote?.userId === this.sdk?.channelData.viewerId,
       this.sdk?.chatroomManager.quoteReplyEnabled ? this.itemData._replyQuoteBean.get() : undefined,
       this.itemData.parsedData,
       this.itemData.isFileShareEvent() ? this.itemData.fileData?.url : undefined,
@@ -133,6 +134,7 @@ export struct PLVChatImgView {
       generateNick(this.itemData.user, this.sdk?.channelData),
       PLVImageBean.toImageBeanForChatImg(this.itemData.values?.[0]),
       undefined,
+      false,
       this.sdk?.chatroomManager.quoteReplyEnabled ? this.itemData._replyQuoteBean.get() : undefined
     )
   }
@@ -172,6 +174,7 @@ export struct PLVChatLocalSpeakView {
       this.nick,
       undefined,
       this.itemData.quote,
+      this.itemData.quote?.userId === this.sdk?.channelData.viewerId,
       this.sdk?.chatroomManager.quoteReplyEnabled ? this.itemData._replyQuoteBean.get() : undefined,
       this.itemData.parsedData,
       undefined,
@@ -198,6 +201,7 @@ export struct PLVChatLocalQuizView {
       generateNickByChannelData(this.channelData),
       undefined,
       undefined,
+      false,
       undefined,
       this.itemData.parsedData
     )
@@ -217,6 +221,7 @@ export struct PLVChatTAnswerView {
       generateNick(this.itemData.user, this.channelData),
       this.itemData.isImgType() ? this.itemData.image : undefined,
       undefined,
+      false,
       undefined,
       this.itemData.parsedData
     )
@@ -266,6 +271,7 @@ export struct PLVChatHistorySpeakView {
       this.nick,
       undefined,
       this.itemData.quote,
+      this.itemData.quote?.userId === this.sdk?.channelData.viewerId,
       this.sdk?.chatroomManager.quoteReplyEnabled ? this.itemData._replyQuoteBean.get() : undefined,
       this.itemData.parsedData,
       undefined,
@@ -293,6 +299,7 @@ export struct PLVChatHistoryChatImgView {
       generateNick(this.itemData.user, this.channelData),
       PLVImageBean.toImageBeanForChatImg(this.itemData.content),
       undefined,
+      false,
       this.sdk?.chatroomManager.quoteReplyEnabled ? this.itemData._replyQuoteBean.get() : undefined
     )
   }
@@ -321,6 +328,7 @@ export struct PLVChatEmotionView {
       generateNick(this.itemData.user, this.channelData),
       PLVImageBean.toImageBeanForEmotion(this.itemData, this.sdk?.chatroomManager.emotions),
       undefined,
+      false,
       this.sdk?.chatroomManager.quoteReplyEnabled ? this.itemData._replyQuoteBean.get(this.sdk?.chatroomManager.emotions) : undefined
     )
   }
@@ -339,6 +347,7 @@ export struct PLVChatHistoryFileShareView {
       generateNickByUser(this.itemData.user),
       toImageBeanForFileShare(this.itemData.fileData),
       undefined,
+      false,
       this.sdk?.chatroomManager.quoteReplyEnabled ? this.itemData._replyQuoteBean.get() : undefined,
       undefined,
       this.itemData.fileData?.url
@@ -383,6 +392,7 @@ export struct PLVChatPlaybackView {
       generateNick(this.itemData.user, this.channelData),
       this.itemData.isImgMsgType() ? PLVImageBean.toImageBeanForChatImg(this.itemData.chatImgContent) : undefined,
       this.itemData.chatQuote,
+      this.itemData.chatQuote?.userId === this.sdk?.channelData.viewerId,
       undefined,
       this.itemData.parsedData
     )
@@ -412,6 +422,7 @@ function messageView(
   nick?: string | Resource,
   imgBean?: PLVImageBean,
   quote?: PLVChatQuoteDataBean,
+  quoteMyself?: boolean,
   reply?: PLVChatQuoteDataBean,
   parsedData?: string[],
   fileUrl?: string,
@@ -424,9 +435,22 @@ function messageView(
       if (quote) {
         Column() {
           Text() {
-            Span(quote.nick + ': ')
-              .fontColor('#FFFFFF')
-              .fontSize(12)
+            if (quoteMyself) {
+              ImageSpan($r('app.media.plvsa_chat_quote_hint_myself_image_span'))
+                .width(2)
+                .height(12)
+                .verticalAlign(ImageSpanAlignment.CENTER)
+              Span(" ")
+              Span(quote.nick)
+                .fontColor("#993F76FC")
+              Span(': ')
+                .fontColor('#FFFFFF')
+                .fontSize(12)
+            } else {
+              Span(quote.nick + ': ')
+                .fontColor('#FFFFFF')
+                .fontSize(12)
+            }
             if (quote.isTextEvent()) {
               if (quote.parsedData) {
                 ForEach(quote.parsedData, (data: string) => {

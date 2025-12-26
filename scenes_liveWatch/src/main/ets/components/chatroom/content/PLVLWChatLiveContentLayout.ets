@@ -297,7 +297,7 @@ export struct PLVLWChatLiveContentLayout {
         this.appendOnlineMessage([event])
         setTimeout(() => {
           this.scroller.scrollEdge(Edge.Bottom)
-        })
+        }, 500)
       }
     }).pushTo(this.observers)
     this.messageBuffer.observe((messageEvents: PLVSocketEvent<string>[]) => {

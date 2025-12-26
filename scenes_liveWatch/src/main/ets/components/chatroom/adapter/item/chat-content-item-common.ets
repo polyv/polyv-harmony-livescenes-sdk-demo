@@ -8,6 +8,7 @@ import {
   PLVHistoryChatImgEvent,
   PLVHistoryFileShareEvent,
   PLVHistorySpeakEvent,
+  PLVLiveSceneSDK,
   PLVLocalQuizEvent,
   PLVLocalSpeakEvent,
   PLVRedPaperEvent,
@@ -97,11 +98,14 @@ export struct PLVLWChatContentItemSpeakContent {
 @Component
 export struct PLVLWChatQuoteContentLayout {
   quote: PLVChatQuoteDataBean = lateInit()
+  @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @State private isMyself: boolean = false
   @State private imageUrl: ResourceStr | undefined = undefined
   @State private imageWidth: number = 80
   @State private imageHeight: number = 80
 
   aboutToAppear(): void {
+    this.isMyself = this.sdk.channelData.viewerId === this.quote.userId
     this.imageUrl = this.quote.image?.url
     const imageSize = chatItemImageDisplaySize({
       width: this.quote.image?.width ?? 80,
@@ -114,7 +118,18 @@ export struct PLVLWChatQuoteContentLayout {
   build() {
     Column() {
       Text() {
-        Span(`${this.quote.nick}: `)
+        if (this.isMyself) {
+          ImageSpan($r('app.media.plvlw_chat_quote_hint_myself_image_span'))
+            .width(2)
+            .height(12)
+            .verticalAlign(ImageSpanAlignment.CENTER)
+          Span(" ")
+          Span(this.quote.nick)
+            .fontColor("#993F76FC")
+        } else {
+          Span(this.quote.nick)
+        }
+        Span(': ')
         if (!this.quote.image) {
           if (this.quote.msgType === 'file') {
             Span(this.quote.fileData?.name)
