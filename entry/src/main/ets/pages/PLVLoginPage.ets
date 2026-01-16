@@ -44,7 +44,7 @@ struct PLVLoginPage {
   viewerName?: string
   viewerAvatar?: string
   newLiveWatch: boolean = (router.getParams() as PLVJSONObject)['newLiveWatch'] as boolean
-  @State liveScene: PLVLiveScene = this.newLiveWatch ? PLVLiveScene.LAND_TEMPLATE : PLVLiveScene.LIVE_ECOMMERCE
+  @State liveScene?: PLVLiveScene = this.newLiveWatch ? undefined : PLVLiveScene.LIVE_ECOMMERCE
   currentYear: number = new Date().getFullYear();
 
   override async aboutToAppear(): Promise<void> {
@@ -62,7 +62,7 @@ struct PLVLoginPage {
         Text(this.newLiveWatch ? '直播观看' : '直播带货')
           .fontSize(30)
           .fontColor(Color.Gray)
-          .margin({ top: 30 })
+          .margin({ top: 26 })
         Tabs({ barPosition: BarPosition.Start }) {
           TabContent() {
             Column({ space: 36 }) {
@@ -119,38 +119,54 @@ struct PLVLoginPage {
           })
 
         if (this.newLiveWatch) {
-          Row() {
-            Radio({ value: 'land', group: 'template' })
-              .checked(this.liveScene == PLVLiveScene.LAND_TEMPLATE)
-              .hitTestBehavior(HitTestMode.None)
-            Text('横屏模版')
-              .margin({ left: 2 })
-          }
-          .margin({ top: 16 })
-          .justifyContent(FlexAlign.Start)
-          .onClick(() => {
-            this.liveScene = PLVLiveScene.LAND_TEMPLATE
-          })
+          Column() {
+            Row() {
+              Radio({ value: 'from_channel', group: 'template' })
+                .checked(this.liveScene == undefined)
+                .hitTestBehavior(HitTestMode.None)
+              Text('跟随频道配置')
+                .margin({ left: 2 })
+            }
+            .margin({ top: 12 })
+            .justifyContent(FlexAlign.Start)
+            .onClick(() => {
+              this.liveScene = undefined
+            })
 
-          Row() {
-            Radio({ value: 'portrait', group: 'template' })
-              .checked(this.liveScene == PLVLiveScene.PORTRAIT_TEMPLATE)
-              .hitTestBehavior(HitTestMode.None)
-            Text('竖屏模版')
-              .margin({ left: 2 })
+            Row() {
+              Radio({ value: 'land', group: 'template' })
+                .checked(this.liveScene == PLVLiveScene.LAND_TEMPLATE)
+                .hitTestBehavior(HitTestMode.None)
+              Text('横屏模版')
+                .margin({ left: 2 })
+            }
+            .margin({ top: 12 })
+            .justifyContent(FlexAlign.Start)
+            .onClick(() => {
+              this.liveScene = PLVLiveScene.LAND_TEMPLATE
+            })
+
+            Row() {
+              Radio({ value: 'portrait', group: 'template' })
+                .checked(this.liveScene == PLVLiveScene.PORTRAIT_TEMPLATE)
+                .hitTestBehavior(HitTestMode.None)
+              Text('竖屏模版')
+                .margin({ left: 2 })
+            }
+            .margin({ top: 12 })
+            .justifyContent(FlexAlign.Start)
+            .onClick(() => {
+              this.liveScene = PLVLiveScene.PORTRAIT_TEMPLATE
+            })
           }
-          .margin({ top: 16 })
-          .justifyContent(FlexAlign.Start)
-          .onClick(() => {
-            this.liveScene = PLVLiveScene.PORTRAIT_TEMPLATE
-          })
+          .alignItems(HorizontalAlign.Start)
         }
 
         Text(`2013 – ${this.currentYear} 易方信息科技股份有限公司 版权所有`)
           .fontSize(14)
           .fontColor(Color.Gray)
           .align(Alignment.Bottom)
-          .margin({ bottom: 16 })
+          .margin({ bottom: 8 })
           .layoutWeight(1)
       }
       .width(PLVCommonConstants.FULL_PERCENT)
@@ -202,7 +218,10 @@ struct PLVLoginPage {
     const sdk = this.createSDK()
     sdk.loginManager.loginLive(this.liveUserId, this.liveChannelId, this.liveAppId, this.liveAppSecret)
       .then((channelData) => {
-        if (!isSupportChannelType(this.liveScene, channelData.channelType)) {
+        if (sdk.channelData.liveScene == undefined) {
+          sdk.channelData.liveScene = channelData.isNormalWatchLayout() ? PLVLiveScene.LAND_TEMPLATE : PLVLiveScene.PORTRAIT_TEMPLATE
+        }
+        if (!isSupportChannelType(sdk.channelData.liveScene, channelData.channelType)) {
           PLVLogger.error(TAG, `loginLive error while channelType=${channelData.channelType}`)
           const toastMessage = this.newLiveWatch ? '直播观看场景仅支持三分屏和纯视频频道类型' : '直播带货场景仅支持纯视频频道类型'
           PLVToastUtils.shortShow(toastMessage)
@@ -229,7 +248,10 @@ struct PLVLoginPage {
     const sdk = this.createSDK()
     sdk.loginManager.loginPlayback(this.playbackUserId, this.playbackChannelId, this.playbackAppId, this.playbackAppSecret, this.playbackVideoId)
       .then((channelData) => {
-        if (!isSupportChannelType(this.liveScene, channelData.channelType)) {
+        if (sdk.channelData.liveScene == undefined) {
+          sdk.channelData.liveScene = channelData.isNormalWatchLayout() ? PLVLiveScene.LAND_TEMPLATE : PLVLiveScene.PORTRAIT_TEMPLATE
+        }
+        if (!isSupportChannelType(sdk.channelData.liveScene, channelData.channelType)) {
           PLVLogger.error(TAG, `loginPlayback error while channelType=${channelData.channelType}`)
           const toastMessage = this.newLiveWatch ? '直播观看场景仅支持三分屏和纯视频频道类型' : '直播带货场景仅支持纯视频频道类型'
           PLVToastUtils.shortShow(toastMessage)
