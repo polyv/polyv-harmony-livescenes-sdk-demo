@@ -655,6 +655,10 @@
     {
       "name": "plvsa_status_bar_notify_microphone_disabled",
       "value": "你的麦克风已关闭"
+    },
+    {
+      "name": "plvsa_setting_splash_change_hint",
+      "value": "修改封面"
     }
   ]
 }

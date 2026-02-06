@@ -290,7 +290,7 @@
     },
     {
       "name": "plvsa_linkmic_member_control_withdraw_speaker_confirm_content",
-      "value": "The lecture\u0027s screen sharing will automatically end after removal"
+      "value": "The lecture's screen sharing will automatically end after removal"
     },
     {
       "name": "plvsa_linkmic_member_control_withdraw_speaker_confirm_title",
@@ -326,7 +326,7 @@
     },
     {
       "name": "plvsa_linkmic_setting_default_setting_hint",
-      "value": "To set a default voice chat method, adjust the settings in the Channel \u003e Role Permissions \u003e Functional Configuration"
+      "value": "To set a default voice chat method, adjust the settings in the Channel > Role Permissions > Functional Configuration"
     },
     {
       "name": "plvsa_linkmic_setting_linkmic_type_audio",
@@ -526,7 +526,7 @@
     },
     {
       "name": "plvsa_push_downgrade_notify_text",
-      "value": "The network condition is currently poor. It\u0027s recommended to switch to fluency mode"
+      "value": "The network condition is currently poor. It's recommended to switch to fluency mode"
     },
     {
       "name": "plvsa_push_downgrade_preference_title",
@@ -655,6 +655,10 @@
     {
       "name": "plvsa_status_bar_notify_microphone_disabled",
       "value": "Your microphone is off"
+    },
+    {
+      "name": "plvsa_setting_splash_change_hint",
+      "value": "Modify the cover"
     }
   ]
 }

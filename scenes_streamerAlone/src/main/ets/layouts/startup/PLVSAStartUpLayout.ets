@@ -16,6 +16,8 @@ import { PLVSAMoreResolutionRatioButton } from '../../components/more/widgets/PL
 import { router } from '@kit.ArkUI';
 import { PLVSAConfirmDialog } from '../../common/widget/PLVSAConfirmDialog';
 import { PLVSAMoreLayoutActionSwitcher } from '../../components/more/PLVSAMoreLayout';
+import { PLVSAStartUpTitleInputLayout } from './components/PLVSAStartUpTitleInputLayout';
+import { PLVSAStartUpSplashImageLayout } from './components/PLVSAStartUpSplashImageLayout';
 
 @Component
 export struct PLVSAStartUpLayout {
@@ -40,8 +42,10 @@ export struct PLVSAStartUpLayout {
     customStyle: true
   })
   @State liveTitle: string = ""
+  @State liveTitleInputVisible: boolean = false
   @State countDownLayoutVisible: boolean = false
   @State isPortrait: boolean = true
+  @State titleTextWidth: number = 0
   private readonly actionSwitcher = lazy(() => new PLVSAMoreLayoutActionSwitcher(this.sdk))
   private recoverStream: boolean = false
   private countDownHandler: PLVSAStartUpCountDownHandler | null = null
@@ -80,49 +84,50 @@ export struct PLVSAStartUpLayout {
             router.back()
           })
 
-        Column() {
-          TextArea({
-            placeholder: $r('app.string.plvsa_startup_title_placeholder'),
-            text: $$this.liveTitle
-          })
-            .width('100%')
-            .textAlign(TextAlign.Center)
-            .backgroundColor('transparent')
-            .placeholderColor("#99F0F1F5")
-            .fontColor("#F0F1F5")
-            .fontSize(18)
-            .margin({
-              left: 24,
-              right: 24
-            })
-            .borderRadius(0)
-            .padding(0)
-            .maxLength(150)
+        Row() {
+          PLVSAStartUpSplashImageLayout()
+            .width(88)
+            .height(50)
 
-          Divider()
-            .vertical(false)
-            .width('100%')
-            .color("#99FFFFFF")
-            .opacity(0.7)
-            .strokeWidth(2)
+          Text(this.liveTitle ?? $r('app.string.plvsa_startup_title_placeholder'))
+            .constraintSize({
+              minWidth: 144,
+              maxWidth: this.isPortrait ? 231 : 500
+            })
+            .maxLines(2)
+            .fontColor('#B3FFFFFF')
+            .fontSize(18)
+            .textAlign(TextAlign.Center)
+            .textOverflow({
+              overflow: TextOverflow.Ellipsis
+            })
+            .ellipsisMode(EllipsisMode.END)
             .margin({
-              top: 12
+              left: 12
+            })
+            .onAreaChange((oldArea, newArea) => {
+              this.titleTextWidth = newArea.width as number
+            })
+            .onClick(() => {
+              if (this.sdk.channelData.viewerType === PLVUserType.USERTYPE_TEACHER) {
+                this.liveTitleInputVisible = true
+              }
             })
         }
         .id('plvsa_startup_title_layout')
+        .width(this.titleTextWidth + 120)
+        .padding(10)
+        .backgroundColor('#33000000')
+        .borderRadius(8)
         .alignRules({
           left: { anchor: PLVCommonConstants.CONTAINER, align: HorizontalAlign.Start },
           right: { anchor: PLVCommonConstants.CONTAINER, align: HorizontalAlign.End },
           top: { anchor: PLVCommonConstants.CONTAINER, align: VerticalAlign.Top }
         })
-        .width('100%')
-        .padding({
-          left: 48,
-          right: 48
-        })
         .margin({
           top: 72
         })
+        .visibility(this.liveTitleInputVisible ? Visibility.None : Visibility.Visible)
 
         Flex({
           wrap: FlexWrap.Wrap,
@@ -223,6 +228,14 @@ export struct PLVSAStartUpLayout {
       .visibility(this.countDownLayoutVisible ? Visibility.None : Visibility.Visible)
       .width('100%')
       .height('100%')
+
+      PLVSAStartUpTitleInputLayout({
+        liveTitle: this.liveTitle,
+        isVisible: this.liveTitleInputVisible
+      })
+        .width(PLVCommonConstants.FULL_PERCENT)
+        .height(PLVCommonConstants.FULL_PERCENT)
+        .hitTestBehavior(HitTestMode.Transparent)
 
       PLVSAStartUpCountDownLayout({
         callbackHandler: (handler: PLVSAStartUpCountDownHandler | null) => {

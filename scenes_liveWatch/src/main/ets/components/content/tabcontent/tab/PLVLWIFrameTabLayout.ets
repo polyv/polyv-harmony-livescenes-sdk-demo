@@ -28,7 +28,7 @@ export struct PLVLWIFrameTabLayout {
 
   build() {
     Stack() {
-      PLVSimpleWeb({ controller: this.webController, src: this.iframeContent })
+      PLVSimpleWeb({ controller: this.webController, src: this.channelData?.buildIFrameLinkParams(this.iframeContent ?? '') })
     }
     .onVisibleAreaChange([0.0, 1.0], (isExpanding: boolean, currentRatio: number) => {
       this.isLayoutVisibleArea = isExpanding

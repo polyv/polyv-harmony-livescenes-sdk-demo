@@ -53,7 +53,7 @@ export struct PLVLWProductPushCardLayout {
     }
     this.sdk.productManager.notifyClick()
     this.sdk.productManager.notifyPush(undefined)
-    pushToProductDetailPage(link)
+    pushToProductDetailPage(this.sdk.channelData.buildIFrameLinkParams(link))
   }
   private readonly onCloseProduct = () => {
     this.sdk.productManager.notifyPush(undefined)

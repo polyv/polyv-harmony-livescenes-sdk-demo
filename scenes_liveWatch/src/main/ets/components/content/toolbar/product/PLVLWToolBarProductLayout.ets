@@ -105,7 +105,7 @@ struct PLVLWProductDialog {
       PLVToastUtils.longShow($r('app.string.plvlw_commodity_toast_empty_link'))
       return
     }
-    pushToProductDetailPage(productLink)
+    pushToProductDetailPage(this.sdk.channelData.buildIFrameLinkParams(productLink))
     this.controller.close()
   }
 

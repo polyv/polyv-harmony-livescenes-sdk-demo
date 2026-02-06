@@ -2,7 +2,7 @@ polyv-harmony-livescenes-sdk-demo
 ===
 
 [![build passing](https://img.shields.io/badge/build-passing-brightgreen.svg)](#)
-[![GitHub release](https://img.shields.io/badge/release-1.3.5-blue.svg)](https://github.com/polyv/polyv-harmony-livescenes-sdk-demo/releases/tag/1.3.5)
+[![GitHub release](https://img.shields.io/badge/release-1.4.0-blue.svg)](https://github.com/polyv/polyv-harmony-livescenes-sdk-demo/releases/tag/1.4.0)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -49,6 +49,6 @@ ohpm install @polyvharmony/live-scenes-sdk
 #### 3.1 集成文档
 [集成文档](https://github.com/polyv/polyv-harmony-livescenes-sdk-demo/tree/master/publish/docs)
 #### 3.2 接口文档
-[v1.3.5 接口文档](https://repo.polyv.net/harmony/documents/livescenes_sdk/1.3.5/index.html)
+[v1.4.0 接口文档](https://repo.polyv.net/harmony/documents/livescenes_sdk/1.4.0/index.html)
 #### 3.3 版本更新记录
 [全版本更新记录](https://github.com/polyv/polyv-harmony-livescenes-sdk-demo/blob/master/CHANGELOG.md)

@@ -25,7 +25,7 @@ const TAG = "[PLVLWInteractLayout]"
 @Component
 export struct PLVLWInteractLayout {
   // <editor-fold defaultstate="collapsed" desc="变量">
-  @LocalStorageLink('sdk') sdk?: PLVLiveSceneSDK = lateInit()
+  @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
   @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @State interactManager?: PLVInteractManager = this.sdk?.interactManager
   @State interactCallback: PLVInteractCallback = new PLVInteractCallback()
@@ -129,7 +129,7 @@ export struct PLVLWInteractLayout {
         PLVToastUtils.longShow($r('app.string.plvlw_commodity_toast_empty_link'))
         return
       }
-      pushToProductDetailPage(productLink)
+      pushToProductDetailPage(this.sdk.channelData.buildIFrameLinkParams(productLink))
     }
   }
 
