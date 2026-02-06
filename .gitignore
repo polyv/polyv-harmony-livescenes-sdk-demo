@@ -13,3 +13,4 @@
 /oh-package-lock.json5
 BuildProfile.ets
 /docs
+.DS_Store
