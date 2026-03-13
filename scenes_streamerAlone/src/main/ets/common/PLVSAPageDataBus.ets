@@ -36,6 +36,10 @@ export class PLVSAPageDataBus {
    */
   readonly networkDisconnectedMaskVisible = new MutableState(false)
   /**
+   * 直播中界面内是否有子组件需要拦截触摸事件
+   */
+  readonly liveLayoutHasChildBlockTouch = new MutableState(false)
+  /**
    * 是否竖屏
    */
   readonly isPortrait = new MutableState(true)

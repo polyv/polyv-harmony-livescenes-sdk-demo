@@ -659,6 +659,14 @@
     {
       "name": "plvsa_setting_splash_change_hint",
       "value": "修改封面"
+    },
+    {
+      "name": "plvsa_interact_title",
+      "value": "互动"
+    },
+    {
+      "name": "plvsa_interact_sign_in",
+      "value": "签到"
     }
   ]
 }

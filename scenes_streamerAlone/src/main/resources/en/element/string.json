@@ -659,6 +659,14 @@
     {
       "name": "plvsa_setting_splash_change_hint",
       "value": "Modify the cover"
+    },
+    {
+      "name": "plvsa_interact_title",
+      "value": "Interact"
+    },
+    {
+      "name": "plvsa_interact_sign_in",
+      "value": "Sign in"
     }
   ]
 }

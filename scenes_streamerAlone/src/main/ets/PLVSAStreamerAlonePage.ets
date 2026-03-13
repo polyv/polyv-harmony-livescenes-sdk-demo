@@ -36,6 +36,7 @@ struct PLVSAStreamerAlonePage {
   @Provide('pageDataBus') pageDataBus: PLVSAPageDataBus = new PLVSAPageDataBus()
   @State stage: PLVSAStreamerStage = PLVSAStreamerStage.STARTUP
   @State isPortrait: boolean = true
+  @State liveLayoutHasChildBlockTouch: boolean = false
   private exitDialogController: CustomDialogController | null = null
   private readonly queryOrientation = mediaquery.matchMediaSync('(orientation: landscape)');
   private observers: MutableObserver[] = []
@@ -50,6 +51,7 @@ struct PLVSAStreamerAlonePage {
     this.pageDataBus.recoverSetting.channelId = this.sdk.channelData.loginChannelId
     this.pageDataBus.streamerStage.observe(it => this.stage = it).pushTo(this.observers)
     this.pageDataBus.isPortrait.observe(it => this.isPortrait = it).pushTo(this.observers)
+    this.pageDataBus.liveLayoutHasChildBlockTouch.observe(it => this.liveLayoutHasChildBlockTouch = it).pushTo(this.observers)
   }
 
   build() {
@@ -65,7 +67,7 @@ struct PLVSAStreamerAlonePage {
         PLVSAStartUpLayout()
       } else if (this.stage === PLVSAStreamerStage.LIVE) {
         PLVSALiveLayout()
-          .hitTestBehavior(HitTestMode.Transparent)
+          .hitTestBehavior(this.liveLayoutHasChildBlockTouch ? HitTestMode.Default : HitTestMode.Transparent)
       } else if (this.stage === PLVSAStreamerStage.END) {
         PLVSALiveEndLayout()
       }

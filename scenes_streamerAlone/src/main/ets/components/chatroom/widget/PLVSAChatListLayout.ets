@@ -222,12 +222,17 @@ export struct PLVSAChatListLayout {
         // 发言
           case PLVSpeakEvent.EVENT: {
             const speakEvent = PLVJSONUtils.toFillData(PLVSpeakEvent, data)
-            if (speakEvent) {
-              // 过滤聊天室广播的自己的发言消息
-              if (this.channelData?.viewerId != speakEvent.user?.userId) {
-                pushChatListData = speakEvent
-              }
+            if (!speakEvent) {
+              break
             }
+            if (!this.sdk?.chatroomManager.sendReliableMessageCallback(speakEvent)) {
+              break
+            }
+            if (this.channelData?.viewerId === speakEvent.user?.userId) {
+              // 过滤聊天室广播的自己的发言消息
+              break
+            }
+            pushChatListData = speakEvent
             break
           }
         // 图片

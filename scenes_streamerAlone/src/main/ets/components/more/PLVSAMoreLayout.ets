@@ -13,6 +13,7 @@ import { PLVSAMoreLinkMicSettingButton } from './widgets/PLVSAMoreLinkMicSetting
 import { PLVSAMorePushDowngradeButton } from './widgets/PLVSAMorePushDowngradeButton';
 import { PLVLinkMicRTCType, PLVLiveSceneSDK, PLVUserType } from '@polyvharmony/live-scenes-sdk';
 import { PLVSAMoreShareButton } from './widgets/PLVSAMoreShareButton';
+import { PLVSAMoreSignInButton } from './widgets/PLVSAMoreSIgnInButton';
 
 @CustomDialog
 export struct PLVSAMoreLayout {
@@ -43,15 +44,15 @@ struct PLVSAMoreLayoutPort {
   private readonly switcher = lazy(() => new PLVSAMoreLayoutActionSwitcher(this.sdk))
 
   build() {
-    Column() {
-      Text($r('app.string.plvsa_more_layout_title'))
-        .fontColor('#F0F1F5')
-        .fontSize(18)
-        .margin({
-          left: 25,
-          top: 32
-        })
-      Scroll() {
+    Scroll() {
+      Column() {
+        Text($r('app.string.plvsa_more_layout_title'))
+          .fontColor('#F0F1F5')
+          .fontSize(18)
+          .margin({
+            left: 25,
+            top: 32
+          })
         Grid() {
           GridItem() {
             PLVSAMoreCameraEnableButton()
@@ -146,17 +147,44 @@ struct PLVSAMoreLayoutPort {
           left: 25,
           right: 25
         })
+        .width('100%')
+        .margin({
+          top: 16
+        })
+
+        Text($r('app.string.plvsa_interact_title'))
+          .fontColor('#F0F1F5')
+          .fontSize(18)
+          .margin({
+            left: 25,
+            top: 32
+          })
+        Grid() {
+          GridItem() {
+            PLVSAMoreSignInButton({
+              onClicked: () => {
+                this.controller.close()
+              }
+            })
+          }
+        }
+        .columnsTemplate('1fr 1fr 1fr 1fr 1fr')
+        .rowsGap(12)
+        .padding({
+          left: 25,
+          right: 25
+        })
+        .width('100%')
+        .margin({
+          top: 16
+        })
+
       }
       .width('100%')
-      .layoutWeight(1)
-      .align(Alignment.TopStart)
-      .margin({
-        top: 16
-      })
+      .alignItems(HorizontalAlign.Start)
     }
     .width('100%')
     .height(270)
-    .alignItems(HorizontalAlign.Start)
     .backgroundColor('#2c2c2c')
     .borderRadius({
       topLeft: 16,
@@ -172,15 +200,15 @@ struct PLVSAMoreLayoutLand {
   private readonly switcher = lazy(() => new PLVSAMoreLayoutActionSwitcher(this.sdk))
 
   build() {
-    Column() {
-      Text($r('app.string.plvsa_more_layout_title'))
-        .fontColor('#F0F1F5')
-        .fontSize(18)
-        .margin({
-          left: 25,
-          top: 32
-        })
-      Scroll() {
+    Scroll() {
+      Column() {
+        Text($r('app.string.plvsa_more_layout_title'))
+          .fontColor('#F0F1F5')
+          .fontSize(18)
+          .margin({
+            left: 25,
+            top: 32
+          })
         Grid() {
           GridItem() {
             PLVSAMoreCameraEnableButton()
@@ -275,17 +303,43 @@ struct PLVSAMoreLayoutLand {
           left: 25,
           right: 25
         })
+        .width('100%')
+        .margin({
+          top: 16
+        })
+
+        Text($r('app.string.plvsa_interact_title'))
+          .fontColor('#F0F1F5')
+          .fontSize(18)
+          .margin({
+            left: 25,
+            top: 32
+          })
+        Grid() {
+          GridItem() {
+            PLVSAMoreSignInButton({
+              onClicked: () => {
+                this.controller.close()
+              }
+            })
+          }
+        }
+        .columnsTemplate('1fr 1fr 1fr')
+        .rowsGap(12)
+        .padding({
+          left: 25,
+          right: 25
+        })
+        .width('100%')
+        .margin({
+          top: 16
+        })
+
       }
-      .width('100%')
-      .layoutWeight(1)
-      .align(Alignment.TopStart)
-      .margin({
-        top: 16
-      })
+      .alignItems(HorizontalAlign.Start)
     }
     .width(240)
     .height('100%')
-    .alignItems(HorizontalAlign.Start)
     .backgroundColor('#2c2c2c')
     .borderRadius({
       topLeft: 16,

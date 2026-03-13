@@ -582,6 +582,7 @@ export struct PLVSALinkMicFullScreenLayout {
           .id('plvsa_linkmic_fullscreen_exit_icon')
           .width(32)
           .height(32)
+          .hitTestBehavior(HitTestMode.Block)
           .alignRules({
             top: { anchor: PLVCommonConstants.CONTAINER, align: VerticalAlign.Top },
             right: { anchor: PLVCommonConstants.CONTAINER, align: HorizontalAlign.End }

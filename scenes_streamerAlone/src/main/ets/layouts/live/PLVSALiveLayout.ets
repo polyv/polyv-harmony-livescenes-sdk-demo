@@ -9,6 +9,7 @@ import { Disposable, lateInit, MutableObserver } from '@polyvharmony/media-playe
 import { PLVSAPageDataBus } from '../../common/PLVSAPageDataBus';
 import { PLVSAConfirmDialog } from '../../common/widget/PLVSAConfirmDialog';
 import { PLVSAChatroomLayout } from '../../components/chatroom/PLVSAChatroomLayout';
+import { PLVSAInteractLayout } from '../../components/interact/PLVSAInteractLayout';
 import { PLVSALinkMicInvitationLayout } from '../../components/linkmic/widgets/PLVSALinkMicInvitationLayout';
 import { PLVSANetworkDisconnectMaskLayout } from '../../components/misc/PLVSANetworkDisconnectMaskLayout';
 import { PLVSAStatusBarLayout } from '../../components/statusbar/PLVSAStatusBarLayout';
@@ -83,6 +84,9 @@ export struct PLVSALiveLayout {
 
 @Component
 struct LiveMainLayout {
+  @Consume('pageDataBus') pageDataBus: PLVSAPageDataBus
+  @State interactLayoutIsShow: boolean = false
+
   build() {
     RelativeContainer() {
       PLVSAStatusBarLayout()
@@ -118,6 +122,17 @@ struct LiveMainLayout {
         .width('100%')
         .height('100%')
         .hitTestBehavior(HitTestMode.Transparent)
+
+      PLVSAInteractLayout({
+        isShowCallback: (isShow: boolean) => {
+          this.pageDataBus.liveLayoutHasChildBlockTouch.setValue(isShow)
+          this.interactLayoutIsShow = isShow
+        }
+      })
+        .id('plvsa_interact_layout')
+        .width('100%')
+        .height('100%')
+        .hitTestBehavior(this.interactLayoutIsShow ? HitTestMode.Default : HitTestMode.Transparent)
     }
     .width('100%')
     .height('100%')
