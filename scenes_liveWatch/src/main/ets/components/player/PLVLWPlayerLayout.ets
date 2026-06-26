@@ -3,6 +3,7 @@ import {
   lateInit,
   MutableObserver,
   PLVLiveStatusEnum,
+  PLVMediaOutputMode,
   PLVMediaPlayerAppContext,
   PLVMediaPlayerBusinessErrorEnum,
   PLVMediaPlayerPlayingState,
@@ -71,16 +72,49 @@ export struct PLVLWPlayerLayout {
       .visibility(this.isNoLive ? Visibility.Visible : Visibility.None)
       .hitTestBehavior(HitTestMode.None)
 
-      // 播放器异常提示
-      PLVLWPlayerErrorOverlayLayout()
-        .id('plvlw_player_error_overlay_layout')
+      if (!this.isPPTToMainScreen) {
+        // 音频模式提示背景
+        PLVLWPlayerAudioModeBackgroundLayout({
+          containerWidth: this.containerWidth,
+          containerHeight: this.containerHeight,
+          isNoLive: this.isNoLive
+        })
+          .id('plvlw_player_audio_mode_background_layout')
+          .hitTestBehavior(HitTestMode.None)
+          .width(PLVCommonConstants.FULL_PERCENT)
+          .height(PLVCommonConstants.FULL_PERCENT)
+      }
+
+      // 播放器异常提示背景
+      PLVLWPlayerErrorBackgroundLayout()
+        .id('plvlw_player_error_background_layout')
+        .hitTestBehavior(HitTestMode.None)
         .width(PLVCommonConstants.FULL_PERCENT)
         .height(PLVCommonConstants.FULL_PERCENT)
-        .hitTestBehavior(HitTestMode.None)
 
       // 播放器皮肤
       PLVLWPlayerControllerLayout()
         .id('plvlw_player_controller_layout')
+        .hitTestBehavior(HitTestMode.Transparent)
+        .width(PLVCommonConstants.FULL_PERCENT)
+        .height(PLVCommonConstants.FULL_PERCENT)
+
+      if (!this.isPPTToMainScreen) {
+        // 音频模式提示按钮
+        PLVLWPlayerAudioModeButtonLayout({
+          containerWidth: this.containerWidth,
+          containerHeight: this.containerHeight,
+          isNoLive: this.isNoLive
+        })
+          .id('plvlw_player_audio_mode_button_layout')
+          .hitTestBehavior(HitTestMode.Transparent)
+          .width(PLVCommonConstants.FULL_PERCENT)
+          .height(PLVCommonConstants.FULL_PERCENT)
+      }
+
+      // 播放器异常提示按钮
+      PLVLWPlayerErrorButtonLayout()
+        .id('plvlw_player_error_button_layout')
         .hitTestBehavior(HitTestMode.Transparent)
         .width(PLVCommonConstants.FULL_PERCENT)
         .height(PLVCommonConstants.FULL_PERCENT)
@@ -160,7 +194,144 @@ export struct PLVLWPlayerLayout {
 }
 
 @Component
-struct PLVLWPlayerErrorOverlayLayout {
+struct PLVLWPlayerAudioModeBackgroundLayout {
+  @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @Prop containerWidth: number = 0
+  @Prop containerHeight: number = 0
+  @Prop isNoLive: boolean = true
+  @State private isAudioMode: boolean = false
+  @State private hasPlayerError: boolean = false
+  private observers: MutableObserver[] = []
+
+  aboutToAppear(): void {
+    watchStates(() => {
+      const businessListenerRegistry = this.sdk.playerManager.mainMediaPlayer.getBusinessListenerRegistry()
+      const outputMode = businessListenerRegistry
+        .currentMediaOutputMode
+        .value ?? PLVMediaOutputMode.AUDIO_VIDEO
+      this.isAudioMode = outputMode === PLVMediaOutputMode.AUDIO_ONLY
+      this.hasPlayerError = businessListenerRegistry.businessErrorState.value !== null
+    }).pushTo(this.observers)
+  }
+
+  build() {
+    if (this.isAudioMode && !this.isNoLive && !this.hasPlayerError) {
+      Column() {
+        Stack({ alignContent: Alignment.Bottom }) {
+          Image($r('app.media.plvlw_bg_player_audio_mode'))
+            .width(this.audioModeImageWidth())
+            .aspectRatio(560 / 444)
+            .objectFit(ImageFit.Contain)
+        }
+        .width(this.audioModeImageWidth())
+        .height(this.audioModeImageWidth() / (560 / 444))
+      }
+      .width(PLVCommonConstants.FULL_PERCENT)
+      .height(PLVCommonConstants.FULL_PERCENT)
+      .justifyContent(FlexAlign.Center)
+      .alignItems(HorizontalAlign.Center)
+      .hitTestBehavior(HitTestMode.None)
+      .backgroundColor('#1B202D')
+    }
+  }
+
+  private audioModeImageWidth(): number {
+    const width = Math.max(this.containerWidth, 0)
+    if (this.isSmallWindow()) {
+      return width * 0.6
+    }
+    return width * (this.isLandscape() ? 0.38 : 0.44)
+  }
+
+  private isLandscape(): boolean {
+    return this.containerWidth > this.containerHeight
+  }
+
+  private isSmallWindow(): boolean {
+    return this.containerWidth < 240 || this.containerHeight < 140
+  }
+
+  aboutToDisappear(): void {
+    MutableObserver.disposeAll(this.observers)
+    this.observers = []
+  }
+}
+
+@Component
+struct PLVLWPlayerAudioModeButtonLayout {
+  @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @Prop containerWidth: number = 0
+  @Prop containerHeight: number = 0
+  @Prop isNoLive: boolean = true
+  @State private isAudioMode: boolean = false
+  @State private hasPlayerError: boolean = false
+  private observers: MutableObserver[] = []
+
+  aboutToAppear(): void {
+    watchStates(() => {
+      const businessListenerRegistry = this.sdk.playerManager.mainMediaPlayer.getBusinessListenerRegistry()
+      const outputMode = businessListenerRegistry
+        .currentMediaOutputMode
+        .value ?? PLVMediaOutputMode.AUDIO_VIDEO
+      this.isAudioMode = outputMode === PLVMediaOutputMode.AUDIO_ONLY
+      this.hasPlayerError = businessListenerRegistry.businessErrorState.value !== null
+    }).pushTo(this.observers)
+  }
+
+  build() {
+    if (this.isAudioMode && !this.isNoLive && !this.hasPlayerError && !this.isSmallWindow()) {
+      Column() {
+        Stack({ alignContent: Alignment.Bottom }) {
+          Text($r('app.string.plvlw_player_video_play_mode'))
+            .id('plvlw_player_audio_mode_play_video_button')
+            .width(this.isLandscape() ? 96 : 80)
+            .height(this.isLandscape() ? 30 : 24)
+            .margin({ bottom: this.isLandscape() ? 16 : 0 })
+            .offset({ y: 16 })
+            .fontSize(12)
+            .fontColor(Color.White)
+            .textAlign(TextAlign.Center)
+            .borderRadius(14)
+            .border({
+              width: 0.5,
+              color: Color.White
+            })
+            .backgroundColor('#1AFFFFFF')
+            .onClick(() => {
+              this.sdk.playerManager.mainMediaPlayer.changeMediaOutputMode(PLVMediaOutputMode.AUDIO_VIDEO)
+            })
+        }
+        .width(this.audioModeImageWidth())
+        .height(this.audioModeImageWidth() / (560 / 444))
+      }
+      .width(PLVCommonConstants.FULL_PERCENT)
+      .height(PLVCommonConstants.FULL_PERCENT)
+      .justifyContent(FlexAlign.Center)
+      .alignItems(HorizontalAlign.Center)
+      .hitTestBehavior(HitTestMode.Transparent)
+    }
+  }
+
+  private audioModeImageWidth(): number {
+    return Math.max(this.containerWidth, 0) * (this.isLandscape() ? 0.38 : 0.44)
+  }
+
+  private isLandscape(): boolean {
+    return this.containerWidth > this.containerHeight
+  }
+
+  private isSmallWindow(): boolean {
+    return this.containerWidth < 240 || this.containerHeight < 140
+  }
+
+  aboutToDisappear(): void {
+    MutableObserver.disposeAll(this.observers)
+    this.observers = []
+  }
+}
+
+@Component
+struct PLVLWPlayerErrorBackgroundLayout {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
   @State error: PLVMediaPlayerBusinessErrorEnum | null = null
   private observers: MutableObserver[] = []
@@ -196,6 +367,78 @@ struct PLVLWPlayerErrorOverlayLayout {
             top: 4,
             bottom: 4
           })
+          .opacity(0)
+          .hitTestBehavior(HitTestMode.None)
+      }
+      .width(PLVCommonConstants.FULL_PERCENT)
+      .height(PLVCommonConstants.FULL_PERCENT)
+      .justifyContent(FlexAlign.Center)
+      .alignItems(HorizontalAlign.Center)
+      .backgroundColor('#00021A')
+      .hitTestBehavior(HitTestMode.None)
+    }
+  }
+
+  private getErrorMessage(): string {
+    if (this.error === null) {
+      return ""
+    }
+    const errorCodeMessage = PLVMediaPlayerAppContext.getString($r('app.string.plvlw_player_error_message_code'), this.error.code)
+    if (this.error.code === PLVMediaPlayerBusinessErrorEnum.ERROR_RESTRICT_WATCH.code) {
+      return PLVMediaPlayerAppContext.getString($r('app.string.plvlw_player_error_message_restricted'), errorCodeMessage)
+    } else {
+      return PLVMediaPlayerAppContext.getString($r('app.string.plvlw_player_error_message_general'), errorCodeMessage)
+    }
+  }
+
+  aboutToDisappear(): void {
+    MutableObserver.disposeAll(this.observers)
+    this.observers = []
+  }
+}
+
+@Component
+struct PLVLWPlayerErrorButtonLayout {
+  @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @State error: PLVMediaPlayerBusinessErrorEnum | null = null
+  private observers: MutableObserver[] = []
+
+  aboutToAppear(): void {
+    this.sdk.playerManager.mainMediaPlayer.getBusinessListenerRegistry()
+      .businessErrorState
+      .observe((error) => {
+        this.error = error
+      })
+      .pushTo(this.observers)
+  }
+
+  build() {
+    if (this.error !== null) {
+      Column({ space: 12 }) {
+        Image($r("app.media.plvlw_player_error_placeholder"))
+          .width(150)
+          .height(116)
+          .opacity(0)
+          .hitTestBehavior(HitTestMode.None)
+
+        Text(this.getErrorMessage())
+          .fontSize(12)
+          .fontColor('#e4e4e4')
+          .opacity(0)
+          .hitTestBehavior(HitTestMode.None)
+
+        Text($r("app.string.plvlw_player_error_action_refresh"))
+          .id('plvlw_player_error_refresh_button')
+          .fontSize(12)
+          .fontColor('#e4e4e4')
+          .borderRadius(30)
+          .backgroundColor('#4880f6')
+          .padding({
+            left: 12,
+            right: 12,
+            top: 4,
+            bottom: 4
+          })
           .onClick(() => {
             this.sdk.playerManager.mainMediaPlayer.restart()
           })
@@ -204,8 +447,7 @@ struct PLVLWPlayerErrorOverlayLayout {
       .height(PLVCommonConstants.FULL_PERCENT)
       .justifyContent(FlexAlign.Center)
       .alignItems(HorizontalAlign.Center)
-      .backgroundColor('#00021A')
-      .hitTestBehavior(HitTestMode.None)
+      .hitTestBehavior(HitTestMode.Transparent)
     }
   }
 

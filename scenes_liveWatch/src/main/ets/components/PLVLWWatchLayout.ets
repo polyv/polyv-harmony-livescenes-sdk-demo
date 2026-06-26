@@ -34,6 +34,7 @@ export struct PLVLWWatchLayout {
     this.layoutController.layoutDataBus = this.layoutDataBus
     this.orientationListener = PLVUtils.listenerOrientation((result) => {
       this.layoutDataBus.isPortrait.setValue(!result.matches)
+      PLVUtils.setWindowFullScreen(true, result.matches)
     })
   }
 
@@ -130,6 +131,11 @@ export struct PLVLWWatchLayout {
 export class PLVWatchLayoutController {
   layoutDataBus?: PLVLWLayoutDataBus
   onBackPressed: PLVCallback<void, boolean | undefined> = () => {
-    return this.layoutDataBus?.onBackPressed()
+    let result = this.layoutDataBus?.onBackPressed()
+    if (!result && PLVUtils.isLandscape()) {
+      PLVUtils.changeOrientation(false)
+      result = true
+    }
+    return result
   }
 }

@@ -1,7 +1,7 @@
 {
   "modelVersion": "5.0.0",
   "name": "@polyvharmony/harmony-livescenes-sdk",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "polyv harmony-livescenes-sdk",
   "main": "",
   "author": "",
@@ -10,9 +10,9 @@
   "devDependencies": {},
   "dynamicDependencies": {},
   "overrides": {
-    "@polyvharmony/media-player-sdk": "2.7.1",
-    "@polyvharmony/media-player-foundation": "2.7.1",
-    "@polyvharmony/common-libs": "1.0.2",
+    "@polyvharmony/media-player-sdk": "2.7.3",
+    "@polyvharmony/media-player-foundation": "2.7.3",
+    "@polyvharmony/common-libs": "1.0.3",
     "liteavsdk": "file:./libs/LiteAVSDK_TRTC_12.3.0.6950.har",
     "@bytertc/volcenginertc": "file:./libs/volcenginertc-3.60.151150.har"
   }

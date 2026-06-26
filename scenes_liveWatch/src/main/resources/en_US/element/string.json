@@ -253,6 +253,10 @@
       "value": "Audio mode"
     },
     {
+      "name": "plvlw_player_video_play_mode",
+      "value": "Play video"
+    },
+    {
       "name": "plvlw_interact_action_default_title",
       "value": "Interactive function"
     },

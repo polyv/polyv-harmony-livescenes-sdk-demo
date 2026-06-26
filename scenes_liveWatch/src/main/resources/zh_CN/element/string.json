@@ -253,6 +253,10 @@
       "value": "音频模式"
     },
     {
+      "name": "plvlw_player_video_play_mode",
+      "value": "播放画面"
+    },
+    {
       "name": "plvlw_interact_action_default_title",
       "value": "互动功能"
     },

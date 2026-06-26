@@ -1,5 +1,5 @@
 import { PLVCommonConstants, PLVLiveSceneSDK, PLVNodeController } from '@polyvharmony/live-scenes-sdk';
-import { lateInit } from '@polyvharmony/media-player-sdk';
+import { lateInit, MutableObserver, PLVMediaOutputMode, watchStates } from '@polyvharmony/media-player-sdk';
 import { PLVLWLayoutDataBus } from '../../../common/PLVLWLayoutDataBus';
 import { PLVLWMarqueeLayout } from '../marquee/PLVLWMarqueeLayout';
 import { PLVLWWatermarkLayout } from '../watermark/PLVLWWatermarkLayout';
@@ -7,6 +7,13 @@ import { PLVLWWatermarkLayout } from '../watermark/PLVLWWatermarkLayout';
 @Component
 export struct PLVLWPlayerView {
   @State viewData: PlayerViewData = lateInit()
+  @State private isAudioMode: boolean = false
+  @State private isPPTToMainScreen: boolean = false
+  private observers: MutableObserver[] = []
+
+  aboutToAppear(): void {
+    this.observePlayerViewState()
+  }
 
   build() {
     Stack() {
@@ -38,6 +45,21 @@ export struct PLVLWPlayerView {
       })
         .width(PLVCommonConstants.FULL_PERCENT)
         .height(PLVCommonConstants.FULL_PERCENT)
+
+      if (this.isPPTToMainScreen && this.isAudioMode) {
+        Column() {
+          Image($r('app.media.plvlw_bg_player_audio_mode'))
+            .width('60%')
+            .aspectRatio(560 / 444)
+            .objectFit(ImageFit.Contain)
+        }
+        .width(PLVCommonConstants.FULL_PERCENT)
+        .height(PLVCommonConstants.FULL_PERCENT)
+        .justifyContent(FlexAlign.Center)
+        .alignItems(HorizontalAlign.Center)
+        .backgroundColor('#1B202D')
+        .hitTestBehavior(HitTestMode.None)
+      }
     }
     .width(PLVCommonConstants.FULL_PERCENT)
     .height(PLVCommonConstants.FULL_PERCENT)
@@ -53,6 +75,21 @@ export struct PLVLWPlayerView {
         this.viewData.sdk?.playerManager.mainMediaPlayer.seek(selData?.timeMillisecond)
       }
     })
+  }
+
+  observePlayerViewState() {
+    watchStates(() => {
+      const outputMode = this.viewData.sdk?.playerManager.mainMediaPlayer.getBusinessListenerRegistry()
+        .currentMediaOutputMode
+        .value ?? PLVMediaOutputMode.AUDIO_VIDEO
+      this.isAudioMode = outputMode === PLVMediaOutputMode.AUDIO_ONLY
+      this.isPPTToMainScreen = this.viewData.layoutDataBus?.isPPTToMainScreen.value ?? false
+    }).pushTo(this.observers)
+  }
+
+  aboutToDisappear(): void {
+    MutableObserver.disposeAll(this.observers)
+    this.observers = []
   }
 }
 
