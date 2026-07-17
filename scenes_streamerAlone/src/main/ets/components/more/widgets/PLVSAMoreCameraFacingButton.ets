@@ -8,13 +8,18 @@ export struct PLVSAMoreCameraFacingButton {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
   @Consume('pageDataBus') pageDataBus: PLVSAPageDataBus
   @State private enable: boolean = true
+  @State private isStartScreenCapture: boolean = false
   private observers: MutableObserver[] = []
 
   aboutToAppear(): void {
+    this.isStartScreenCapture = this.sdk.streamerManager.isStartScreenCapture.value ?? false
     const localVideoEnable = new DerivedState<boolean>(() => {
       return this.sdk.linkmicManager.localLinkMicViewer.value?.isVideoEnable?.value ?? false
     })
     localVideoEnable.observe((videoEnable) => this.enable = videoEnable).pushTo(this.observers)
+    this.sdk.streamerManager.isStartScreenCapture
+      .observe(isStart => this.isStartScreenCapture = isStart)
+      .pushTo(this.observers)
   }
 
   build() {
@@ -25,12 +30,16 @@ export struct PLVSAMoreCameraFacingButton {
         .padding(this.iconPadding)
         .objectFit(ImageFit.Contain)
       Text($r('app.string.plvsa_more_camera_facing_switch'))
-        .fontColor(this.enable ? "#FFFFFF" : "#99FFFFFF")
+        .fontColor(this.enable && !this.isStartScreenCapture ? "#FFFFFF" : "#99FFFFFF")
         .fontSize(12)
         .textAlign(TextAlign.Center)
     }
-    .enabled(this.enable)
+    .opacity(this.isStartScreenCapture ? 0.45 : 1)
+    .enabled(this.enable && !this.isStartScreenCapture)
     .onClick(() => {
+      if (this.isStartScreenCapture) {
+        return
+      }
       this.sdk.linkmicManager.switchCamera()
       const newFacingFront = this.sdk.linkmicManager.cameraFacing.value === PLVLinkMicCameraFacing.FRONT
       if (!newFacingFront) {

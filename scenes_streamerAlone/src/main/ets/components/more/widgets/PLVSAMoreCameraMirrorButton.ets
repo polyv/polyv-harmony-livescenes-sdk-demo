@@ -7,9 +7,11 @@ export struct PLVSAMoreCameraMirrorButton {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
   @State private enable: boolean = true
   @State private isMirror: boolean = false
+  @State private isStartScreenCapture: boolean = false
   private observers: MutableObserver[] = []
 
   aboutToAppear(): void {
+    this.isStartScreenCapture = this.sdk.streamerManager.isStartScreenCapture.value ?? false
     const mirrorEnable = new DerivedState<boolean>(() => {
       const videoEnable = this.sdk.linkmicManager.localLinkMicViewer.value?.isVideoEnable?.value ?? false
       const cameraFacingFront = this.sdk.linkmicManager.cameraFacing.value === PLVLinkMicCameraFacing.FRONT
@@ -17,6 +19,9 @@ export struct PLVSAMoreCameraMirrorButton {
     })
     mirrorEnable.observe((mirrorEnable) => this.enable = mirrorEnable).pushTo(this.observers)
     this.sdk.linkmicManager.renderMirror.observe((isMirror) => this.isMirror = isMirror)
+      .pushTo(this.observers)
+    this.sdk.streamerManager.isStartScreenCapture
+      .observe(isStart => this.isStartScreenCapture = isStart)
       .pushTo(this.observers)
   }
 
@@ -28,12 +33,16 @@ export struct PLVSAMoreCameraMirrorButton {
         .padding(this.iconPadding)
         .objectFit(ImageFit.Contain)
       Text($r('app.string.plvsa_more_camera_mirror'))
-        .fontColor(this.enable ? "#FFFFFF" : "#99FFFFFF")
+        .fontColor(this.enable && !this.isStartScreenCapture ? "#FFFFFF" : "#99FFFFFF")
         .fontSize(12)
         .textAlign(TextAlign.Center)
     }
-    .enabled(this.enable)
+    .opacity(this.isStartScreenCapture ? 0.45 : 1)
+    .enabled(this.enable && !this.isStartScreenCapture)
     .onClick(() => {
+      if (this.isStartScreenCapture) {
+        return
+      }
       this.sdk.linkmicManager.setLocalMirror(!this.isMirror)
     })
   }

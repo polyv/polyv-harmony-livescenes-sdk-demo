@@ -489,6 +489,46 @@
       "value": "Ratio"
     },
     {
+      "name": "plvsa_more_screen_capture_need_streamer_start",
+      "value": "Please start live first"
+    },
+    {
+      "name": "plvsa_more_screen_capture_need_video_first",
+      "value": "Please turn on the camera first"
+    },
+    {
+      "name": "plvsa_more_screen_capture_not_support",
+      "value": "Screen sharing is not supported"
+    },
+    {
+      "name": "plvsa_more_screen_capture_start",
+      "value": "Screen share"
+    },
+    {
+      "name": "plvsa_more_screen_capture_start_fail",
+      "value": "Screen sharing failed: %s"
+    },
+    {
+      "name": "plvsa_more_screen_capture_stop",
+      "value": "Stop sharing"
+    },
+    {
+      "name": "plvsa_more_screen_capture_stop_fail",
+      "value": "Stop sharing failed: %s"
+    },
+    {
+      "name": "plvsa_streamer_screenshare_ing",
+      "value": "You are sharing your screen"
+    },
+    {
+      "name": "plvsa_streamer_screenshare_stop",
+      "value": "Stop Sharing"
+    },
+    {
+      "name": "plvsa_streamer_screenshare_stop_confirm",
+      "value": "Are you sure to end screen sharing?"
+    },
+    {
       "name": "plvsa_more_share_action_cancel",
       "value": "Cancel"
     },

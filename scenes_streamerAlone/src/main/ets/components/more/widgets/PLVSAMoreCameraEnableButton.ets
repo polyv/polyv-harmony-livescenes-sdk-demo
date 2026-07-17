@@ -8,13 +8,18 @@ export struct PLVSAMoreCameraEnableButton {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
   @Consume('pageDataBus') pageDataBus: PLVSAPageDataBus
   @State private enable: boolean = true
+  @State private isStartScreenCapture: boolean = false
   private observers: MutableObserver[] = []
 
   aboutToAppear(): void {
+    this.isStartScreenCapture = this.sdk.streamerManager.isStartScreenCapture.value ?? false
     const localVideoEnable = new DerivedState<boolean>(() => {
       return this.sdk.linkmicManager.localLinkMicViewer.value?.isVideoEnable?.value ?? false
     })
     localVideoEnable.observe((videoEnable) => this.enable = videoEnable).pushTo(this.observers)
+    this.sdk.streamerManager.isStartScreenCapture
+      .observe(isStart => this.isStartScreenCapture = isStart)
+      .pushTo(this.observers)
   }
 
   build() {
@@ -29,7 +34,12 @@ export struct PLVSAMoreCameraEnableButton {
         .fontSize(12)
         .textAlign(TextAlign.Center)
     }
+    .opacity(this.isStartScreenCapture ? 0.45 : 1)
+    .enabled(!this.isStartScreenCapture)
     .onClick(() => {
+      if (this.isStartScreenCapture) {
+        return
+      }
       const toEnable = !this.enable
       this.sdk.linkmicManager.enableCamera(toEnable)
       this.pageDataBus.recoverSetting.update({

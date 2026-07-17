@@ -53,6 +53,7 @@ export class PLVSAPageDataBus {
   readonly recoverSetting = new PLVSAStreamerRecoverSetting()
 
   finishStream(sdk: PLVLiveSceneSDK) {
+    sdk.streamerManager.stopScreenCapture()
     sdk.streamerManager.finishStream()
     sdk.linkmicManager.enableCamera(false)
     sdk.linkmicManager.enableMicrophone(false)

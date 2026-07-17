@@ -13,7 +13,7 @@ export class PLVRTCEngineStartUp {
     PLVRTCEngineStartUp.isInit = true
 
     PLVRTCEngineFactory.register(PLVARTCEngineFactory.instance)
-    // PLVRTCEngineFactory.register(PLVTRTCEngineFactory.instance) TODO 如需集成trtc，请联系技术支持
+    PLVRTCEngineFactory.register(PLVTRTCEngineFactory.instance)
     // PLVRTCEngineFactory.register(PLVVRTCEngineFactory.instance) TODO 如需集成vrtc，请联系技术支持
   }
 }

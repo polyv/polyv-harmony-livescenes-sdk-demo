@@ -6,6 +6,7 @@ import {
   PLVLinkMicViewer,
   PLVLiveSceneSDK,
   PLVStreamerState,
+  PLVToastUtils,
   PLVUserType
 } from '@polyvharmony/live-scenes-sdk'
 import {
@@ -26,6 +27,7 @@ import {
   PLVSALinkMicMemberControlDialog
 } from './widgets/PLVSALinkMicMemberControlDialog'
 import { PLVSALinkMicViewerTimerLayout } from './widgets/PLVSALinkMicViewerTimerLayout'
+import { PLVSAConfirmDialog } from '../../common/widget/PLVSAConfirmDialog'
 
 @Component
 export struct PLVSALinkMicLayout {
@@ -629,16 +631,32 @@ struct PLVSALinkMicViewerItemView {
   @State guestLinkmicStateJoined: boolean = true
   @State speakerIconVisible: boolean = false
   @State isShowInFullScreen: boolean = false
+  @State isStartScreenCapture: boolean = false
   @State videoRatio: number | null = null
   private videoXComponentId: string = ""
   private memberControlDialogSwitcher: PLVSALinkMicMemberControlActionSwitcher | undefined = undefined
   private linkmicMemberControlDialogController: CustomDialogController | undefined = undefined
+  private readonly stopScreenCaptureDialogController = new CustomDialogController({
+    builder: PLVSAConfirmDialog({
+      title: $r('app.string.plvsa_streamer_screenshare_stop_confirm'),
+      hasContent: false,
+      onClickConfirm: (controller) => {
+        const ret = this.sdk.streamerManager.stopScreenCapture()
+        if (ret !== 0) {
+          PLVToastUtils.shortShow($r('app.string.plvsa_more_screen_capture_stop_fail', `${ret}`))
+        }
+        controller?.close()
+      }
+    }),
+    customStyle: true
+  })
   private tapCountTimeout: number | undefined = undefined
   private tapCount = 0
   private observers: MutableObserver[] = []
 
   aboutToAppear(): void {
     this.memberControlDialogSwitcher = new PLVSALinkMicMemberControlActionSwitcher(this.sdk, this.viewer)
+    this.isStartScreenCapture = this.sdk.streamerManager.isStartScreenCapture.value ?? false
     this.viewer.isVideoEnable.observe((videoEnable) => this.isVideoEnable = videoEnable).pushTo(this.observers)
     this.viewer.isAudioEnable.observe((audioEnable) => this.isAudioEnable = audioEnable).pushTo(this.observers)
     this.viewer.audioVolume.observe((audioVolume) => this.audioVolume = audioVolume).pushTo(this.observers)
@@ -663,6 +681,7 @@ struct PLVSALinkMicViewerItemView {
     this.pageDataBus.linkmicFullScreenViewer.observe(fullScreenViewer => {
       this.isShowInFullScreen = this.viewer === fullScreenViewer
     }).pushTo(this.observers)
+    this.sdk.streamerManager.isStartScreenCapture.observe(it => this.isStartScreenCapture = it).pushTo(this.observers)
     const videoRatioState = derivedStateOf<number | null>(() => {
       const isLandscape = this.pageDataBus.isPortrait.value === false
       const ratio = this.sdk.streamerManager.pushResolutionRatio.value ?? PLVLinkMicPushResolutionRatio.RATIO_16_9
@@ -718,6 +737,14 @@ struct PLVSALinkMicViewerItemView {
             ['#383F64', 0],
             ['#2D324C', 1]
           ]
+        })
+      }
+
+      if (this.viewer.isMyself && this.isStartScreenCapture) {
+        PLVSAScreenCapturePlaceholder({
+          onClickStop: () => {
+            this.stopScreenCaptureDialogController.open()
+          }
         })
       }
 
@@ -856,8 +883,66 @@ struct PLVSALinkMicViewerItemView {
   }
 
   aboutToDisappear(): void {
+    this.stopScreenCaptureDialogController.close()
     MutableObserver.disposeAll(this.observers)
     this.observers = []
+  }
+}
+
+@Component
+struct PLVSAScreenCapturePlaceholder {
+  onClickStop: () => void = () => {
+  }
+
+  build() {
+    Column() {
+      Image($r('app.media.plvsa_streamer_screen_sharing_placeholder'))
+        .width(32)
+        .height(32)
+        .objectFit(ImageFit.Contain)
+
+      Text($r('app.string.plvsa_streamer_screenshare_ing'))
+        .fontColor('#F0F1F5')
+        .fontSize(12)
+        .textAlign(TextAlign.Center)
+        .maxLines(2)
+        .textOverflow({ overflow: TextOverflow.Ellipsis })
+        .width('90%')
+        .margin({
+          top: 5
+        })
+
+      Text($r('app.string.plvsa_streamer_screenshare_stop'))
+        .fontColor('#FFFFFF')
+        .fontSize(14)
+        .textAlign(TextAlign.Center)
+        .maxLines(1)
+        .textOverflow({ overflow: TextOverflow.Ellipsis })
+        .constraintSize({ maxWidth: '90%' })
+        .backgroundColor('#FF6363')
+        .borderRadius(18)
+        .padding({
+          left: 22,
+          right: 22,
+          top: 9,
+          bottom: 9
+        })
+        .margin({
+          top: 12
+        })
+        .onClick(() => this.onClickStop())
+    }
+    .width('100%')
+    .height('100%')
+    .justifyContent(FlexAlign.Center)
+    .alignItems(HorizontalAlign.Center)
+    .linearGradient({
+      angle: 45,
+      colors: [
+        ['#383F64', 0],
+        ['#2D324C', 1]
+      ]
+    })
   }
 }
 

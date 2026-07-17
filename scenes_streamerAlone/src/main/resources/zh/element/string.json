@@ -485,6 +485,46 @@
       "value": "开播比例"
     },
     {
+      "name": "plvsa_more_screen_capture_need_streamer_start",
+      "value": "请先开始直播"
+    },
+    {
+      "name": "plvsa_more_screen_capture_need_video_first",
+      "value": "请先打开摄像头"
+    },
+    {
+      "name": "plvsa_more_screen_capture_not_support",
+      "value": "当前不支持屏幕共享"
+    },
+    {
+      "name": "plvsa_more_screen_capture_start",
+      "value": "屏幕共享"
+    },
+    {
+      "name": "plvsa_more_screen_capture_start_fail",
+      "value": "屏幕共享失败：%s"
+    },
+    {
+      "name": "plvsa_more_screen_capture_stop",
+      "value": "退出共享"
+    },
+    {
+      "name": "plvsa_more_screen_capture_stop_fail",
+      "value": "退出共享失败：%s"
+    },
+    {
+      "name": "plvsa_streamer_screenshare_ing",
+      "value": "您正在共享屏幕"
+    },
+    {
+      "name": "plvsa_streamer_screenshare_stop",
+      "value": "结束共享"
+    },
+    {
+      "name": "plvsa_streamer_screenshare_stop_confirm",
+      "value": "确定结束屏幕共享吗？"
+    },
+    {
       "name": "plvsa_more_share_action_cancel",
       "value": "取消"
     },

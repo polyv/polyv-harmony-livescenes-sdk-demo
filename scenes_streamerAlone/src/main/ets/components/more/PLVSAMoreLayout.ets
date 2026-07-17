@@ -14,6 +14,7 @@ import { PLVSAMorePushDowngradeButton } from './widgets/PLVSAMorePushDowngradeBu
 import { PLVLinkMicRTCType, PLVLiveSceneSDK, PLVUserType } from '@polyvharmony/live-scenes-sdk';
 import { PLVSAMoreShareButton } from './widgets/PLVSAMoreShareButton';
 import { PLVSAMoreSignInButton } from './widgets/PLVSAMoreSIgnInButton';
+import { PLVSAMoreScreenCaptureButton } from './widgets/PLVSAMoreScreenCaptureButton';
 
 @CustomDialog
 export struct PLVSAMoreLayout {
@@ -95,6 +96,12 @@ struct PLVSAMoreLayoutPort {
                   origin()
                 }
               })
+            }
+          }
+
+          if (this.switcher.value.showScreenCaptureButton) {
+            GridItem() {
+              PLVSAMoreScreenCaptureButton()
             }
           }
 
@@ -254,6 +261,12 @@ struct PLVSAMoreLayoutLand {
             }
           }
 
+          if (this.switcher.value.showScreenCaptureButton) {
+            GridItem() {
+              PLVSAMoreScreenCaptureButton()
+            }
+          }
+
           GridItem() {
             PLVSAMorePushDowngradeButton({
               onClicked: (origin) => {
@@ -352,6 +365,7 @@ export class PLVSAMoreLayoutActionSwitcher {
   private readonly sdk: PLVLiveSceneSDK
   readonly showCloseRoomButton: boolean
   readonly showShareButton: boolean
+  readonly showScreenCaptureButton: boolean
   readonly showAllowLinkMicButton: boolean
   readonly showHangupAllLinkMicButton: boolean
   readonly showLinkMicSettingButton: boolean
@@ -364,9 +378,11 @@ export class PLVSAMoreLayoutActionSwitcher {
     const isTeacher = this.sdk.channelData.viewerType === PLVUserType.USERTYPE_TEACHER
     const isLinkMicStrategyV2 = this.sdk.linkmicManager.isLinkMicStrategyV2.value ?? false
     const isMirrorSupport = this.sdk.channelData.liveDetail?.rtcType != PLVLinkMicRTCType.TRTC
+    const isStartScreenCapture = this.sdk.streamerManager.sdkSupportScreenCapture.value ?? false
 
     this.showCloseRoomButton = isTeacher
     this.showShareButton = isLiteralTrue(this.sdk.channelData.liveDetail?.pushSharingEnabled)
+    this.showScreenCaptureButton = isTeacher && isStartScreenCapture
     this.showAllowLinkMicButton = isTeacher && isLinkMicStrategyV2
     this.showHangupAllLinkMicButton = isTeacher
     this.showLinkMicSettingButton = isTeacher && isLinkMicStrategyV2
