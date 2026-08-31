@@ -96,6 +96,14 @@ export class PLVLWLayoutDataBus {
    */
   readonly onChangePPTPage = new MutableEvent<ChangePPTType>().async(false)
   /**
+   * 连麦状态
+   */
+  readonly isLinkmic = mutableStateOf(false)
+  /**
+   * PPT是否在连麦主画面的位置
+   */
+  readonly isPPTInLinkmicMainItem = mutableStateOf(false)
+  /**
    * 顶层布局里的组件触摸事件拦截区域
    */
   readonly topLayerViewTouchArea = mutableStateOf<Rect>()

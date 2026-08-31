@@ -12,7 +12,7 @@ import {
   pushToWatchPage
 } from 'scenes_live';
 import { router } from '@kit.ArkUI';
-import { pushToLiveWatchPage } from 'scenes_liveWatch';
+import { closeLiveWatchPiPForNewSession, pushToLiveWatchPage } from 'scenes_liveWatch';
 import BuildProfile from 'BuildProfile';
 
 const TAG = '[PLVLoginPage]'
@@ -217,7 +217,7 @@ struct PLVLoginPage {
   loginLive() {
     const sdk = this.createSDK()
     sdk.loginManager.loginLive(this.liveUserId, this.liveChannelId, this.liveAppId, this.liveAppSecret)
-      .then((channelData) => {
+      .then(async (channelData) => {
         if (sdk.channelData.liveScene == undefined) {
           sdk.channelData.liveScene = channelData.isNormalWatchLayout() ? PLVLiveScene.LAND_TEMPLATE : PLVLiveScene.PORTRAIT_TEMPLATE
         }
@@ -232,6 +232,7 @@ struct PLVLoginPage {
         PLVLogger.info(TAG, `loginLive success`)
         this.loadingVisibility = Visibility.None
         if (this.newLiveWatch) {
+          await closeLiveWatchPiPForNewSession()
           pushToLiveWatchPage(sdk.uniqueId)
         } else {
           pushToWatchPage(sdk.uniqueId)
@@ -247,7 +248,7 @@ struct PLVLoginPage {
   loginPlayback() {
     const sdk = this.createSDK()
     sdk.loginManager.loginPlayback(this.playbackUserId, this.playbackChannelId, this.playbackAppId, this.playbackAppSecret, this.playbackVideoId)
-      .then((channelData) => {
+      .then(async (channelData) => {
         if (sdk.channelData.liveScene == undefined) {
           sdk.channelData.liveScene = channelData.isNormalWatchLayout() ? PLVLiveScene.LAND_TEMPLATE : PLVLiveScene.PORTRAIT_TEMPLATE
         }
@@ -263,6 +264,7 @@ struct PLVLoginPage {
         this.loadingVisibility = Visibility.None
         sdk.channelData.setupPlaybackListType(this.isOnVodList)
         if (this.newLiveWatch) {
+          await closeLiveWatchPiPForNewSession()
           pushToLiveWatchPage(sdk.uniqueId)
         } else {
           pushToWatchPage(sdk.uniqueId)

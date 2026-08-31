@@ -6,6 +6,7 @@ import {
   PLVMediaPlayerPlayingState,
   watchStates
 } from '@polyvharmony/media-player-sdk'
+import { PLVLWLayoutDataBus } from '../../../../common/PLVLWLayoutDataBus'
 import { PLVLWMoreBitRateSelectDialog } from '../../../content/toolbar/moresetting/actions/PLVLWMoreBitRateAction'
 import { PLVLWMoreSpeedSelectDialog } from '../../../content/toolbar/moresetting/actions/PLVLWMoreSpeedAction'
 import { PLVLWMoreSettingIcon } from '../../../content/toolbar/moresetting/PLVLWMoreSettingLayout'
@@ -14,6 +15,7 @@ import { PLVLWPlayerControllerCastButton } from './PLVLWPlayerControllerCastButt
 @Component
 export struct PLVLWPlayerControllerTopToolBarLayout {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @State private bitRateButtonVisible: boolean = false
   @State private bitRateButtonText: ResourceStr = $r('app.string.plvlw_player_definition')
   private readonly bitRateSelectDialog = new CustomDialogController({
@@ -31,13 +33,14 @@ export struct PLVLWPlayerControllerTopToolBarLayout {
 
   aboutToAppear(): void {
     watchStates(() => {
+      const isLinkMic = this.layoutDataBus.isLinkmic.value ?? false
       const mediaPlayer = this.sdk.playerManager.mainMediaPlayer
       const supportBitRates = mediaPlayer.getBusinessListenerRegistry().supportMediaBitRates.value ?? []
       const currentBitRate = mediaPlayer.getBusinessListenerRegistry().currentMediaBitRate.value
       const isMediaPlaying = mediaPlayer.getStateListenerRegistry()
         .playingState
         .value === PLVMediaPlayerPlayingState.PLAYING
-      this.bitRateButtonVisible = supportBitRates.length > 0 && isMediaPlaying
+      this.bitRateButtonVisible = supportBitRates.length > 0 && isMediaPlaying && !isLinkMic
       this.bitRateButtonText = currentBitRate?.name ?? $r('app.string.plvlw_player_definition')
     }).pushTo(this.observers)
 

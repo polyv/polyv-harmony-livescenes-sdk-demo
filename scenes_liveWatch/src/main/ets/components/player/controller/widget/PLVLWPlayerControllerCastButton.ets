@@ -2,10 +2,12 @@ import { PLVLiveSceneSDK } from '@polyvharmony/live-scenes-sdk'
 import { lateInit, MutableObserver, PLVMediaPlayerPlayingState, watchStates } from '@polyvharmony/media-player-sdk'
 import { PLVMediaCastData, PLVMediaCastManager } from '@polyvharmony/media-cast'
 import { PLVLWCastDeviceSelectLayout } from './PLVLWCastDeviceSelectLayout'
+import { PLVLWLayoutDataBus } from '../../../../common/PLVLWLayoutDataBus'
 
 @Component
 export struct PLVLWPlayerControllerCastButton {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @State private isCastEnable: boolean = false
   private readonly deviceSelectDialog = new CustomDialogController({
     builder: PLVLWCastDeviceSelectLayout(),
@@ -16,12 +18,13 @@ export struct PLVLWPlayerControllerCastButton {
 
   aboutToAppear(): void {
     watchStates(async () => {
+      const isLinkmic = this.layoutDataBus.isLinkmic.value ?? false
       const mediaPlayer = this.sdk.playerManager.mainMediaPlayer
       const mediaResource = mediaPlayer.getBusinessListenerRegistry().currentMediaResource.value
       const isMediaPlaying = mediaPlayer.getStateListenerRegistry()
         .playingState
         .value === PLVMediaPlayerPlayingState.PLAYING
-      if (mediaResource && isMediaPlaying) {
+      if (mediaResource && isMediaPlaying && !isLinkmic) {
         const castData = new PLVMediaCastData()
         castData.mediaResource = mediaResource
         this.isCastEnable = await PLVMediaCastManager.getInstance().isMediaSupportCast(castData)

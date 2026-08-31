@@ -70,7 +70,7 @@ export struct PLVLWToolBarLayout {
           })
             .width(36)
             .height(36)
-            .visibility(this.isPortrait && this.isLinkMicIconVisible ? Visibility.Visible : Visibility.None)
+            .visibility(this.isLinkMicIconVisible ? Visibility.Visible : Visibility.None)
 
           PLVLWToolBarProductIcon()
             .width(36)

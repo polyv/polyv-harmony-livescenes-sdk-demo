@@ -129,7 +129,7 @@ export struct PLVLWDanmuLayout {
   }
 
   private emitDanmu(text: string | undefined) {
-    if (!text) {
+    if (!text || (this.danmuModel.getConfig()?.mDanmakuFactory === undefined || this.danmuModel.getConfig()?.mDanmakuFactory === null)) {
       return
     }
     const danmu = this.danmuModel.getConfig().mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL)

@@ -2,8 +2,7 @@ import {
   PLVCommonConstants,
   PLVLinkMicMode,
   PLVLinkMicState,
-  PLVLiveSceneSDK,
-  PLVToastUtils
+  PLVLiveSceneSDK, PLVLoginType, PLVToastUtils
 } from '@polyvharmony/live-scenes-sdk'
 import { lateInit, MutableObserver, RequirePermissions, watchStates } from '@polyvharmony/media-player-sdk'
 import { PLVLWConfirmDialog } from '../../../../common/widget/PLVLWConfirmDialog'
@@ -22,11 +21,12 @@ export struct PLVLWToolBarLinkMicControlIcon {
 
   aboutToAppear(): void {
     watchStates(() => {
+      const isLive = this.sdk.channelData.loginType === PLVLoginType.LIVE
       const sdkSupport = this.sdk.linkmicManager.sdkSupportChannelLinkMic.value ?? false
       const allowLinkMic = this.sdk.linkmicManager.channelAllowLinkMic.value ?? false
       const allowRequestLinkMic = this.sdk.linkmicManager.channelAllowRequestHandsUpLinkMic.value ?? false
       const linkmicState = this.sdk.linkmicManager.linkmicState.value ?? PLVLinkMicState.NoLinkMic
-      const isVisible = (sdkSupport && allowLinkMic && allowRequestLinkMic) || linkmicState === PLVLinkMicState.Joined
+      const isVisible = (isLive && sdkSupport && allowLinkMic && allowRequestLinkMic) || linkmicState === PLVLinkMicState.Joined
       this.isLinkMicIconVisible = isVisible
       this.linkmicState = linkmicState
     }).pushTo(this.observers)

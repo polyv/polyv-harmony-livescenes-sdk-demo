@@ -84,6 +84,8 @@ export struct PLVLWPlayerControllerPPTStatusLayout {
 
   onLayoutData() {
     watchStates(() => {
+      const isLinkmic = this.layoutDataBus.isLinkmic.value ?? false
+      const isPPTInLinkmicMainItem = this.layoutDataBus.isPPTInLinkmicMainItem.value ?? false
       const isPPTToMainScreen = this.layoutDataBus.isPPTToMainScreen.value ?? false
       const liveStatus = this.sdk?.playerManager.mainMediaPlayer.getBusinessListenerRegistry().liveStatus.value
       const playerStatus = this.sdk?.playerManager.mainMediaPlayer.getStateListenerRegistry().playerState.value
@@ -93,7 +95,7 @@ export struct PLVLWPlayerControllerPPTStatusLayout {
       if (liveStatusNone || playerStatusNone) {
         this.isLayoutVisible = false
       } else {
-        this.isLayoutVisible = isPPTToMainScreen
+        this.isLayoutVisible = isPPTToMainScreen || (isLinkmic && isPPTInLinkmicMainItem)
       }
 
       const pptStatus = this.layoutDataBus.pptStatus.value ?? undefined

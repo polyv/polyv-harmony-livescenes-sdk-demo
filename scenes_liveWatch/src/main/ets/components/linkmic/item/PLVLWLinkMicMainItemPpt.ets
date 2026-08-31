@@ -1,24 +1,21 @@
-import { PLVCommonConstants } from '@polyvharmony/live-scenes-sdk';
-import {
-  PLVLWPlayerControllerPPTStatusLayout
-} from '../../player/controller/widget/PLVLWPlayerControllerPPTStatusLayout';
+import { PLVLWLayoutDataBus } from '../../../common/PLVLWLayoutDataBus';
 import { PLVLWPPTNodeContainer } from '../../ppt/node/PLVLWPPTNodeContainer';
 
 @Component
 export struct PLVLWLinkMicMainItemPpt {
+  @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
+
+  aboutToAppear(): void {
+    this.layoutDataBus.isPPTInLinkmicMainItem.setValue(true)
+  }
+
+  aboutToDisappear(): void {
+    this.layoutDataBus.isPPTInLinkmicMainItem.setValue(false)
+  }
 
   build() {
     RelativeContainer() {
       PLVLWPPTNodeContainer()
-
-      PLVLWPlayerControllerPPTStatusLayout()
-        .alignRules({
-          middle: { anchor: PLVCommonConstants.CONTAINER, align: HorizontalAlign.Center },
-          bottom: { anchor: PLVCommonConstants.CONTAINER, align: VerticalAlign.Bottom }
-        })
-        .margin({
-          bottom: 12
-        })
     }
     .width('100%')
     .height('100%')

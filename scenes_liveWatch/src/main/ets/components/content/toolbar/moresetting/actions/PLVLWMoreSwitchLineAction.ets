@@ -13,6 +13,7 @@ import { MoreSettingActionCallback, MoreSettingActionView } from './more-setting
 @Component
 export struct PLVLWMoreSwitchLineAction {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @Consume('moreSettingActionCallback') moreSettingActionCallback: MoreSettingActionCallback
   @State private isVisible: boolean = false
   private readonly lineSelectDialog = new CustomDialogController({
@@ -24,12 +25,13 @@ export struct PLVLWMoreSwitchLineAction {
 
   aboutToAppear(): void {
     watchStates(() => {
+      const isLinkmic = this.layoutDataBus.isLinkmic.value ?? false
       const mediaPlayer = this.sdk.playerManager.mainMediaPlayer
       const supportLines = mediaPlayer.getBusinessListenerRegistry().supportMediaRoutes.value ?? []
       const isMediaPlaying = mediaPlayer.getStateListenerRegistry()
         .playingState
         .value === PLVMediaPlayerPlayingState.PLAYING
-      this.isVisible = supportLines.length > 0 && isMediaPlaying
+      this.isVisible = supportLines.length > 0 && isMediaPlaying && !isLinkmic
     }).pushTo(this.observers)
   }
 

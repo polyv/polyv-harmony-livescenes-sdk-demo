@@ -7,6 +7,8 @@ import { lateInit, MutableObserver } from '@polyvharmony/media-player-sdk';
 import { PLVLWLayoutDataBus } from '../../../../common/PLVLWLayoutDataBus';
 import { MoreSettingActionCallback } from './actions/more-setting-action-common';
 import { PLVLWMoreAudioModeAction } from './actions/PLVLWMoreAudioModeAction';
+import { PLVLWMoreFloatWindowAction } from './actions/PLVLWMoreFloatWindowAction';
+import { PLVLWMorePlaySettingAction } from './actions/PLVLWMorePlaySettingAction';
 import { PLVLWMoreBitRateAction } from './actions/PLVLWMoreBitRateAction';
 import { PLVLWMoreChatOnlyTeacherAction } from './actions/PLVLWMoreChatOnlyTeacherAction';
 import { PLVLWMoreInteractDynamicAction } from './actions/PLVLWMoreInteractDynamicAction';
@@ -62,6 +64,8 @@ struct PLVLWMoreSettingDialog {
           PLVLWMoreChatOnlyTeacherAction()
           PLVLWMoreShowAnnouncementAction()
           PLVLWMoreAudioModeAction()
+          PLVLWMoreFloatWindowAction()
+          PLVLWMorePlaySettingAction()
           if (this.isPortrait) {
             PLVLWMoreBitRateAction()
             PLVLWMoreSpeedAction()

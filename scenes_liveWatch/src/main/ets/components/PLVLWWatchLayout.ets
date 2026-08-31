@@ -16,6 +16,7 @@ import { PLVLWTopLayerLayout } from './layer/PLVLWTopLayerLayout';
 import { common } from '@kit.AbilityKit';
 import { router } from '@kit.ArkUI';
 import { PLVLWDialogLayerLayout } from './layer/PLVLWDialogLayerLayout';
+import { PLVLWPiPManager } from '../common/PLVLWPiPManager';
 
 @Preview
 @Component
@@ -40,7 +41,10 @@ export struct PLVLWWatchLayout {
 
   aboutToDisappear(): void {
     this.layoutDataBus.destroy()
-    this.sdk.destroy()
+    if (!PLVLWPiPManager.instance.shouldKeepPlayerAlive(this.sdk.uniqueId)) {
+      this.sdk.destroy()
+      PLVLWPiPManager.instance.clearIfPlayerNotKept(this.sdk.uniqueId)
+    }
     this.orientationListener?.off()
   }
 

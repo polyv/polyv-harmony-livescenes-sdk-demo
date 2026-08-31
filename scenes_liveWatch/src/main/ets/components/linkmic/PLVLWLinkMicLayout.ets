@@ -1,25 +1,16 @@
 import {
-  PLVCommonConstants,
-  PLVLiveChannelType,
-  PLVLiveScene,
-  PLVLiveSceneSDK,
-  PLVPushOrientation,
-  PLVUtils
+  PLVCommonConstants, PLVLiveChannelType, PLVLiveScene, PLVLiveSceneSDK, PLVPushOrientation
 } from '@polyvharmony/live-scenes-sdk';
 import {
-  derivedStateOf,
-  extendArray,
-  lateInit,
-  MutableObserver,
-  mutableStateOf,
-  Rect,
-  watchStates
+  derivedStateOf, extendArray, lateInit, MutableObserver, mutableStateOf, Rect, watchStates
 } from '@polyvharmony/media-player-sdk';
 import { display } from '@kit.ArkUI';
 import { common, wantAgent } from '@kit.AbilityKit';
 import { backgroundTaskManager } from '@kit.BackgroundTasksKit';
 import { PLVLWLayoutDataBus } from '../../common/PLVLWLayoutDataBus';
 import { PLVLWLinkmicItem, PLVLWLinkMicItemAdapter } from './item/PLVLWLinkMicItemAdapter';
+import { PLVLWPlayerControllerLayout } from '../player/controller/PLVLWPlayerControllerLayout';
+import { PLVLWDanmuLayout } from '../player/danmu/PLVLWDanmuLayout';
 
 @Component
 export struct PLVLWLinkMicLayout {
@@ -41,6 +32,7 @@ export struct PLVLWLinkMicLayout {
     return extendArray(this.allLinkmicItems.value ?? []).filter(it => it !== this.mainLinkmicItem.value)
   })
   private readonly listLinkmicItemDataSource = new PLVFullUpdateDataSource<PLVLWLinkmicItem>()
+  @State private isPortrait: boolean = true
   @State private layoutMarginTop: number = 0
   @State private mainItemHeight: number = 0
   // mainItem = [mainLinkmicItem]
@@ -48,9 +40,6 @@ export struct PLVLWLinkMicLayout {
   private observers: MutableObserver[] = []
 
   aboutToAppear(): void {
-    // 连麦当前只支持竖屏
-    PLVUtils.changeOrientation(false)
-
     watchStates(() => {
       const channelLinkmicViewers = this.sdk.linkmicManager.channelLinkMicViewers.value ?? []
       const viewerItems = channelLinkmicViewers.map(it => {
@@ -75,11 +64,12 @@ export struct PLVLWLinkMicLayout {
       .pushTo(this.observers)
 
     watchStates(() => {
+      this.isPortrait = this.layoutDataBus.isPortrait.value ?? true
       const screenWidth: number = px2vp(display.getDefaultDisplaySync().width)
       const screenHeight: number = px2vp(display.getDefaultDisplaySync().height)
       const isPortraitTemplate = this.sdk.channelData.liveScene === PLVLiveScene.PORTRAIT_TEMPLATE
       const playerLocation = this.layoutDataBus.playerLocation.value ?? new Rect()
-      this.layoutMarginTop = playerLocation.top
+      this.layoutMarginTop = this.isPortrait ? playerLocation.top : 0
       const mainItemMinHeight = screenWidth / 16 * 9
       const mainItemMaxHeight = screenHeight - this.layoutMarginTop - 98
       const mainItem = this.mainLinkmicItem.value
@@ -87,71 +77,139 @@ export struct PLVLWLinkMicLayout {
         this.mainItemHeight = mainItemMinHeight
       } else {
         const viewerVideoRatio = (mainItem.viewer?.videoWidth.value ?? 1) / (mainItem.viewer?.videoHeight.value ?? 1)
-        const isPortrait = viewerVideoRatio < 1
+        const isPortrait = viewerVideoRatio === 1 ? isPortraitTemplate : viewerVideoRatio < 1
         this.mainItemHeight = isPortrait ? mainItemMaxHeight : mainItemMinHeight
       }
+      // 由于播放器组件在连麦时被移除，这里需要更新播放器区域状态，避免其他依赖播放器区域的组件显示有问题
+      const isFullscreen = this.mainItemHeight === mainItemMaxHeight
+      this.layoutDataBus.playerFullscreen.setValue(isFullscreen)
+      this.updateLocalLinkMicParam()
     }).pushTo(this.observers)
-
-    this.updateLocalLinkMicParam()
   }
 
   build() {
     Column() {
       LinkMicKeepBackgroundTask()
 
-      Column() {
-        List({
-          space: 8
-        }) {
-          ListItem().width(0)
-          LazyForEach(
-            this.listLinkmicItemDataSource,
-            (item: PLVLWLinkmicItem) => {
-              ListItem() {
-                PLVLWLinkMicItemAdapter({
-                  pos: 'list',
-                  item: item
-                }).onClick(() => {
-                  this.userSetMainLinkmicItemId.setValue(item.id)
-                })
-              }
-            },
-            (item: PLVLWLinkmicItem) => item.id
-          )
-          ListItem().width(0)
-        }
-        .listDirection(Axis.Horizontal)
-        .width(PLVCommonConstants.FULL_PERCENT)
-        .height(90)
+      RelativeContainer() {
+        if (this.isPortrait) {
+          Column() {
+            Stack() {
+              this.LinkMicItemList(Axis.Horizontal)
+            }
+            .width(PLVCommonConstants.FULL_PERCENT)
+            .height(90)
 
-        Blank().height(8)
+            Blank().height(8)
 
-        Stack() {
-          ForEach(
-            this.mainItem,
-            (item: PLVLWLinkmicItem) => {
-              PLVLWLinkMicItemAdapter({
-                pos: 'main',
-                item: item
-              })
-            },
-            (item: PLVLWLinkmicItem) => item.id
-          )
+            Stack() {
+              this.MainLinkMicItem()
+            }
+            .width(PLVCommonConstants.FULL_PERCENT)
+            .height(this.mainItemHeight)
+          }
+          .id('plvlw_linkmic_content_layout_port')
+          .width(PLVCommonConstants.FULL_PERCENT)
+        } else {
+          Row() {
+            Stack() {
+              this.MainLinkMicItem()
+            }
+            .layoutWeight(1)
+            .height(PLVCommonConstants.FULL_PERCENT)
+
+            Blank().width(8)
+
+            Stack() {
+              this.LinkMicItemList(Axis.Vertical)
+            }
+            .width(90)
+            .height(PLVCommonConstants.FULL_PERCENT)
+
+            Blank().width(8)
+          }
+          .id('plvlw_linkmic_content_layout_land')
+          .width(PLVCommonConstants.FULL_PERCENT)
+          .height(PLVCommonConstants.FULL_PERCENT)
         }
-        .width(PLVCommonConstants.FULL_PERCENT)
-        .height(this.mainItemHeight)
+
+        // 弹幕
+        PLVLWDanmuLayout()
+          .id('plvlw_danmu_layout')
+          .hitTestBehavior(HitTestMode.None)
+          .width(PLVCommonConstants.FULL_PERCENT)
+          .margin({ top: this.isPortrait ? 98 : 0 })
+          .alignRules({
+            top: { anchor: PLVCommonConstants.CONTAINER, align: VerticalAlign.Top },
+            bottom: { anchor: this.isPortrait ? 'plvlw_linkmic_content_layout_port' : 'plvlw_linkmic_content_layout_land', align: VerticalAlign.Bottom }
+          })
+
+        // 播放器皮肤
+        PLVLWPlayerControllerLayout()
+          .id('plvlw_player_controller_layout')
+          .hitTestBehavior(HitTestMode.Transparent)
+          .width(PLVCommonConstants.FULL_PERCENT)
+          .margin({ top: this.isPortrait ? 98 : 0 })
+          .alignRules({
+            top: { anchor: PLVCommonConstants.CONTAINER, align: VerticalAlign.Top },
+            bottom: { anchor: this.isPortrait ? 'plvlw_linkmic_content_layout_port' : 'plvlw_linkmic_content_layout_land', align: VerticalAlign.Bottom }
+          })
       }
-      .width(PLVCommonConstants.FULL_PERCENT)
     }
-    .width('100%')
+    .width(PLVCommonConstants.FULL_PERCENT)
     .margin({
       top: this.layoutMarginTop
     })
   }
 
+  @Builder
+  private LinkMicItemList(direction: Axis) {
+    List({
+      space: 8
+    }) {
+      ListItem().width(0).height(0)
+      LazyForEach(
+        this.listLinkmicItemDataSource,
+        (item: PLVLWLinkmicItem) => {
+          ListItem() {
+            PLVLWLinkMicItemAdapter({
+              pos: 'list',
+              item: item
+            }).onTouch((event)=>{
+                if (event.type === TouchType.Up) {
+                  this.userSetMainLinkmicItemId.setValue(item.id)
+                }
+              })
+          }
+        },
+        (item: PLVLWLinkmicItem) => item.id
+      )
+      ListItem().width(0).height(0)
+    }
+    .listDirection(direction)
+    .scrollBar(BarState.Off)
+    .width(PLVCommonConstants.FULL_PERCENT)
+    .height(PLVCommonConstants.FULL_PERCENT)
+  }
+
+  @Builder
+  private MainLinkMicItem() {
+    Stack() {
+      ForEach(
+        this.mainItem,
+        (item: PLVLWLinkmicItem) => {
+          PLVLWLinkMicItemAdapter({
+            pos: 'main',
+            item: item
+          })
+        },
+        (item: PLVLWLinkmicItem) => item.id
+      )
+    }
+  }
+
   private updateLocalLinkMicParam() {
-    const isPortraitScene = this.sdk.channelData.liveScene === PLVLiveScene.PORTRAIT_TEMPLATE
-    this.sdk.linkmicManager.setPushOrientation(isPortraitScene ? PLVPushOrientation.PORTRAIT : PLVPushOrientation.LANDSCAPE)
+    this.sdk.linkmicManager.setPushOrientation(this.isPortrait ? PLVPushOrientation.PORTRAIT : PLVPushOrientation.LANDSCAPE)
   }
 
   aboutToDisappear(): void {

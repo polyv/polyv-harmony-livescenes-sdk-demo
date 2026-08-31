@@ -33,7 +33,7 @@
             ]
           }
         ],
-        "backgroundModes": ["audioRecording"]
+        "backgroundModes": ["audioPlayback", "audioRecording"]
       }
     ],
     "requestPermissions": [

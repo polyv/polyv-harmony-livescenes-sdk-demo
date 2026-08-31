@@ -13,6 +13,7 @@ import { MoreSettingActionCallback, MoreSettingActionView } from './more-setting
 @Component
 export struct PLVLWMoreBitRateAction {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @Consume('moreSettingActionCallback') moreSettingActionCallback: MoreSettingActionCallback
   @State private isVisible: boolean = false
   private readonly bitRateSelectDialog = new CustomDialogController({
@@ -24,12 +25,13 @@ export struct PLVLWMoreBitRateAction {
 
   aboutToAppear(): void {
     watchStates(() => {
+      const isLinkmic = this.layoutDataBus.isLinkmic.value ?? false
       const mediaPlayer = this.sdk.playerManager.mainMediaPlayer
       const supportBitRates = mediaPlayer.getBusinessListenerRegistry().supportMediaBitRates.value ?? []
       const isMediaPlaying = mediaPlayer.getStateListenerRegistry()
         .playingState
         .value === PLVMediaPlayerPlayingState.PLAYING
-      this.isVisible = supportBitRates.length > 0 && isMediaPlaying
+      this.isVisible = supportBitRates.length > 0 && isMediaPlaying && !isLinkmic
     }).pushTo(this.observers)
   }
 

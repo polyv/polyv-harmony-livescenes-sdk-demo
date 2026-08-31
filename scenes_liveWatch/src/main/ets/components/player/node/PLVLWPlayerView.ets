@@ -3,6 +3,7 @@ import { lateInit, MutableObserver, PLVMediaOutputMode, watchStates } from '@pol
 import { PLVLWLayoutDataBus } from '../../../common/PLVLWLayoutDataBus';
 import { PLVLWMarqueeLayout } from '../marquee/PLVLWMarqueeLayout';
 import { PLVLWWatermarkLayout } from '../watermark/PLVLWWatermarkLayout';
+import { PLVLWPiPManager } from '../../../common/PLVLWPiPManager';
 
 @Component
 export struct PLVLWPlayerView {
@@ -20,15 +21,23 @@ export struct PLVLWPlayerView {
       XComponent({
         id: `plvlw_video_xcomponent`,
         type: "surface",
-        libraryname: "plvplayer_xcomponent"
+        libraryname: "plvplayer_xcomponent",
+        controller: PLVLWPiPManager.instance.xComponentController
       }) {
       }
       .onLoad((component) => {
-        this.viewData.sdk?.playerManager.startMainMediaPlayerWithComponent(component!)
+        if (PLVLWPiPManager.instance.consumeRestoringPlayer(this.viewData.sdk.uniqueId)) {
+          this.viewData.sdk.playerManager.attachMainMediaPlayerWithComponent(component!)
+        } else {
+          this.viewData.sdk?.playerManager.startMainMediaPlayerWithComponent(component!)
+        }
         this.onPreviousData()
+        PLVLWPiPManager.instance.onXComponentReady()
       })
       .onDestroy(() => {
-        this.viewData.sdk?.playerManager.release()
+        if (!PLVLWPiPManager.instance.shouldKeepPlayerAlive(this.viewData.sdk.uniqueId)) {
+          this.viewData.sdk?.playerManager.release()
+        }
       })
       .id('plvlw_player_xcomponent')
       .width(PLVCommonConstants.FULL_PERCENT)

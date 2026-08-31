@@ -253,6 +253,22 @@
       "value": "Audio mode"
     },
     {
+      "name": "plvlw_player_float_window",
+      "value": "Picture-in-picture"
+    },
+    {
+      "name": "plvlw_live_play_setting",
+      "value": "Playback Settings"
+    },
+    {
+      "name": "plvlw_live_auto_pip_exit_page",
+      "value": "Enable picture-in-picture on live room exit"
+    },
+    {
+      "name": "plvlw_live_auto_pip_go_home",
+      "value": "Enable picture-in-picture on app exit"
+    },
+    {
       "name": "plvlw_player_video_play_mode",
       "value": "Play video"
     },

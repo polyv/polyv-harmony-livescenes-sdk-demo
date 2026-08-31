@@ -6,11 +6,14 @@ import {
   PLVMediaPlayerPlayingState,
   watchStates
 } from '@polyvharmony/media-player-sdk';
+import { PLVLWLayoutDataBus } from '../../../../../common/PLVLWLayoutDataBus';
+import { PLVLWPiPManager } from '../../../../../common/PLVLWPiPManager';
 import { MoreSettingActionCallback, MoreSettingActionView } from './more-setting-action-common';
 
 @Component
 export struct PLVLWMoreAudioModeAction {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
+  @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @Consume('moreSettingActionCallback') moreSettingActionCallback: MoreSettingActionCallback
   @State private isAudioMode: boolean = false
   @State private isVisible: boolean = false
@@ -18,6 +21,7 @@ export struct PLVLWMoreAudioModeAction {
 
   aboutToAppear(): void {
     watchStates(() => {
+      const isLinkmic = this.layoutDataBus.isLinkmic.value ?? false
       const mediaPlayer = this.sdk.playerManager.mainMediaPlayer
       const supportOutputModes = mediaPlayer.getBusinessListenerRegistry().supportMediaOutputModes.value ?? []
       const currentOutputMode = mediaPlayer.getBusinessListenerRegistry()
@@ -29,7 +33,9 @@ export struct PLVLWMoreAudioModeAction {
         .value === PLVMediaPlayerPlayingState.PLAYING
       const isLive = this.sdk.channelData.loginType === PLVLoginType.LIVE
       this.isAudioMode = currentOutputMode === PLVMediaOutputMode.AUDIO_ONLY
-      this.isVisible = isMediaPlaying && isLive && supportAudioMode
+      this.isVisible = isMediaPlaying && isLive && supportAudioMode && !isLinkmic &&
+        !PLVLWPiPManager.instance.isPiPActive.value &&
+        !PLVLWPiPManager.instance.isPiPStarting.value
     }).pushTo(this.observers)
   }
 

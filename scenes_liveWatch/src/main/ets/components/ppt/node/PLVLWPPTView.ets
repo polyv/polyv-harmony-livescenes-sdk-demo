@@ -41,6 +41,7 @@ export struct PLVLWPPTView {
       PLVLWWatermarkLayout({
         sdk: this.viewData.sdk
       })
+        .hitTestBehavior(HitTestMode.Transparent)
         .width(PLVCommonConstants.FULL_PERCENT)
         .height(PLVCommonConstants.FULL_PERCENT)
     }
@@ -57,7 +58,12 @@ export struct PLVLWPPTView {
 
   onLayoutData() {
     watchStates(() => {
-      this.isPPTToMainScreen = this.viewData.layoutDataBus?.isPPTToMainScreen.value ?? false
+      // 非连麦时的PPT位置
+      const isPPTInPlayerMainScreen = this.viewData.layoutDataBus?.isPPTToMainScreen.value ?? false
+      // 连麦时的PPT位置
+      const isLinkmic = this.viewData.layoutDataBus?.isLinkmic.value ?? false
+      const isPPTInLinkmicMainItem = this.viewData.layoutDataBus?.isPPTInLinkmicMainItem.value ?? false
+      this.isPPTToMainScreen = isPPTInPlayerMainScreen || (isLinkmic && isPPTInLinkmicMainItem)
     }).pushTo(this.observers)
     this.viewData.layoutDataBus?.onChangePPTPage.observe((value)=>{
       this.webController.get()?.changePPTPage(value)
