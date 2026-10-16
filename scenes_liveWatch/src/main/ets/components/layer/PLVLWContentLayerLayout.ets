@@ -6,7 +6,6 @@ import {
   PLVLinkMicState,
   PLVLiveScene,
   PLVLiveSceneSDK,
-  PLVMediaQueryListener,
   PLVUtils
 } from '@polyvharmony/live-scenes-sdk';
 import { MutableObserver, Rect, watchStates } from '@polyvharmony/media-player-sdk';
@@ -24,7 +23,6 @@ export struct PLVLWContentLayerLayout {
   @LocalStorageLink('channelData') channelData?: PLVChannelData = undefined
   @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   private liveScene?: PLVLiveScene = this.channelData?.liveScene
-  private orientationListener: PLVMediaQueryListener | undefined
   private avoidAreaChangeListener: PLVAvoidAreaChangeListener | undefined
   @State isPortrait: boolean = true
   @State isLinkmic: boolean = false
@@ -33,10 +31,10 @@ export struct PLVLWContentLayerLayout {
   private observers: MutableObserver[] = []
 
   override aboutToAppear(): void {
-    this.orientationListener = PLVUtils.listenerOrientation((result) => {
-      this.isPortrait = !result.matches
+    this.layoutDataBus.isPortrait.observe((portrait) => {
+      this.isPortrait = portrait
       this.topPadding = !this.isPortrait ? 0 : PLVDeviceUtils.getStatusBarHeight()
-    })
+    }).pushTo(this.observers)
     this.avoidAreaChangeListener = PLVUtils.listenerAvoidAreaChange(() => {
       this.topPadding = !this.isPortrait ? 0 : PLVDeviceUtils.getStatusBarHeight()
     })
@@ -46,7 +44,6 @@ export struct PLVLWContentLayerLayout {
   }
 
   aboutToDisappear(): void {
-    this.orientationListener?.off()
     this.avoidAreaChangeListener?.off()
     MutableObserver.disposeAll(this.observers)
   }
@@ -99,6 +96,7 @@ export struct PLVLWContentLayerLayout {
 
             // 功能菜单区域
             PLVLWTabContentLayout()
+              .visibility(this.isPortrait ? Visibility.Visible : Visibility.None)
               .alignRules({
                 top: { anchor: 'plvlw_player_anchor_space', align: VerticalAlign.Bottom },
                 left: { anchor: PLVCommonConstants.CONTAINER, align: HorizontalAlign.Start },

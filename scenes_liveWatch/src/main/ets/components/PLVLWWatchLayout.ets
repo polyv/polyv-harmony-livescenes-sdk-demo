@@ -2,13 +2,12 @@ import {
   PLVCallback,
   PLVCommonConstants,
   PLVLiveSceneSDK,
-  PLVMediaQueryListener,
   PLVSocketStatus,
   PLVSocketStatusSup,
   PLVToastUtils,
   PLVUtils
 } from '@polyvharmony/live-scenes-sdk';
-import { lateInit } from '@polyvharmony/media-player-sdk';
+import { lateInit, Rect } from '@polyvharmony/media-player-sdk';
 import { PLVLWLayoutDataBus } from '../common/PLVLWLayoutDataBus';
 import { PLVLWBottomLayerLayout } from './layer/PLVLWBottomLayerLayout';
 import { PLVLWContentLayerLayout } from './layer/PLVLWContentLayerLayout';
@@ -24,7 +23,6 @@ export struct PLVLWWatchLayout {
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
   @Provide('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus = new PLVLWLayoutDataBus()
   @Link layoutController: PLVWatchLayoutController
-  private orientationListener: PLVMediaQueryListener | undefined
 
   aboutToAppear(): void {
     this.initData()
@@ -33,10 +31,6 @@ export struct PLVLWWatchLayout {
     this.onChatData()
     this.loginSocket()
     this.layoutController.layoutDataBus = this.layoutDataBus
-    this.orientationListener = PLVUtils.listenerOrientation((result) => {
-      this.layoutDataBus.isPortrait.setValue(!result.matches)
-      PLVUtils.setWindowFullScreen(true, result.matches)
-    })
   }
 
   aboutToDisappear(): void {
@@ -45,7 +39,6 @@ export struct PLVLWWatchLayout {
       this.sdk.destroy()
       PLVLWPiPManager.instance.clearIfPlayerNotKept(this.sdk.uniqueId)
     }
-    this.orientationListener?.off()
   }
 
   build() {
@@ -58,6 +51,20 @@ export struct PLVLWWatchLayout {
     .backgroundColor($r('app.color.plvlw_theme_bg_blue_merge_dark_70'))
     .width(PLVCommonConstants.FULL_PERCENT)
     .height(PLVCommonConstants.FULL_PERCENT)
+    .onAreaChange((_, area: Area) => {
+      const left = area.globalPosition.x as number
+      const top = area.globalPosition.y as number
+      const changed = this.layoutDataBus.updateLayoutArea(new Rect({
+        left: left,
+        top: top,
+        right: left + (area.width as number),
+        bottom: top + (area.height as number)
+      }))
+      if (changed) {
+        PLVUtils.setWindowFullScreen(true, !(this.layoutDataBus.isPortrait.value ?? true))
+      }
+    })
+    .clip(true)
   }
 
   initData() {

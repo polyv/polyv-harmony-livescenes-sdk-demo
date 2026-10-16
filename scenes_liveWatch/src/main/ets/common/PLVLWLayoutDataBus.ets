@@ -42,7 +42,20 @@ export class PLVLWLayoutDataBus {
   /**
    * 是否竖屏
    */
-  readonly isPortrait = mutableStateOf(false)
+  readonly isPortrait = mutableStateOf(true)
+  /** 当前观看布局的实际区域（vp），包含分屏窗口内的尺寸和全局位置。 */
+  readonly layoutArea = mutableStateOf(new Rect())
+
+  updateLayoutArea(area: Rect): boolean {
+    if (area.width() <= 0 || area.height() <= 0) {
+      return false
+    }
+    this.layoutArea.setValue(area)
+    const portrait = area.height() >= area.width()
+    const orientationChanged = this.isPortrait.value !== portrait
+    this.isPortrait.setValue(portrait)
+    return orientationChanged
+  }
   /**
    * 播放器区域位置
    */

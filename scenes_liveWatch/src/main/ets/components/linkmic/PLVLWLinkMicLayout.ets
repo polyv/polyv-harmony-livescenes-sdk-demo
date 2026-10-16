@@ -4,7 +4,6 @@ import {
 import {
   derivedStateOf, extendArray, lateInit, MutableObserver, mutableStateOf, Rect, watchStates
 } from '@polyvharmony/media-player-sdk';
-import { display } from '@kit.ArkUI';
 import { common, wantAgent } from '@kit.AbilityKit';
 import { backgroundTaskManager } from '@kit.BackgroundTasksKit';
 import { PLVLWLayoutDataBus } from '../../common/PLVLWLayoutDataBus';
@@ -65,13 +64,17 @@ export struct PLVLWLinkMicLayout {
 
     watchStates(() => {
       this.isPortrait = this.layoutDataBus.isPortrait.value ?? true
-      const screenWidth: number = px2vp(display.getDefaultDisplaySync().width)
-      const screenHeight: number = px2vp(display.getDefaultDisplaySync().height)
+      const layoutArea = this.layoutDataBus.layoutArea.value ?? new Rect()
+      const screenWidth = layoutArea.width()
+      const screenHeight = layoutArea.height()
+      if (screenWidth <= 0 || screenHeight <= 0) {
+        return
+      }
       const isPortraitTemplate = this.sdk.channelData.liveScene === PLVLiveScene.PORTRAIT_TEMPLATE
       const playerLocation = this.layoutDataBus.playerLocation.value ?? new Rect()
-      this.layoutMarginTop = this.isPortrait ? playerLocation.top : 0
+      this.layoutMarginTop = this.isPortrait ? Math.max(0, playerLocation.top - layoutArea.top) : 0
       const mainItemMinHeight = screenWidth / 16 * 9
-      const mainItemMaxHeight = screenHeight - this.layoutMarginTop - 98
+      const mainItemMaxHeight = Math.max(0, screenHeight - this.layoutMarginTop - 98)
       const mainItem = this.mainLinkmicItem.value
       if (!mainItem || !mainItem.type || mainItem.type === 'ppt' || !isPortraitTemplate) {
         this.mainItemHeight = mainItemMinHeight

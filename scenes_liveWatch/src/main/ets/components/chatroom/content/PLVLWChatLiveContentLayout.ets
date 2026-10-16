@@ -313,7 +313,7 @@ export struct PLVLWChatLiveContentLayout {
       switch (event) {
         case PLVSpeakEvent.EVENT: {
           const speakEvent = PLVJSONUtils.toFillData(PLVSpeakEvent, data);
-          if (speakEvent) {
+          if (speakEvent && speakEvent.user) {
             if (this.sdk.channelData.viewerId !== speakEvent.user?.userId) {
               result.push(speakEvent);
             }

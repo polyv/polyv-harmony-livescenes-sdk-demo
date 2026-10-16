@@ -222,7 +222,7 @@ export struct PLVSAChatListLayout {
         // 发言
           case PLVSpeakEvent.EVENT: {
             const speakEvent = PLVJSONUtils.toFillData(PLVSpeakEvent, data)
-            if (!speakEvent) {
+            if (!speakEvent || !speakEvent.user) {
               break
             }
             if (!this.sdk?.chatroomManager.sendReliableMessageCallback(speakEvent)) {

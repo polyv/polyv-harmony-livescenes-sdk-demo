@@ -10,7 +10,7 @@ import {
   Rect,
   watchStates
 } from '@polyvharmony/media-player-sdk'
-import { display, window } from '@kit.ArkUI'
+import { window } from '@kit.ArkUI'
 import { AbilityLifecycleCallback, common, UIAbility, wantAgent } from '@kit.AbilityKit'
 import { backgroundTaskManager } from '@kit.BackgroundTasksKit'
 import { avSession } from '@kit.AVSessionKit'
@@ -118,6 +118,10 @@ export struct PLVLWPlayerLayout {
 
   private observeMediaPlayerState() {
     watchStates(() => {
+      const layoutArea = this.layoutDataBus.layoutArea.value ?? new Rect()
+      if (layoutArea.width() <= 0 || layoutArea.height() <= 0) {
+        return
+      }
       const isPortrait = this.layoutDataBus.isPortrait.value ?? true
       const isPortraitTemplate = this.sdk.channelData.liveScene === PLVLiveScene.PORTRAIT_TEMPLATE
       const videoSize = this.sdk.playerManager.mainMediaPlayer.getStateListenerRegistry()
@@ -130,21 +134,22 @@ export struct PLVLWPlayerLayout {
 
       this.layoutDataBus.playerFullscreen.setValue(isFullscreen)
 
-      this.containerWidth = isFullscreen ? px2vp(display.getDefaultDisplaySync().width) : containerLocation.width()
-      this.containerHeight = isFullscreen ? px2vp(display.getDefaultDisplaySync().height) : containerLocation.height()
-      this.containerMarginTop = isFullscreen ? 0 : containerLocation.top
+      this.containerWidth = isFullscreen ? layoutArea.width() : containerLocation.width()
+      this.containerHeight = isFullscreen ? layoutArea.height() : containerLocation.height()
+      this.containerMarginTop = isFullscreen ? 0 : Math.max(0, containerLocation.top - layoutArea.top)
 
       this.layoutDataBus.bottomLayerViewTouchArea.setValue(new Rect({
-        left: containerLocation.left,
-        top: this.containerMarginTop,
-        right: isPortrait && isFullscreen ? 0 : this.containerWidth + containerLocation.left,
-        bottom: isPortrait && isFullscreen ? 0 : this.containerHeight + this.containerMarginTop
+        left: layoutArea.left,
+        top: layoutArea.top + this.containerMarginTop,
+        right: isPortrait && isFullscreen ? layoutArea.left : this.containerWidth + layoutArea.left,
+        bottom: isPortrait && isFullscreen ? layoutArea.top : this.containerHeight + this.containerMarginTop + layoutArea.top
       }))
 
       const containerRatio = this.containerWidth / this.containerHeight
       let videoWidth = this.containerWidth
       let videoHeight = this.containerHeight
-      const videoRatio = videoSize.width() / videoSize.height()
+      const videoRatio = videoSize.width() > 0 && videoSize.height() > 0
+        ? videoSize.width() / videoSize.height() : containerRatio
       // fit center
       if (containerRatio > videoRatio) {
         videoWidth = this.containerHeight / videoSize.height() * videoSize.width()
