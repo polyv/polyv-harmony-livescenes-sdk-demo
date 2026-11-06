@@ -1,6 +1,6 @@
 import { PLVCommonConstants, PLVLiveSceneSDK, PLVTimeUtils } from '@polyvharmony/live-scenes-sdk'
 import { lateInit, MutableObserver, watchStates } from '@polyvharmony/media-player-sdk'
-import { PLVLWLayoutDataBus } from '../../../../common/PLVLWLayoutDataBus'
+import { PlayerSeekPreviewState, PLVLWLayoutDataBus } from '../../../../common/PLVLWLayoutDataBus'
 
 // <editor-fold defaultstate="collapsed" desc="UI样式常量定义">
 const SLIDER_BACKGROUND_COLOR = '#33FFFFFF'
@@ -27,7 +27,7 @@ export struct PLVLWPlayerControllerProgressLayout {
   @State private duration: number = 0
   @State private isDragging: boolean = false
   @State private isLocked: boolean = false
-  private seekPosition: number = 0
+  @State private seekPosition: number = 0
   private observers: MutableObserver[] = []
 
   aboutToAppear(): void {
@@ -36,6 +36,13 @@ export struct PLVLWPlayerControllerProgressLayout {
       this.currentTime = player.getStateListenerRegistry().progressState.value ?? 0
       this.duration = player.getStateListenerRegistry().durationState.value ?? 0
       this.isLocked = this.layoutDataBus.playerControllerStatus.value?.locked ?? false
+      const isCasting = this.layoutDataBus.mediaCast.isCasting.value ?? false
+      if (this.isLocked || isCasting || this.duration <= 0) {
+        this.cancelDrag()
+      }
+    }).pushTo(this.observers)
+    this.mainMediaPlayer().getBusinessListenerRegistry().currentMediaResource.observe(() => {
+      this.cancelDrag()
     }).pushTo(this.observers)
   }
 
@@ -51,7 +58,7 @@ export struct PLVLWPlayerControllerProgressLayout {
         })
 
       Slider({
-        value: this.currentTime,
+        value: this.isDragging ? this.seekPosition : this.currentTime,
         min: 0,
         max: this.duration,
         direction: Axis.Horizontal
@@ -75,24 +82,29 @@ export struct PLVLWPlayerControllerProgressLayout {
         .blockColor(SLIDER_THUMB_COLOR)
         .onTouch((event)=>{
           event.stopPropagation()
+          if (event.type === TouchType.Cancel) {
+            this.cancelDrag()
+          }
         })
         .hitTestBehavior(this.isLocked ? HitTestMode.None : HitTestMode.Transparent)
         .onChange((value: number, mode: SliderChangeMode) => {
           switch (mode) {
             case SliderChangeMode.Begin:
-              this.isDragging = true;
-              this.seekPosition = value;
-              break;
             case SliderChangeMode.Moving:
-              this.isDragging = true;
-              this.seekPosition = value;
+              this.updateDrag(value)
               break;
             case SliderChangeMode.End:
-              this.isDragging = false;
-              this.mainMediaPlayer().seek(this.seekPosition)
+              if (this.isDragging) {
+                this.updateDrag(value)
+                if (this.isDragging) {
+                  const position = this.seekPosition
+                  this.cancelDrag()
+                  this.mainMediaPlayer().seek(position)
+                }
+              }
               break;
             case SliderChangeMode.Click:
-              this.isDragging = false;
+              this.cancelDrag()
               this.mainMediaPlayer().seek(value)
               break;
           }
@@ -119,7 +131,30 @@ export struct PLVLWPlayerControllerProgressLayout {
     return this.sdk.playerManager.mainMediaPlayer
   }
 
+  private updateDrag(value: number): void {
+    if (this.isLocked || this.duration <= 0 || (this.layoutDataBus.mediaCast.isCasting.value ?? false)) {
+      this.cancelDrag()
+      return
+    }
+    this.isDragging = true
+    this.seekPosition = Math.max(0, Math.min(this.duration, value))
+    this.layoutDataBus.playerSeekPreviewState.mutate({
+      source: 'slider',
+      position: this.seekPosition,
+      duration: this.duration
+    })
+  }
+
+  private cancelDrag(): void {
+    this.isDragging = false
+    if (this.layoutDataBus.playerSeekPreviewState.value?.source === 'slider') {
+      this.layoutDataBus.playerSeekPreviewState.setValue(new PlayerSeekPreviewState())
+    }
+  }
+
   aboutToDisappear(): void {
+    this.cancelDrag()
     MutableObserver.disposeAll(this.observers)
+    this.observers = []
   }
 }

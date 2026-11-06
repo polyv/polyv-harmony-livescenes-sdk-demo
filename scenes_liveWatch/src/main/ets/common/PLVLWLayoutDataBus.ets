@@ -68,6 +68,8 @@ export class PLVLWLayoutDataBus {
    * 播放器控制器状态
    */
   readonly playerControllerStatus = mutableStateOf(new PlayerControllerStatus())
+  /** 进度条拖动和横向手势共用的进度预览。 */
+  readonly playerSeekPreviewState = mutableStateOf(new PlayerSeekPreviewState())
   /**
    * 弹幕配置
    */
@@ -162,6 +164,12 @@ export class PLVLWLayoutDataBus {
 export class PlayerControllerStatus {
   visible: boolean = true
   locked: boolean = false
+}
+
+export class PlayerSeekPreviewState {
+  source: 'gesture' | 'slider' | undefined = undefined
+  position: number = 0
+  duration: number = 0
 }
 
 export class DanmuSetting {

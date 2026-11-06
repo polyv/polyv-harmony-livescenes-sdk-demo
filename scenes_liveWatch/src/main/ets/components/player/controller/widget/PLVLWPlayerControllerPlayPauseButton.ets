@@ -13,10 +13,11 @@ export struct PLVLWPlayerControllerPlayPauseButton {
 
   aboutToAppear(): void {
     watchStates(() => {
-      const isPaused = this.sdk.playerManager.mainMediaPlayer.getStateListenerRegistry()
+      const playerState = this.sdk.playerManager.mainMediaPlayer.getStateListenerRegistry()
         .playerState
-        .value === PLVMediaPlayerState.STATE_PAUSED
-      this.isPlaying = !isPaused
+        .value
+      this.isPlaying = playerState !== PLVMediaPlayerState.STATE_PAUSED
+        && playerState !== PLVMediaPlayerState.STATE_COMPLETED
       this.isLive = this.sdk.channelData.loginType === PLVLoginType.LIVE
       const isLinkmic = this.layoutDataBus.isLinkmic.value ?? false
       this.isEnabled = !isLinkmic
@@ -28,13 +29,14 @@ export struct PLVLWPlayerControllerPlayPauseButton {
       Image(this.isPlaying ? $r('app.media.plvlw_player_controller_to_pause_icon') : $r('app.media.plvlw_player_controller_to_play_icon'))
         .objectFit(ImageFit.Contain)
         .onClick(() => {
+          const player = this.sdk.playerManager.mainMediaPlayer
           if (this.isPlaying) {
-            this.sdk.playerManager.mainMediaPlayer.pause()
+            player.pause()
           } else {
             if (this.isLive) {
-              this.sdk.playerManager.mainMediaPlayer.restart()
+              player.restart()
             } else {
-              this.sdk.playerManager.mainMediaPlayer.start()
+              player.start()
             }
           }
         })

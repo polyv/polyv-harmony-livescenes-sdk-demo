@@ -14,6 +14,6 @@ export class PLVRTCEngineStartUp {
 
     PLVRTCEngineFactory.register(PLVARTCEngineFactory.instance)
     PLVRTCEngineFactory.register(PLVTRTCEngineFactory.instance)
-    // PLVRTCEngineFactory.register(PLVVRTCEngineFactory.instance) TODO 如需集成vrtc，请联系技术支持
+    // PLVRTCEngineFactory.register(PLVVRTCEngineFactory.instance)
   }
 }

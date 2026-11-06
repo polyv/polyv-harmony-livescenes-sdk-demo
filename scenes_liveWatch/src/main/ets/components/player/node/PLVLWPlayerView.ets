@@ -1,5 +1,5 @@
-import { PLVCommonConstants, PLVLiveSceneSDK, PLVNodeController } from '@polyvharmony/live-scenes-sdk';
-import { lateInit, MutableObserver, PLVMediaOutputMode, watchStates } from '@polyvharmony/media-player-sdk';
+import { PLVCommonConstants, PLVLiveSceneSDK, PLVLoginType, PLVNodeController } from '@polyvharmony/live-scenes-sdk';
+import { lateInit, MutableObserver, PLVMediaOutputMode, PLVMediaPlayerOptionEnum, watchStates } from '@polyvharmony/media-player-sdk';
 import { PLVLWLayoutDataBus } from '../../../common/PLVLWLayoutDataBus';
 import { PLVLWMarqueeLayout } from '../marquee/PLVLWMarqueeLayout';
 import { PLVLWWatermarkLayout } from '../watermark/PLVLWWatermarkLayout';
@@ -26,6 +26,7 @@ export struct PLVLWPlayerView {
       }) {
       }
       .onLoad((component) => {
+        this.setupMediaPlayer()
         if (PLVLWPiPManager.instance.consumeRestoringPlayer(this.viewData.sdk.uniqueId)) {
           this.viewData.sdk.playerManager.attachMainMediaPlayerWithComponent(component!)
         } else {
@@ -72,6 +73,16 @@ export struct PLVLWPlayerView {
     }
     .width(PLVCommonConstants.FULL_PERCENT)
     .height(PLVCommonConstants.FULL_PERCENT)
+  }
+
+  private setupMediaPlayer() {
+    if (this.viewData.sdk.channelData.loginType === PLVLoginType.PLAYBACK) {
+      // 回放精准 seek 配置，可在场景层按需调整；须在加载播放资源前设置。
+      this.viewData.sdk.playerManager.mainMediaPlayer.setPlayerOption([
+        PLVMediaPlayerOptionEnum.ENABLE_ACCURATE_SEEK.value("1"),
+        PLVMediaPlayerOptionEnum.SKIP_ACCURATE_SEEK_AT_START.value("1"),
+      ])
+    }
   }
 
   onPreviousData() {

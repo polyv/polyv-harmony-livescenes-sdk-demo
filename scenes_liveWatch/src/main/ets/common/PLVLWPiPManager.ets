@@ -250,7 +250,8 @@ export class PLVLWPiPManager {
     if (!this.sdk || !this.context || !pipWindow.isPiPEnabled()) {
       return undefined
     }
-    const isLive = this.sdk.channelData.loginType === PLVLoginType.LIVE
+    const sdk = this.sdk
+    const isLive = sdk.channelData.loginType === PLVLoginType.LIVE
     const videoSize = this.getVideoSize()
     const controller = await pipWindow.create({
       context: this.context,
@@ -264,6 +265,12 @@ export class PLVLWPiPManager {
         ? [pipWindow.VideoLiveControlGroup.VIDEO_PLAY_PAUSE]
         : []
     })
+    // create 是异步的，会话可能已在等待期间被关闭或替换。
+    // 旧 controller 不能在 clear 后重新注册到系统或覆盖新会话。
+    if (this.sdk !== sdk) {
+      this.disposeController(controller)
+      return undefined
+    }
     // 多个异步入口同时创建时，只保留最先完成并绑定到当前会话的 controller。
     if (!this.controller) {
       this.controller = controller
@@ -282,8 +289,8 @@ export class PLVLWPiPManager {
     const controller = this.controller
     const oldSdk = this.sdk
     if (!controller || (!this.isPiPActive.value && !this.isPiPStarting.value)) {
-      oldSdk?.destroy()
       this.clear()
+      oldSdk?.destroy()
       return
     }
     try {
@@ -296,10 +303,11 @@ export class PLVLWPiPManager {
         this.restoringPlayerPending = false
         this.isPiPActive.setValue(false)
         this.isPiPStarting.setValue(false)
-        if (this.sdk?.uniqueId === oldSdk?.uniqueId) {
+        const shouldDestroyOldSdk = this.sdk?.uniqueId === oldSdk?.uniqueId
+        this.clear()
+        if (shouldDestroyOldSdk) {
           oldSdk?.destroy()
         }
-        this.clear()
       }
     } catch (error) {
       console.warn(`[PLVLWPiPManager] stop PiP for new session failed: ${JSON.stringify(error)}`)
@@ -417,9 +425,9 @@ export class PLVLWPiPManager {
         this.isPiPActive.setValue(false)
         this.isPiPStarting.setValue(false)
         if (!this.restoreRequested && this.sourcePageState === PiPSourcePageState.REMOVED) {
-          this.keepPlayerAlive = false
-          this.sdk?.destroy()
+          const sdk = this.sdk
           this.clear()
+          sdk?.destroy()
         } else {
           this.restoreRequested = false
           // 原页面仍存在，或正在恢复到新页面；结束临时保活但不能销毁当前 SDK。
@@ -446,15 +454,44 @@ export class PLVLWPiPManager {
   private clear(): void {
     MutableObserver.disposeAll(this.observers)
     this.observers = []
+    const controller = this.controller
+    // 先让旧回调失效，再注销系统侧的 Home 自动启动与监听。
     this.controller = undefined
+    if (controller) {
+      this.disposeController(controller)
+    }
     this.sdk = undefined
     this.context = undefined
     this.restorePage = undefined
     this.restoreCoveredPage = undefined
     this.canStartPiPState.setValue(false)
     this.canShowPiPAction.setValue(false)
+    this.keepPlayerAlive = false
+    this.restoreRequested = false
+    this.restoringPlayerPending = false
+    this.isPiPActive.setValue(false)
+    this.isPiPStarting.setValue(false)
     this.sourcePageState = PiPSourcePageState.KEEP
     PLVLWPiPEntranceBridge.instance.unbind()
+  }
+
+  private disposeController(controller: pipWindow.PiPController): void {
+    // 仅清空 JS 引用不会取消系统持有的自动启动注册，Home 仍可能拉起已释放的小窗。
+    try {
+      controller.setAutoStartEnabled(false)
+    } catch (error) {
+      console.warn(`[PLVLWPiPManager] disable PiP auto start failed: ${JSON.stringify(error)}`)
+    }
+    try {
+      controller.off('controlEvent')
+    } catch (error) {
+      console.warn(`[PLVLWPiPManager] unregister PiP control event failed: ${JSON.stringify(error)}`)
+    }
+    try {
+      controller.off('stateChange')
+    } catch (error) {
+      console.warn(`[PLVLWPiPManager] unregister PiP state change failed: ${JSON.stringify(error)}`)
+    }
   }
 }
 
