@@ -487,6 +487,14 @@
     {
       "name": "plvlw_linkmic_hang_off_dialog_confirm",
       "value": "挂断"
+    },
+    {
+      "name": "plvlw_player_seek_backward",
+      "value": "快退 %d 秒"
+    },
+    {
+      "name": "plvlw_player_seek_forward",
+      "value": "快进 %d 秒"
     }
   ]
 }

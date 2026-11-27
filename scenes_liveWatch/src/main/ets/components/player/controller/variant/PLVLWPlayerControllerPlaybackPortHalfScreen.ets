@@ -1,3 +1,4 @@
+import { PLVLWPlaybackStepSeekLayout } from '../widget/PLVLWPlaybackStepSeekLayout';
 import { PLVCommonConstants } from '@polyvharmony/live-scenes-sdk';
 import { PLVLWPlayerControllerVariantState } from '../vo/PLVLWPlayerControllerVariantState';
 import { PLVLWPlayerControllerDanmuOpenButton } from '../widget/PLVLWPlayerControllerDanmuOpenButton';
@@ -13,6 +14,12 @@ export struct PLVLWPlayerControllerPlaybackPortHalfScreen {
 
   build() {
     RelativeContainer() {
+      PLVLWPlaybackStepSeekLayout()
+        .alignRules({
+          middle: { anchor: PLVCommonConstants.CONTAINER, align: HorizontalAlign.Center },
+          center: { anchor: PLVCommonConstants.CONTAINER, align: VerticalAlign.Center }
+        })
+
       PLVLWPlayerControllerPlayPauseButton()
         .id('plvlw_player_controller_play_pause_button')
         .width(36)

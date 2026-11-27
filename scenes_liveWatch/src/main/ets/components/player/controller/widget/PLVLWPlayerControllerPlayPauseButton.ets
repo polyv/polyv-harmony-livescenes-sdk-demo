@@ -4,6 +4,8 @@ import { PLVLWLayoutDataBus } from '../../../../common/PLVLWLayoutDataBus';
 
 @Component
 export struct PLVLWPlayerControllerPlayPauseButton {
+  /** 在实际处理点击的图片上阻断背景手势，不能在自定义组件外层 Block 子节点。 */
+  @Prop exclusiveTouch: boolean = false
   @LocalStorageLink('sdk') sdk: PLVLiveSceneSDK = lateInit()
   @Consume('layoutDataBus') layoutDataBus: PLVLWLayoutDataBus
   @State private isLive: boolean = false
@@ -28,6 +30,7 @@ export struct PLVLWPlayerControllerPlayPauseButton {
     if (this.isEnabled) {
       Image(this.isPlaying ? $r('app.media.plvlw_player_controller_to_pause_icon') : $r('app.media.plvlw_player_controller_to_play_icon'))
         .objectFit(ImageFit.Contain)
+        .hitTestBehavior(this.exclusiveTouch ? HitTestMode.Block : HitTestMode.Default)
         .onClick(() => {
           const player = this.sdk.playerManager.mainMediaPlayer
           if (this.isPlaying) {

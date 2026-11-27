@@ -1,3 +1,4 @@
+import { PLVLWPlaybackStepSeekLayout } from '../widget/PLVLWPlaybackStepSeekLayout';
 import { PLVCommonConstants } from '@polyvharmony/live-scenes-sdk';
 import { PLVLWRewardMessageLayout } from '../../../chatroom/widget/PLVLWRewardMessageLayout';
 import { PLVLWInteractSideBarLayout } from '../../../content/interactsidebar/PLVLWInteractSideBarLayout';
@@ -18,6 +19,12 @@ export struct PLVLWPlayerControllerPlaybackLandscape {
 
   build() {
     RelativeContainer() {
+      PLVLWPlaybackStepSeekLayout()
+        .alignRules({
+          middle: { anchor: PLVCommonConstants.CONTAINER, align: HorizontalAlign.Center },
+          center: { anchor: PLVCommonConstants.CONTAINER, align: VerticalAlign.Center }
+        })
+
       PLVLWPlayerControllerPlayPauseButton()
         .id('plvlw_player_controller_play_pause_button')
         .width(36)

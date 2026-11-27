@@ -8,11 +8,12 @@ import { PLVLWPlayerControllerLivePortFullScreen } from './variant/PLVLWPlayerCo
 import { PLVLWPlayerControllerLivePortHalfScreen } from './variant/PLVLWPlayerControllerLivePortHalfScreen';
 import { PLVLWPlayerControllerPlaybackLandLocked } from './variant/PLVLWPlayerControllerPlaybackLandLocked';
 import { PLVLWPlayerControllerPlaybackLandscape } from './variant/PLVLWPlayerControllerPlaybackLandscape';
-import { PLVLWPlayerControllerPlaybackPortFullScreen } from './variant/PLVLWPlayerControllerPlaybackPortFullScreen';
+import { PLVLWPlayerControllerPlaybackPortFullScreen, PLVLWPlayerControllerPlaybackPortFullScreenBar } from './variant/PLVLWPlayerControllerPlaybackPortFullScreen';
 import { PLVLWPlayerControllerPlaybackPortHalfScreen } from './variant/PLVLWPlayerControllerPlaybackPortHalfScreen';
 import { PLVLWPlayerControllerVariantState } from './vo/PLVLWPlayerControllerVariantState';
 import { PLVLWCastControlHandler } from './widget/PLVLWCastControlHandler';
 import { PLVLWPlayerControllerGestureHandler } from './widget/PLVLWPlayerControllerGestureHandler';
+import { PLVLWPlayerControllerGradientBackground } from './widget/PLVLWPlayerControllerGradientBackground';
 
 @Component
 export struct PLVLWPlayerControllerLayout {
@@ -41,6 +42,10 @@ export struct PLVLWPlayerControllerLayout {
       PLVLWCastControlHandler()
 
       Stack() {
+        PLVLWPlayerControllerGradientBackground({
+          variantState: this.variantState,
+          isVisible: this.isVisible
+        })
         if (PLVLWPlayerControllerLivePortHalfScreen.match(this.variantState)) {
           PLVLWPlayerControllerLivePortHalfScreen()
             .visibility(this.isVisible ? Visibility.Visible : Visibility.None)
@@ -60,6 +65,10 @@ export struct PLVLWPlayerControllerLayout {
           PLVLWPlayerControllerPlaybackPortHalfScreen()
             .visibility(this.isVisible ? Visibility.Visible : Visibility.None)
         }
+        if (PLVLWPlayerControllerPlaybackPortFullScreen.match(this.variantState)) {
+          PLVLWPlayerControllerPlaybackPortFullScreen()
+            .visibility(this.isVisible ? Visibility.Visible : Visibility.None)
+        }
         if (PLVLWPlayerControllerPlaybackLandLocked.match(this.variantState)) {
           PLVLWPlayerControllerPlaybackLandLocked()
             .visibility(this.isVisible ? Visibility.Visible : Visibility.None)
@@ -72,6 +81,8 @@ export struct PLVLWPlayerControllerLayout {
           PLVLWCastController()
         }
       }
+      .width(PLVCommonConstants.FULL_PERCENT)
+      .height(PLVCommonConstants.FULL_PERCENT)
       .hitTestBehavior(HitTestMode.Transparent)
     }
     .width(PLVCommonConstants.FULL_PERCENT)
@@ -105,7 +116,7 @@ export struct PLVLWContentLayoutEmbedPlayerController {
 
   build() {
     if (PLVLWPlayerControllerPlaybackPortFullScreen.match(this.variantState)) {
-      PLVLWPlayerControllerPlaybackPortFullScreen()
+      PLVLWPlayerControllerPlaybackPortFullScreenBar()
     }
   }
 

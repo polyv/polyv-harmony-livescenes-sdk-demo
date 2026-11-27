@@ -3,6 +3,7 @@ import { lateInit, MutableObserver, PLVLiveStatusEnum, PLVMediaPlayerState, Rect
 import { PLVLWLayoutDataBus } from '../../common/PLVLWLayoutDataBus';
 import { PLVLWPlayerControllerPlayPauseButton } from '../player/controller/widget/PLVLWPlayerControllerPlayPauseButton';
 import { PLVLWPPTPlayerExchangeView } from './node/PLVLWPPTPlayerExchangeView';
+import { PLVLWPPTFloatingControllerBackground } from './widget/PLVLWPPTFloatingControllerBackground';
 import { FLOATING_WINDOW_INIT_POSITION_PADDING, FLOATING_WINDOW_INIT_POSITION_TOP, PLVLWFloatWindowView } from './widget/PLVLWFloatWindowView';
 
 const FLOATING_WINDOW_LAND_VIDEO_PORT_WIDTH = 176 // 横向视频，竖向屏幕
@@ -105,6 +106,7 @@ export struct PLVLWPPTLayout {
         .width(PLVCommonConstants.FULL_PERCENT)
         .height(PLVCommonConstants.FULL_PERCENT)
       if (this.isShowFloatingController) {
+        PLVLWPPTFloatingControllerBackground()
         Image($r('app.media.plvlw_ppt_floating_pack_up'))
           .alignRules({
             top: { anchor: PLVCommonConstants.CONTAINER, align: VerticalAlign.Top },

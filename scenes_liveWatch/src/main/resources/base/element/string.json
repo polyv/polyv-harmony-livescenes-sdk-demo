@@ -487,6 +487,14 @@
     {
       "name": "plvlw_linkmic_hang_off_dialog_confirm",
       "value": "Hang up"
+    },
+    {
+      "name": "plvlw_player_seek_backward",
+      "value": "Rewind %d seconds"
+    },
+    {
+      "name": "plvlw_player_seek_forward",
+      "value": "Forward %d seconds"
     }
   ]
 }
